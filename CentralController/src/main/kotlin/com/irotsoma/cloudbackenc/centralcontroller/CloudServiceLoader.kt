@@ -13,7 +13,7 @@ import java.util.logging.Logger
 /**
  * Created by irotsoma on 6/20/2016.
  */
-class CloudServiceLoaderService : ApplicationContextAware {
+class CloudServiceLoader : ApplicationContextAware {
     val LOG = Logger.getLogger(this.javaClass.name)
     init{
         loadDynamicServices()

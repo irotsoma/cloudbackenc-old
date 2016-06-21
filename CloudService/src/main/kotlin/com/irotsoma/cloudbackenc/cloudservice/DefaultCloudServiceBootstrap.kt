@@ -3,9 +3,6 @@
  */
 package com.irotsoma.cloudbackenc.cloudservice
 
-import com.irotsoma.cloudbackenc.cloudservice.CloudServiceBootstrap
-import com.irotsoma.cloudbackenc.cloudservice.CloudServiceException
-import com.irotsoma.cloudbackenc.cloudservice.CloudServiceExtension
 import org.springframework.context.ApplicationContext
 import org.springframework.context.support.FileSystemXmlApplicationContext
 import org.springframework.core.io.FileSystemResource
