@@ -1,0 +1,9 @@
+{
+  "properties": [
+    {
+      "name": "controller.cloudServicesDirectory",
+      "type": "java.lang.String",
+      "description": "Folder containing cloud services plugins."
+    }
+  ]
+}

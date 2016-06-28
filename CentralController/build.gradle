@@ -1,33 +1,51 @@
 group 'com.irotsoma.cloudbackenc'
+
 version '0.1-SNAPSHOT'
+def localMavenRepository = '$rootDir/../cloudbackenc-maven-repo'
 
 buildscript {
     repositories {
         mavenCentral()
+        maven { url 'http://repo.spring.io/plugins-release' }
     }
     dependencies {
-        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:1.0.2-1"
+        classpath 'org.jetbrains.kotlin:kotlin-gradle-plugin:1.0.2-1'
+        classpath 'org.springframework.boot:spring-boot-gradle-plugin:1.3.5.RELEASE'
+        classpath 'org.springframework.build.gradle:propdeps-plugin:0.0.7'
     }
+
 }
 
 apply plugin: 'java'
 apply plugin: 'kotlin'
 apply plugin: 'maven-publish'
+apply plugin: 'spring-boot'
+apply plugin: 'propdeps'
 
 sourceCompatibility = 1.8
 
 repositories {
     mavenCentral()
+    maven { url 'https://dl.bintray.com/sdeleuze/maven' }
 }
 
 dependencies {
-    compile "org.springframework:spring-core:4.3.0.RELEASE"
-    compile "org.springframework:spring-context:4.3.0.RELEASE"
-    compile "org.springframework:spring-beans:4.3.0.RELEASE"
-    compile project(":cloudservice")
-    compile "org.jetbrains.kotlin:kotlin-stdlib:1.0.2-1"
+    //spring deps
+    compile 'org.springframework:spring-core:4.3.0.RELEASE'
+    compile 'org.springframework:spring-context:4.3.0.RELEASE'
+    compile 'org.springframework:spring-beans:4.3.0.RELEASE'
+    compile 'org.springframework.boot:spring-boot-starter'
+    compile 'org.springframework.kotlin:spring-kotlin:0.2.0'
+    optional 'org.springframework.boot:spring-boot-configuration-processor'
+    //cloud service interfaces
+    compile project(':cloudservice')
+    //kotlin lib
+    compile 'org.jetbrains.kotlin:kotlin-stdlib:1.0.2-1'
+    //testing deps
     testCompile group: 'junit', name: 'junit', version: '4.11'
 }
+compileJava.dependsOn(processResources)
+
 publishing {
     publications {
         mavenJava(MavenPublication) {
@@ -37,7 +55,7 @@ publishing {
     repositories {
         maven {
             // change to point to your repo, e.g. http://my.org/repo
-            url "$rootDir/../cloudbackenc-maven-repo"
+            url localMavenRepository
         }
     }
 }

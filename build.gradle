@@ -3,21 +3,3 @@ version '0.1-SNAPSHOT'
 
 buildscript {
 }
-
-apply plugin: 'maven-publish'
-
-publishing {
-    publications {
-        maven(MavenPublication) {
-            groupId project.group
-            artifactId rootProject.name
-            version project.version
-        }
-    }
-    repositories {
-        maven {
-            // change to point to your repo, e.g. http://my.org/repo
-            url "$rootDir/../cloudbackenc-maven-repo"
-        }
-    }
-}
