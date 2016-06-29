@@ -1,36 +1,45 @@
 package com.irotsoma.cloudbackenc.centralcontroller
 
-import com.irotsoma.cloudbackenc.cloudservice.CloudServiceFactory
+import com.irotsoma.cloudbackenc.cloudservice.CloudServiceException
+import org.springframework.beans.factory.annotation.Autowired
+import org.springframework.beans.factory.support.DefaultListableBeanFactory
 import org.springframework.context.ApplicationContext
 import org.springframework.context.ApplicationContextAware
+import org.springframework.context.annotation.ClassPathBeanDefinitionScanner
+import org.springframework.kotlin.toResource
+import org.springframework.stereotype.Component
 import java.io.File
-import java.io.FileFilter
-import java.io.FilenameFilter
+import java.net.JarURLConnection
 import java.net.URL
 import java.net.URLClassLoader
+import java.util.jar.Attributes
 import java.util.logging.Logger
 
 /**
  * Created by irotsoma on 6/20/2016.
  */
+@Component
 class CloudServiceLoader : ApplicationContextAware {
     val LOG = Logger.getLogger(this.javaClass.name)
-    init{
-        loadDynamicServices()
-    }
-    var _applicationContext : ApplicationContext? = null
+    @Autowired lateinit var controllerSettings : ControllerSettings
+
+    lateinit var _applicationContext : ApplicationContext
     override fun setApplicationContext(applicationContext: ApplicationContext?) {
-        _applicationContext = applicationContext
+
+        _applicationContext = applicationContext ?: throw CloudServiceException("Application context in CloudServiceLoader is null.")
     }
 
     fun loadDynamicServices() {
-        val extensionsDirectory: File = File(CLOUD_SERVICES_DIRECTORY)
+        var controllerSettings : ControllerSettings = _applicationContext.getBean(ControllerSettings::class.java)
+        val extensionsDirectory: File = File(controllerSettings.cloudServicesDirectory)
+        //val abp = extensionsDirectory.absolutePath
         if (!extensionsDirectory.isDirectory || !extensionsDirectory.canRead()) {
             LOG.warning("Extensions directory is missing or unreadable. ${extensionsDirectory.absolutePath}")
             return
         }
         //find all zip files and extract them to the appropriate directory
-        for (extFile in extensionsDirectory.listFiles({f:File -> (!f.isDirectory)&&(f.name.endsWith(".zip"))})) {
+        for (extFile in extensionsDirectory.listFiles{directory, name -> (!File(directory,name).isDirectory && name.endsWith(".zip"))} ?: arrayOf<File>()){
+        //for (extFile in extensionsDirectory.listFiles({f:File -> (!f.isDirectory)&&(f.name.endsWith(".zip"))})) {
             val extDir = File(extFile.nameWithoutExtension)
             //if directory already exists, remove it
             if (extDir.exists()){
@@ -43,13 +52,15 @@ class CloudServiceLoader : ApplicationContextAware {
 
         }
 
-        for (extDir in extensionsDirectory.listFiles({f:File -> f.isDirectory})) {
-            var jars : Array<File>? = extDir.listFiles({f:File -> f.name.endsWith(".jar")})
-            //TODO: find jar and spring xml and add details to a global var
 
+        for (jar in extensionsDirectory.listFiles{directory, name -> (!File(directory,name).isDirectory && name.endsWith(".jar"))} ?: arrayOf<File>()) {
+            val jarURL : URL = jar.toURI().toURL()
+            var jarConnection : JarURLConnection = jarURL.openConnection() as JarURLConnection
+            val attr : Attributes = jarConnection.mainAttributes
 
         }
     }
 
 
 }
+

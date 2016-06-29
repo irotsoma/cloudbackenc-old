@@ -1,6 +1,8 @@
 group 'com.irotsoma.cloudbackenc'
 version '0.1-SNAPSHOT'
 
+def localMavenRepository = "$rootDir/../cloudbackenc-maven-repo"
+
 buildscript {
     ext.kotlin_version = '1.0.2-1'
     repositories {
@@ -37,7 +39,7 @@ publishing {
     repositories {
         maven {
             // change to point to your repo, e.g. http://my.org/repo
-            url "$rootDir/../cloudbackenc-maven-repo"
+            url localMavenRepository
         }
     }
 }
