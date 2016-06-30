@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<metadata>
+  <groupId>com.irotsoma.cloudbackenc</groupId>
+  <artifactId>centralcontroller</artifactId>
+  <versioning>
+    <versions>
+      <version>0.1-SNAPSHOT</version>
+    </versions>
+    <lastUpdated>20160629235940</lastUpdated>
+  </versioning>
+</metadata>

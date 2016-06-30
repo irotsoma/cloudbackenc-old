@@ -1,7 +1,7 @@
 package com.irotsoma.cloudbackenc.cloudservice
 
-import org.springframework.beans.factory.annotation.Autowired
-import org.springframework.stereotype.Service
+import org.springframework.context.ApplicationContext
+import org.springframework.context.ApplicationContextAware
 
 
 /**
@@ -9,9 +9,10 @@ import org.springframework.stereotype.Service
  *
  * Cloud Service Factory interface
  */
-interface CloudServiceFactory {
-    val serviceName: String
-    var authenticationService: AuthenticationService
 
-    var cloudServiceFileIOService: CloudServiceFileIOService
+interface CloudServiceFactory : ApplicationContextAware {
+
+     val serviceName: String
+     var authenticationService: CloudServiceAuthenticationService
+     var cloudServiceFileIOService: CloudServiceFileIOService
 }

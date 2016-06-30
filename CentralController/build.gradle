@@ -26,7 +26,6 @@ sourceCompatibility = 1.8
 
 repositories {
     mavenCentral()
-    maven { url 'https://dl.bintray.com/sdeleuze/maven' }
 }
 
 dependencies {
@@ -35,7 +34,6 @@ dependencies {
     compile 'org.springframework:spring-context:4.3.0.RELEASE'
     compile 'org.springframework:spring-beans:4.3.0.RELEASE'
     compile 'org.springframework.boot:spring-boot-starter'
-    compile 'org.springframework.kotlin:spring-kotlin:0.2.0'
     optional 'org.springframework.boot:spring-boot-configuration-processor'
     //cloud service interfaces
     compile project(':cloudservice')

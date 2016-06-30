@@ -6,7 +6,6 @@ import org.springframework.beans.factory.support.DefaultListableBeanFactory
 import org.springframework.context.ApplicationContext
 import org.springframework.context.ApplicationContextAware
 import org.springframework.context.annotation.ClassPathBeanDefinitionScanner
-import org.springframework.kotlin.toResource
 import org.springframework.stereotype.Component
 import java.io.File
 import java.net.JarURLConnection
@@ -19,7 +18,7 @@ import java.util.logging.Logger
  * Created by irotsoma on 6/20/2016.
  */
 @Component
-class CloudServiceLoader : ApplicationContextAware {
+class CloudServiceLoader_OLD : ApplicationContextAware {
     val LOG = Logger.getLogger(this.javaClass.name)
     @Autowired lateinit var controllerSettings : ControllerSettings
 
