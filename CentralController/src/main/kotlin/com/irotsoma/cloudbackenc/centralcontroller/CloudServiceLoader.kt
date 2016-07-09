@@ -1,6 +1,10 @@
 package com.irotsoma.cloudbackenc.centralcontroller
 
+import com.fasterxml.jackson.databind.ObjectMapper
+import com.fasterxml.jackson.module.kotlin.KotlinModule
+import com.fasterxml.jackson.module.kotlin.readValue
 import com.irotsoma.cloudbackenc.cloudservice.CloudServiceException
+import com.irotsoma.cloudbackenc.cloudservice.CloudServiceExtensionConfig
 import com.irotsoma.cloudbackenc.cloudservice.CloudServiceFactory
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.context.ApplicationContext
@@ -10,14 +14,15 @@ import org.springframework.stereotype.Component
 import java.io.File
 import java.net.URL
 import java.net.URLClassLoader
+import java.util.jar.JarFile
 
 /**
  * Created by irotsoma on 6/20/2016.
  */
 @Component
-class CloudServiceLoader : ApplicationContextAware {
+open class CloudServiceLoader : ApplicationContextAware {
     companion object { val LOG by logger() }
-    @Autowired lateinit var controllerSettings : ControllerSettings
+    @Autowired lateinit var cloudServicesSettings: CloudServicesSettings
 
     lateinit var _applicationContext : ConfigurableApplicationContext
     override fun setApplicationContext(applicationContext: ApplicationContext?) {
@@ -26,8 +31,8 @@ class CloudServiceLoader : ApplicationContextAware {
     }
 
     fun loadDynamicServices() {
-        val controllerSettings : ControllerSettings = _applicationContext.getBean(ControllerSettings::class.java)
-        val extensionsDirectory: File = File(controllerSettings.cloudServicesDirectory)
+        val cloudServicesSettings: CloudServicesSettings = _applicationContext.getBean(CloudServicesSettings::class.java)
+        val extensionsDirectory: File = File(cloudServicesSettings.directory)
         //val abp = extensionsDirectory.absolutePath
         if (!extensionsDirectory.isDirectory || !extensionsDirectory.canRead()) {
             LOG.warn("Extensions directory is missing or unreadable. ${extensionsDirectory.absolutePath}")
@@ -49,15 +54,23 @@ class CloudServiceLoader : ApplicationContextAware {
         var jarURLs = kotlin.arrayOfNulls<URL>(0)
         var classNames = kotlin.arrayOfNulls<String>(0)
         var serviceNames = kotlin.arrayOfNulls<String>(0)
-        for (configFile in extensionsDirectory.listFiles{directory, name -> (!File(directory,name).isDirectory && name.endsWith(".json"))} ?: arrayOf<File>()) {
-            //TODO: open json config files to find location of factory jars and populate jarURLs classNames and service names
-        }
 
 
-
-        //TODO: remove this once above is done
         for (jar in extensionsDirectory.listFiles{directory, name -> (!File(directory,name).isDirectory && name.endsWith(".jar"))} ?: arrayOf<File>()) {
             jarURLs = jarURLs.plus(jar.toURI().toURL())
+            val jarFile = JarFile(jar)
+            var jarFileEntry = jarFile.getEntry(cloudServicesSettings.configFileName)
+            val jarInputStream = jarFile.getInputStream(jarFileEntry).reader()
+            val jsonValue: String = jarInputStream.readText()
+            val mapper = ObjectMapper().registerModule(KotlinModule())
+            val mapperData: CloudServiceExtensionConfig = mapper.readValue(jsonValue)
+
+            //TODO: get data from JSON file
+
+
+
+            val test = "test"
+
         }
 
         val classLoader = URLClassLoader(jarURLs,_applicationContext.classLoader)
@@ -65,7 +78,7 @@ class CloudServiceLoader : ApplicationContextAware {
         //TODO: load all classes as defined in the json configs if class not found log it and move on
         val gdClass = classLoader.loadClass("com.irotsoma.cloudbackenc.cloudservice.googledrive.GoogleDriveCloudServiceFactory")
         if (gdClass.newInstance() is CloudServiceFactory) {
-            controllerSettings.plugins = controllerSettings.plugins.plus(gdClass as Class<CloudServiceFactory>)
+            cloudServicesSettings.extensions = cloudServicesSettings.extensions.plus(gdClass as Class<CloudServiceFactory>)
         }
     }
 

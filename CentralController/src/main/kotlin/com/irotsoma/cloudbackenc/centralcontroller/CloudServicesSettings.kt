@@ -11,9 +11,11 @@ import org.springframework.context.annotation.Configuration
  */
 @Configuration
 @EnableConfigurationProperties
-@ConfigurationProperties("controller")
-open class ControllerSettings {
+@ConfigurationProperties("cloudServices")
+open class CloudServicesSettings {
 
-    lateinit var cloudServicesDirectory: String
-    var plugins : List<Class<CloudServiceFactory>> = emptyList()
+    lateinit var directory: String
+    lateinit var configFileName: String
+
+    var extensions : List<Class<CloudServiceFactory>> = emptyList()
 }
