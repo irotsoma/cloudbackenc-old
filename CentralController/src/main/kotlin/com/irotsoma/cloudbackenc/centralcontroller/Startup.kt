@@ -15,6 +15,7 @@ open class CentralController{
 }
 
 fun main(args: Array<String>) {
+    System.setProperty("log4j.debug", "")
     val context = SpringApplication.run(CentralController::class.java, *args)
     val cloudServiceLoader = CloudServiceLoader()
     cloudServiceLoader.setApplicationContext(context)

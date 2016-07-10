@@ -10,7 +10,8 @@ import kotlin.reflect.companionObject
  * usage:  companion object { val LOG by logger() }
  */
 fun <R : Any> R.logger(): Lazy<Logger> {
-    return lazy { Logger.getLogger(unwrapCompanionClass(this.javaClass).name) }
+
+    return lazy { Logger.getLogger(unwrapCompanionClass(this.javaClass).name)}
 }
 
 fun <T: Any> unwrapCompanionClass(ofClass: Class<T>): Class<*> {

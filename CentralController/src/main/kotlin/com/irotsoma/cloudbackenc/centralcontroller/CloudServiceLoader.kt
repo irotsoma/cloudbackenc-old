@@ -2,6 +2,7 @@ package com.irotsoma.cloudbackenc.centralcontroller
 
 import com.fasterxml.jackson.databind.ObjectMapper
 import com.fasterxml.jackson.module.kotlin.KotlinModule
+import com.fasterxml.jackson.module.kotlin.MissingKotlinParameterException
 import com.fasterxml.jackson.module.kotlin.readValue
 import com.irotsoma.cloudbackenc.cloudservice.CloudServiceException
 import com.irotsoma.cloudbackenc.cloudservice.CloudServiceExtensionConfig
@@ -14,6 +15,7 @@ import org.springframework.stereotype.Component
 import java.io.File
 import java.net.URL
 import java.net.URLClassLoader
+import java.util.*
 import java.util.jar.JarFile
 
 /**
@@ -33,7 +35,6 @@ open class CloudServiceLoader : ApplicationContextAware {
     fun loadDynamicServices() {
         val cloudServicesSettings: CloudServicesSettings = _applicationContext.getBean(CloudServicesSettings::class.java)
         val extensionsDirectory: File = File(cloudServicesSettings.directory)
-        //val abp = extensionsDirectory.absolutePath
         if (!extensionsDirectory.isDirectory || !extensionsDirectory.canRead()) {
             LOG.warn("Extensions directory is missing or unreadable. ${extensionsDirectory.absolutePath}")
             return
@@ -51,34 +52,49 @@ open class CloudServiceLoader : ApplicationContextAware {
             Unzip().unZipAllToFolder(extFile,extDir)
         }
 
-        var jarURLs = kotlin.arrayOfNulls<URL>(0)
-        var classNames = kotlin.arrayOfNulls<String>(0)
-        var serviceNames = kotlin.arrayOfNulls<String>(0)
+        var jarURLs = arrayOf<URL>()
+        var factoryClasses = mapOf<UUID,String>()
+
 
 
         for (jar in extensionsDirectory.listFiles{directory, name -> (!File(directory,name).isDirectory && name.endsWith(".jar"))} ?: arrayOf<File>()) {
-            jarURLs = jarURLs.plus(jar.toURI().toURL())
-            val jarFile = JarFile(jar)
-            var jarFileEntry = jarFile.getEntry(cloudServicesSettings.configFileName)
-            val jarInputStream = jarFile.getInputStream(jarFileEntry).reader()
-            val jsonValue: String = jarInputStream.readText()
-            val mapper = ObjectMapper().registerModule(KotlinModule())
-            val mapperData: CloudServiceExtensionConfig = mapper.readValue(jsonValue)
+            try {
+                val jarFile = JarFile(jar)
+                //read config file from jar if present
+                var jarFileEntry = jarFile.getEntry(cloudServicesSettings.configFileName)
+                if (jarFileEntry == null) {
+                    LOG.warn("Cloud service extension missing config file named ${cloudServicesSettings.configFileName}. Skipping jar file: ${jar.absolutePath}")
+                }
+                else {
+                    //get Json config file data
+                    val jsonValue = jarFile.getInputStream(jarFileEntry).reader().readText()
+                    val mapper = ObjectMapper().registerModule(KotlinModule())
+                    val mapperData: CloudServiceExtensionConfig = mapper.readValue(jsonValue)
 
-            //TODO: get data from JSON file
-
-
-
-            val test = "test"
-
+                    //add values to maps for consumption later
+                    var cloudServiceUUID = UUID.fromString(mapperData.serviceUUID)
+                    factoryClasses = factoryClasses.plus(Pair(cloudServiceUUID,mapperData.packageName+"."+mapperData.factoryClass))
+                    cloudServiceNames = cloudServiceNames.plus(Pair(cloudServiceUUID,mapperData.serviceName))
+                    jarURLs = jarURLs.plus(jar.toURI().toURL())
+                }
+            } catch (e: MissingKotlinParameterException) {
+                LOG.warn("Cloud service extension file is missing a required field.  File Name: ${jar.absolutePath}. Error Message: ${e.message}")
+            } catch (e: Exception) {
+                LOG.warn("Error processing cloud service extension file: ${jar.absolutePath}. Error Message: ${e.message}")
+            }
         }
 
+        //create a class loader with all of the jars
         val classLoader = URLClassLoader(jarURLs,_applicationContext.classLoader)
-
-        //TODO: load all classes as defined in the json configs if class not found log it and move on
-        val gdClass = classLoader.loadClass("com.irotsoma.cloudbackenc.cloudservice.googledrive.GoogleDriveCloudServiceFactory")
-        if (gdClass.newInstance() is CloudServiceFactory) {
-            cloudServicesSettings.extensions = cloudServicesSettings.extensions.plus(gdClass as Class<CloudServiceFactory>)
+        //cycle through all of the classes, make sure they inheritors CloudServiceFactory, and add them to the list
+        for ((key, value) in factoryClasses) {
+            val gdClass = classLoader.loadClass(value)
+            if (gdClass.newInstance() is CloudServiceFactory) {
+                cloudServiceExtensions = cloudServiceExtensions.plus(Pair(key, gdClass as Class<CloudServiceFactory>))
+            }
+            else {
+                LOG.warn("Error loading cloud service extension: Factory is not an instance of CloudServiceFactory: $value" )
+            }
         }
     }
 
