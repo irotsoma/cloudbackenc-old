@@ -1,6 +1,5 @@
-package com.irotsoma.cloudbackenc.centralcontroller
+package com.irotsoma.cloudbackenc.common
 
-import org.apache.log4j.Logger
 import kotlin.reflect.companionObject
 
 /**
@@ -9,9 +8,9 @@ import kotlin.reflect.companionObject
  * from example: https://stackoverflow.com/questions/34416869/idiomatic-way-of-logging-in-kotlin
  * usage:  companion object { val LOG by logger() }
  */
-fun <R : Any> R.logger(): Lazy<Logger> {
+fun <R : Any> R.logger(): Lazy<org.apache.log4j.Logger> {
 
-    return lazy { Logger.getLogger(unwrapCompanionClass(this.javaClass).name)}
+    return lazy { org.apache.log4j.Logger.getLogger(unwrapCompanionClass(this.javaClass).name)}
 }
 
 fun <T: Any> unwrapCompanionClass(ofClass: Class<T>): Class<*> {

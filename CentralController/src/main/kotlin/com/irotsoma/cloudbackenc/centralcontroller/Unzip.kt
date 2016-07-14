@@ -1,5 +1,6 @@
 package com.irotsoma.cloudbackenc.centralcontroller
 
+import com.irotsoma.cloudbackenc.common.logger
 import java.io.File
 import java.io.FileInputStream
 import java.io.FileOutputStream

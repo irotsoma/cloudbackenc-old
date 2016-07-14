@@ -7,7 +7,6 @@ package com.irotsoma.cloudbackenc.cloudservice
  */
 interface CloudServiceFactory {
 
-     val serviceName: String
      var authenticationService: CloudServiceAuthenticationService
      var cloudServiceFileIOService: CloudServiceFileIOService
 }

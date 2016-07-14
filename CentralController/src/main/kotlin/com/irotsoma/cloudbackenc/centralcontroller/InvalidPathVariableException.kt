@@ -1,11 +1,9 @@
-package com.irotsoma.cloudbackenc.cloudservice
+package com.irotsoma.cloudbackenc.centralcontroller
 
 /**
- * Created by justin on 6/20/2016.
- *
- * Exception class for Cloud Service Implementations
+ * Created by irotsoma on 7/13/2016.
  */
-class CloudServiceException : Exception{
+class InvalidPathVariableException : Exception{
     constructor(message: String?) : super(message)
     constructor(message: String?, cause: Throwable) : super(message, cause)
     constructor(cause: Throwable) : super(cause)

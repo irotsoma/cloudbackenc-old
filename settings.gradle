@@ -1,4 +1,6 @@
 rootProject.name = 'cloudbackenc-parent'
 include 'cloudservice'
 include 'centralcontroller'
-//include 'cloudservice-googledrive'
+include 'common'
+
+

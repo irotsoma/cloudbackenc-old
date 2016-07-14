@@ -18,3 +18,4 @@ open class CloudServicesSettings {
 
 
 }
+//TODO: make properties file external in config folder
