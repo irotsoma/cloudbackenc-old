@@ -1,8 +1,5 @@
 package com.irotsoma.cloudbackenc.centralcontroller
 
-import com.fasterxml.jackson.databind.ObjectMapper
-import com.fasterxml.jackson.module.kotlin.KotlinModule
-import com.fasterxml.jackson.module.kotlin.readValue
 import com.irotsoma.cloudbackenc.cloudservice.CloudServiceException
 import com.irotsoma.cloudbackenc.cloudservice.CloudServiceFactory
 import com.irotsoma.cloudbackenc.cloudservice.CloudServiceUser
@@ -20,22 +17,18 @@ open class CloudServiceLoginController {
     @Autowired
     private lateinit var cloudServiceRepository: CloudServiceRepository
 
-    @RequestMapping("/cloudservice/login/{uuid}", method = arrayOf(RequestMethod.POST))
-    fun login(@PathVariable(value="uuid")uuid: String, @RequestBody user: String ) : ResponseEntity<CloudServiceUser> {
-
-        val mapper = ObjectMapper().registerModule(KotlinModule())
-        val mapperData: CloudServiceUser = mapper.readValue(user)
-
+    @RequestMapping("cloudservice/login/{uuid}", method = arrayOf(RequestMethod.POST))
+    fun login(@PathVariable(value="uuid")uuid: String, @RequestBody user: CloudServiceUser ) : ResponseEntity<CloudServiceUser> {
 
         val cloudServiceFactory : Class<CloudServiceFactory> = cloudServiceRepository.cloudServiceExtensions[UUID.fromString(uuid)] ?: throw InvalidPathVariableException("Invalid UUID.")
-        var token : String
+        val token : String
         try {
-            token = cloudServiceFactory.newInstance().authenticationService.login(mapperData.userId, mapperData.password)
+            token = cloudServiceFactory.newInstance().authenticationService.login(user.userId, user.password ?: throw InvalidPathVariableException("Password is missing from request."))
         } catch (e:Exception ){
             throw CloudServiceException(e.message)
         }
 
-        return ResponseEntity(CloudServiceUser(userId=mapperData.userId, password = "", token = token),HttpStatus.OK)
+        return ResponseEntity(CloudServiceUser(userId=user.userId, password = null, token = token),HttpStatus.OK)
     }
 
 }

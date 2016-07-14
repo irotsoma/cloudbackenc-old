@@ -44,9 +44,13 @@ dependencies {
     //testing deps
     testCompile "org.springframework.boot:spring-boot-starter-test"
     testCompile "junit:junit"
+
 }
 compileJava.dependsOn(processResources)
-//compileKotlin.dependsOn(processResources)
+
+processResources {
+    expand(project.properties)
+}
 
 springBoot {
     executable = true

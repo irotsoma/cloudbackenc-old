@@ -1,6 +1,5 @@
 rootProject.name = 'cloudbackenc-parent'
 include 'cloudservice'
-include 'centralcontroller'
 include 'common'
-
+include 'centralcontroller'
 

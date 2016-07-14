@@ -22,6 +22,7 @@ import org.springframework.web.client.RestTemplate
 class CloudServicesListControllerTest {
     @Value("\${local.server.port}")
     private var port: Int = 0
+
     var template: RestTemplate = TestRestTemplate()
     var jsonUserRequest = "{\"userId\": \"testUser\", \"password\":\"testPassword\",\"token\":\"\"}"
 
@@ -30,8 +31,19 @@ class CloudServicesListControllerTest {
     fun testGetCloudServicesList(){
         val testValue = template.getForEntity("http://localhost:$port/cloudservices",String::class.java)
         assertThat(testValue.statusCode, `is`(HttpStatus.OK))
-        //below is only valid when google drive plugin is installed
+        //below is only valid when google drive plugin is installed in extensions folder
         assertThat(testValue.body, containsString("[{\"uuid\":\"1d3cb21f-5b88-4b3c-8cb8-1afddf1ff375\",\"serviceName\":\"Google Drive\"}]"))
     }
+/* TODO: Fix test:  not seeing ObjectMapperConfiguration
+    //below is only valid when google drive plugin is installed in extensions folder
+    @Test
+    fun testLoginGoogleDrive(){
 
+        val requestHeaders = HttpHeaders()
+        requestHeaders.add(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
+        val httpEntity = HttpEntity<CloudServiceUser>(CloudServiceUser("test","test",null), requestHeaders)
+        val testValue = template.postForEntity("http://localhost:$port/cloudservice/login/1d3cb21f-5b88-4b3c-8cb8-1afddf1ff375", httpEntity, CloudServiceUser::class.java)
+        assertThat(testValue.body, `is`(CloudServiceUser("test", null, "test login")))
+    }
+*/
 }
