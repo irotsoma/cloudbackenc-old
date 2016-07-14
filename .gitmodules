@@ -1,3 +1,0 @@
-[submodule "CloudService-GoogleDrive"]
-    path = CloudService-GoogleDrive
-    url = git@github.com:irotsoma/cloudservice-googledrive.git
