@@ -1,8 +1,5 @@
 package com.irotsoma.cloudbackenc.cloudservice
 
-import java.io.File
-import java.io.InputStream
-
 /**
  * Created by irotsoma on 6/20/2016.
  */

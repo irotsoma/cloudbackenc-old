@@ -14,11 +14,6 @@ import org.springframework.context.ApplicationContext
 import org.springframework.context.ApplicationContextAware
 import org.springframework.context.ConfigurableApplicationContext
 import org.springframework.stereotype.Component
-import java.io.File
-import java.net.URL
-import java.net.URLClassLoader
-import java.util.*
-import java.util.jar.JarFile
 import javax.annotation.PostConstruct
 
 /**
