@@ -12,12 +12,10 @@ import org.springframework.context.annotation.PropertySources
  */
 @Configuration
 @EnableConfigurationProperties
-@ConfigurationProperties("cloudServices")
+@ConfigurationProperties("cloudservices")
 open class CloudServicesSettings {
 
     lateinit var directory: String
     lateinit var configFileName: String
 
-
 }
-//TODO: make properties file external in config folder

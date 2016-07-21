@@ -13,7 +13,10 @@ import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.context.ApplicationContext
 import org.springframework.context.ApplicationContextAware
 import org.springframework.context.ConfigurableApplicationContext
+import org.springframework.context.MessageSource
+import org.springframework.context.i18n.LocaleContextHolder
 import org.springframework.stereotype.Component
+import org.springframework.web.servlet.LocaleResolver
 import java.io.File
 import java.net.URL
 import java.net.URLClassLoader
@@ -27,6 +30,7 @@ import javax.annotation.PostConstruct
 @Component
 open class CloudServiceRepository : ApplicationContextAware {
     companion object { val LOG by logger() }
+    //inject settings
     @Autowired lateinit var cloudServicesSettings: CloudServicesSettings
     var cloudServiceExtensions  = emptyMap<UUID,Class<CloudServiceFactory>>()
     var cloudServiceNames = emptyList<CloudServiceExtensionName>()
@@ -39,8 +43,6 @@ open class CloudServiceRepository : ApplicationContextAware {
 
     @PostConstruct
     fun loadDynamicServices() {
-        //get settings
-        //val cloudServicesSettings: CloudServicesSettings = _applicationContext.getBean(CloudServicesSettings::class.java)
         val extensionsDirectory: File = File(cloudServicesSettings.directory)
         if (!extensionsDirectory.isDirectory || !extensionsDirectory.canRead()) {
             LOG.warn("Extensions directory is missing or unreadable. ${extensionsDirectory.absolutePath}")
@@ -108,7 +110,5 @@ open class CloudServiceRepository : ApplicationContextAware {
             }
         }
     }
-
-
 }
 

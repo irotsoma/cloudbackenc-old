@@ -4,9 +4,10 @@ import kotlin.reflect.companionObject
 
 /**
  * Created by irotsoma on 7/8/2016.
- * logging functionality
+ * Logging functionality
  * from example: https://stackoverflow.com/questions/34416869/idiomatic-way-of-logging-in-kotlin
- * usage:  companion object { val LOG by logger() }
+ * @code usage:  companion object { val LOG by logger() }
+ * @return instance of a log4j logger
  */
 fun <R : Any> R.logger(): Lazy<org.apache.log4j.Logger> {
 
