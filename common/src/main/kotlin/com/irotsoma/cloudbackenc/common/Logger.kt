@@ -1,5 +1,7 @@
 package com.irotsoma.cloudbackenc.common
 
+import kotlin.reflect.companionObject
+
 /**
  * Created by irotsoma on 7/8/2016.
  * Logging functionality
