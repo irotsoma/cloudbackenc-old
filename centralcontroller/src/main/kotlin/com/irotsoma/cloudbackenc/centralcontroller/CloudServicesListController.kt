@@ -1,6 +1,6 @@
 package com.irotsoma.cloudbackenc.centralcontroller
 
-import com.irotsoma.cloudbackenc.cloudservice.CloudServiceExtensionNames
+import com.irotsoma.cloudbackenc.cloudservice.CloudServiceExtensionList
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Controller
 import org.springframework.web.bind.annotation.RequestMapping
@@ -19,7 +19,7 @@ open class CloudServicesListController {
     private lateinit var cloudServiceRepository: CloudServiceRepository
 
     @RequestMapping(method = arrayOf(RequestMethod.GET))
-    @ResponseBody fun getCloudServices() : CloudServiceExtensionNames{
+    @ResponseBody fun getCloudServices() : CloudServiceExtensionList {
         return cloudServiceRepository.cloudServiceNames
     }
 }

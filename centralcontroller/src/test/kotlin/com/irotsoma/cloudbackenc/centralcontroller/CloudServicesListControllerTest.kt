@@ -38,7 +38,7 @@ class CloudServicesListControllerTest {
         val testValue = template.getForEntity("http://localhost:$port/cloudservices",String::class.java)
         assertThat(testValue.statusCode, `is`(HttpStatus.OK))
         //below is only valid when google drive plugin is installed in extensions folder
-        assertThat(testValue.body, containsString("[{\"uuid\":\"1d3cb21f-5b88-4b3c-8cb8-1afddf1ff375\",\"serviceName\":\"Google Drive\"}]"))
+        assertThat(testValue.body, containsString("[{\"uuid\":\"1d3cb21f-5b88-4b3c-8cb8-1afddf1ff375\",\"name\":\"Google Drive\"}]"))
     }
 // TODO: Fix test:  not seeing ObjectMapperConfiguration
     //below is only valid when google drive plugin is installed in extensions folder

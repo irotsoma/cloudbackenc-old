@@ -27,18 +27,14 @@ subprojects {
     repositories {
         mavenCentral()
     }
-
-    dependencies {
-        compile "org.jetbrains.kotlin:kotlin-stdlib:$kotlinVersion"
-        testCompile group: 'junit', name: 'junit', version: '4.11'
-    }
-
 }
 
 project(':common'){
     dependencies {
+        compile "org.jetbrains.kotlin:kotlin-stdlib:$kotlinVersion"
         compile "org.apache.logging.log4j:log4j-1.2-api:$log4jVersion"
         compile "org.jetbrains.kotlin:kotlin-reflect:$kotlinVersion"
+        testCompile group: 'junit', name: 'junit', version: '4.11'
     }
 
     apply plugin: 'maven-publish'
@@ -58,7 +54,10 @@ project(':common'){
 
 project(':cloudservice'){
     apply plugin: 'maven-publish'
-
+    dependencies {
+        //tornadofx
+        compile 'no.tornado:tornadofx:1.5.2'
+    }
     publishing {
         publications {
             mavenJava(MavenPublication) {
@@ -91,8 +90,6 @@ project(':centralcontroller'){
         compile "com.fasterxml.jackson.core:jackson-core:$jacksonVersion"
         compile "com.fasterxml.jackson.core:jackson-databind:$jacksonVersion"
         compile "com.fasterxml.jackson.core:jackson-annotations:$jacksonVersion"
-        //kotlin lib
-        compile "org.jetbrains.kotlin:kotlin-reflect:$kotlinVersion"
         //testing deps
         testCompile "org.springframework.boot:spring-boot-starter-test:$springBootVersion"
 
@@ -123,12 +120,8 @@ project(':centralcontroller'){
 }
 project(':cloudbackencui'){
     dependencies {
-        //tornadofx
-        compile 'no.tornado:tornadofx:1.5.1'
         //logging
         compile "org.apache.logging.log4j:log4j-1.2-api:$log4jVersion"
-        //kotlin
-        compile "org.jetbrains.kotlin:kotlin-reflect:$kotlinVersion"
         //spring
         compile "org.springframework:spring-web:$springVersion"
         //jackson

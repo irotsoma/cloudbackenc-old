@@ -4,10 +4,7 @@ import com.fasterxml.jackson.databind.ObjectMapper
 import com.fasterxml.jackson.module.kotlin.KotlinModule
 import com.fasterxml.jackson.module.kotlin.MissingKotlinParameterException
 import com.fasterxml.jackson.module.kotlin.readValue
-import com.irotsoma.cloudbackenc.cloudservice.CloudServiceException
-import com.irotsoma.cloudbackenc.cloudservice.CloudServiceExtensionConfig
-import com.irotsoma.cloudbackenc.cloudservice.CloudServiceExtensionNames
-import com.irotsoma.cloudbackenc.cloudservice.CloudServiceFactory
+import com.irotsoma.cloudbackenc.cloudservice.*
 import com.irotsoma.cloudbackenc.common.logger
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.context.ApplicationContext
@@ -33,7 +30,7 @@ open class CloudServiceRepository : ApplicationContextAware {
     //inject settings
     @Autowired lateinit var cloudServicesSettings: CloudServicesSettings
     var cloudServiceExtensions  = emptyMap<UUID,Class<CloudServiceFactory>>()
-    var cloudServiceNames = CloudServiceExtensionNames()
+    var cloudServiceNames = CloudServiceExtensionList()
 
     lateinit var _applicationContext : ConfigurableApplicationContext
     override fun setApplicationContext(applicationContext: ApplicationContext?) {
@@ -85,7 +82,7 @@ open class CloudServiceRepository : ApplicationContextAware {
 
 
                     factoryClasses = factoryClasses.plus(Pair(cloudServiceUUID,mapperData.packageName+"."+mapperData.factoryClass))
-                    cloudServiceNames.put(cloudServiceUUID,mapperData.serviceName)
+                    cloudServiceNames.add(CloudServiceExtension(cloudServiceUUID,mapperData.serviceName))
                     jarURLs = jarURLs.plus(jar.toURI().toURL())
                 }
             } catch (e: MissingKotlinParameterException) {
