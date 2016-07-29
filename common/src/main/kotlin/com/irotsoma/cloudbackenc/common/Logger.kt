@@ -1,5 +1,6 @@
 package com.irotsoma.cloudbackenc.common
 
+import org.apache.log4j.PropertyConfigurator
 import kotlin.reflect.companionObject
 
 /**
@@ -10,7 +11,6 @@ import kotlin.reflect.companionObject
  * @return instance of a log4j logger
  */
 fun <R : Any> R.logger(): Lazy<org.apache.log4j.Logger> {
-
     return lazy { org.apache.log4j.Logger.getLogger(unwrapCompanionClass(this.javaClass).name)}
 }
 
