@@ -11,6 +11,10 @@ import java.util.*
 
 /**
  * Created by irotsoma on 7/13/2016.
+ *
+ * Rest Controller that takes an instance of CloudServiceUser as JSON, calls the login method of the requested cloud
+ * service as identified in the URL by UUID, and returns an instance of CloudServiceUser with the userId and login
+ * token.
  */
 @RestController
 open class CloudServiceLoginController {
@@ -23,12 +27,12 @@ open class CloudServiceLoginController {
         val cloudServiceFactory : Class<CloudServiceFactory> = cloudServiceRepository.cloudServiceExtensions[UUID.fromString(uuid)] ?: throw InvalidPathVariableException("Invalid UUID.")
         val token : String
         try {
-            token = cloudServiceFactory.newInstance().authenticationService.login(user.userId, user.password ?: throw InvalidPathVariableException("Password is missing from request."))
+            token = cloudServiceFactory.newInstance().authenticationService.login(user.userId, user.password)
         } catch (e:Exception ){
             throw CloudServiceException(e.message)
         }
 
-        return ResponseEntity(CloudServiceUser(userId=user.userId, password = null, token = token),HttpStatus.OK)
+        return ResponseEntity(CloudServiceUser(userId=user.userId, password = "", token = token),HttpStatus.OK)
     }
 
 }

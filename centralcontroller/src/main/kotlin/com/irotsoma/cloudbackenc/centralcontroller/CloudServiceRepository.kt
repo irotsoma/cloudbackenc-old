@@ -10,10 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.context.ApplicationContext
 import org.springframework.context.ApplicationContextAware
 import org.springframework.context.ConfigurableApplicationContext
-import org.springframework.context.MessageSource
-import org.springframework.context.i18n.LocaleContextHolder
 import org.springframework.stereotype.Component
-import org.springframework.web.servlet.LocaleResolver
 import java.io.File
 import java.net.URL
 import java.net.URLClassLoader
@@ -23,6 +20,8 @@ import javax.annotation.PostConstruct
 
 /**
  * Created by irotsoma on 6/20/2016.
+ *
+ * Imports and stores information about installed Cloud Service Extensions
  */
 @Component
 open class CloudServiceRepository : ApplicationContextAware {
@@ -31,10 +30,9 @@ open class CloudServiceRepository : ApplicationContextAware {
     @Autowired lateinit var cloudServicesSettings: CloudServicesSettings
     var cloudServiceExtensions  = emptyMap<UUID,Class<CloudServiceFactory>>()
     var cloudServiceNames = CloudServiceExtensionList()
-
+    //application context must be set before
     lateinit var _applicationContext : ConfigurableApplicationContext
     override fun setApplicationContext(applicationContext: ApplicationContext?) {
-
         _applicationContext = applicationContext as ConfigurableApplicationContext? ?: throw CloudServiceException("Application context in CloudServiceRepository is null.")
     }
 
@@ -45,23 +43,8 @@ open class CloudServiceRepository : ApplicationContextAware {
             LOG.warn("Extensions directory is missing or unreadable. ${extensionsDirectory.absolutePath}")
             return
         }
-        /*  not needed anymore since we are packaging everything in a jar including the config file
-        //find all zip files and extract them to the appropriate directory
-        for (extFile in extensionsDirectory.listFiles{directory, name -> (!File(directory,name).isDirectory && name.endsWith(".zip"))} ?: arrayOf<File>()){
-            val extDir = File(extensionsDirectory, extFile.nameWithoutExtension)
-            //if directory already exists, remove it
-            if (extDir.exists() && extDir.isDirectory){
-                if (extDir.deleteRecursively()) {
-                    LOG.warn("Unable to remove existing extension directory: ${extDir.absolutePath}")
-                    return
-                }
-            }
-            Unzip().unZipAllToFolder(extFile,extDir)
-        }
-        */
         var jarURLs = emptyArray<URL>()
         var factoryClasses = emptyMap<UUID,String>()
-
 
         for (jar in extensionsDirectory.listFiles{directory, name -> (!File(directory,name).isDirectory && name.endsWith(".jar"))} ?: arrayOf<File>()) {
             try {
@@ -76,11 +59,8 @@ open class CloudServiceRepository : ApplicationContextAware {
                     val jsonValue = jarFile.getInputStream(jarFileEntry).reader().readText()
                     val mapper = ObjectMapper().registerModule(KotlinModule())
                     val mapperData: CloudServiceExtensionConfig = mapper.readValue(jsonValue)
-
                     //add values to maps for consumption later
                     val cloudServiceUUID = UUID.fromString(mapperData.serviceUUID)
-
-
                     factoryClasses = factoryClasses.plus(Pair(cloudServiceUUID,mapperData.packageName+"."+mapperData.factoryClass))
                     cloudServiceNames.add(CloudServiceExtension(cloudServiceUUID,mapperData.serviceName))
                     jarURLs = jarURLs.plus(jar.toURI().toURL())
@@ -91,7 +71,6 @@ open class CloudServiceRepository : ApplicationContextAware {
                 LOG.warn("Error processing cloud service extension file. This extension will be unavailable: ${jar.name}.   Error Message: ${e.message}")
             }
         }
-
         //create a class loader with all of the jars
         val classLoader = URLClassLoader(jarURLs,_applicationContext.classLoader)
         //cycle through all of the classes, make sure they inheritors CloudServiceFactory, and add them to the list

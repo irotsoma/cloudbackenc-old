@@ -56,7 +56,7 @@ project(':cloudservice'){
     apply plugin: 'maven-publish'
     dependencies {
         //tornadofx
-        compile 'no.tornado:tornadofx:1.5.2'
+        compile 'no.tornado:tornadofx:1.5.4'
     }
     publishing {
         publications {

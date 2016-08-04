@@ -13,8 +13,8 @@ import org.springframework.web.client.RestTemplate
 import tornadofx.*
 
 /**
- * Created by justin on 7/28/2016.
- */
+* Created by irotsoma on 7/28/2016.
+*/
 class CloudServicesUI() : Fragment() {
     companion object { val LOG by logger() }
     override val root: VBox by fxml()

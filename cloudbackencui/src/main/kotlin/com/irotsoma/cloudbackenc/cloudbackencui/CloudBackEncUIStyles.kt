@@ -1,10 +1,10 @@
 package com.irotsoma.cloudbackenc.cloudbackencui
 
-import tornadofx.*
+import tornadofx.Stylesheet
 
 /**
- * Created by justin on 7/19/2016.
- */
+* Created by irotsoma on 7/19/2016.
+*/
 class CloudBackEncUIStyles : Stylesheet(){
     companion object{
     }

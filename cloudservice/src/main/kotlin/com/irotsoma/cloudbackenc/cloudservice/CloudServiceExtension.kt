@@ -3,8 +3,8 @@ package com.irotsoma.cloudbackenc.cloudservice
 import java.util.*
 
 /**
- * Created by justin on 7/27/2016.
- */
+* Created by irotsoma on 7/27/2016.
+*/
 
 class CloudServiceExtension {
     var uuid: UUID = UUID.randomUUID()
