@@ -5,11 +5,13 @@ import org.junit.Test
 /**
  * Created by irotsoma on 8/3/2016.
  *
- *
+ * Unit test for unwrapping companion class for logger implementation and validating logger can be created.
  */
 class TestLogger {
     companion object{
+        @Suppress("JAVA_CLASS_ON_COMPANION")
         val testValueWithUnwrapper: String? = unwrapCompanionClass(this.javaClass).name
+        @Suppress("JAVA_CLASS_ON_COMPANION")
         val testValueWithoutUnwrapper: String? = this.javaClass.name
         val LOG by logger()
     }
