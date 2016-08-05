@@ -23,7 +23,7 @@ open class CloudServiceLoginController {
 
     @RequestMapping("cloudservice/login/{uuid}", method = arrayOf(RequestMethod.POST))
     fun login(@PathVariable(value="uuid")uuid: String, @RequestBody user: CloudServiceUser ) : ResponseEntity<CloudServiceUser> {
-
+        //TODO:  authentication
         val cloudServiceFactory : Class<CloudServiceFactory> = cloudServiceRepository.cloudServiceExtensions[UUID.fromString(uuid)] ?: throw InvalidPathVariableException("Invalid UUID.")
         val token : String
         try {
