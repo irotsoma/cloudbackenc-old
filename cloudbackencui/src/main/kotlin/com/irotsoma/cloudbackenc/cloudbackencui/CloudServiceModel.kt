@@ -8,6 +8,8 @@ import java.util.*
 
 /**
 * Created by irotsoma on 7/27/2016.
+ *
+ * View model class for binding CloudServiceExtension objects to UI components
 */
 class CloudServiceModel(var source: CloudServiceExtension) : ViewModel() {
     val uuid: Property<UUID> = bind { source.observable(CloudServiceExtension::uuid)  }

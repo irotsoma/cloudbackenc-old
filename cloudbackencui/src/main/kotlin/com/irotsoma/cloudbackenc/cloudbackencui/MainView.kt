@@ -10,6 +10,8 @@ import tornadofx.View
 
 /**
 * Created by irotsoma on 7/19/2016.
+ *
+ * Startup view
 */
 class MainView : View() {
     companion object { val LOG by logger() }

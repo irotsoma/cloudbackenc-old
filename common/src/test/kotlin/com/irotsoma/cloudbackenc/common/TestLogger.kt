@@ -5,9 +5,10 @@ import org.junit.Test
 /**
  * Created by irotsoma on 8/3/2016.
  *
- *
+ * Test for companion class unwrapper and logger
  */
 class TestLogger {
+    @Suppress("JAVA_CLASS_ON_COMPANION")
     companion object{
         val testValueWithUnwrapper: String? = unwrapCompanionClass(this.javaClass).name
         val testValueWithoutUnwrapper: String? = this.javaClass.name

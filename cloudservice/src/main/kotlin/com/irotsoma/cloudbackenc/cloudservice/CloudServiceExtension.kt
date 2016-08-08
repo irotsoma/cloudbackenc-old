@@ -4,6 +4,8 @@ import java.util.*
 
 /**
 * Created by irotsoma on 7/27/2016.
+ *
+ * Cloud Service Extension object
 */
 
 class CloudServiceExtension {

@@ -14,6 +14,8 @@ import tornadofx.*
 
 /**
 * Created by irotsoma on 7/28/2016.
+ *
+ * Cloud Services UI functionality
 */
 class CloudServicesUI() : Fragment() {
     companion object { val LOG by logger() }
