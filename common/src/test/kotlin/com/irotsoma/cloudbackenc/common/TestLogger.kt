@@ -5,7 +5,7 @@ import org.junit.Test
 /**
  * Created by irotsoma on 8/3/2016.
  *
- * Test for companion class unwrapper and logger
+ * Unit test for unwrapping companion class for logger implementation and validating logger can be created.
  */
 class TestLogger {
     @Suppress("JAVA_CLASS_ON_COMPANION")

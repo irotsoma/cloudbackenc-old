@@ -7,6 +7,7 @@ package com.irotsoma.cloudbackenc.cloudservice
 */
 
 interface CloudServiceAuthenticationService  {
-    fun login(username: String, password: String) : String
-    fun logoff() : String
+    fun isLoggedIn(user: CloudServiceUser): Boolean
+    fun login(user: CloudServiceUser) : String
+    fun logoff(user: CloudServiceUser) : String
 }

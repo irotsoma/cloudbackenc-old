@@ -27,12 +27,12 @@ open class CloudServiceLoginController {
         val cloudServiceFactory : Class<CloudServiceFactory> = cloudServiceRepository.cloudServiceExtensions[UUID.fromString(uuid)] ?: throw InvalidPathVariableException("Invalid UUID.")
         val token : String
         try {
-            token = cloudServiceFactory.newInstance().authenticationService.login(user.userId, user.password)
+            token = cloudServiceFactory.newInstance().authenticationService.login(user)
         } catch (e:Exception ){
             throw CloudServiceException(e.message)
         }
 
-        return ResponseEntity(CloudServiceUser(userId=user.userId, password = "", token = token),HttpStatus.OK)
+        return ResponseEntity(CloudServiceUser(userId=user.userId, password = "", serviceUUID = uuid, token = token),HttpStatus.OK)
     }
 
 }

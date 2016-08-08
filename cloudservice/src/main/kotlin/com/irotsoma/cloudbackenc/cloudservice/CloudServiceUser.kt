@@ -8,4 +8,4 @@ package com.irotsoma.cloudbackenc.cloudservice
  * @param password Password for the service (only for login, should be blank otherwise)
  * @param token Login token for the service
  */
-class CloudServiceUser(val userId: String, val password:String, val token:String)
+class CloudServiceUser(val userId: String, val password:String, val serviceUUID: String, val token:String)
