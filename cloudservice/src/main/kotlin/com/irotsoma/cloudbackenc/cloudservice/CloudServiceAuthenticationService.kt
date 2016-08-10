@@ -1,5 +1,7 @@
 package com.irotsoma.cloudbackenc.cloudservice
 
+import java.net.URL
+
 /**
 * Created by irotsoma on 6/19/2016.
  *
@@ -7,7 +9,10 @@ package com.irotsoma.cloudbackenc.cloudservice
 */
 
 interface CloudServiceAuthenticationService  {
+    var authorizationURL: URL?
+    var authorizationCallbackURL: URL?
+
     fun isLoggedIn(user: CloudServiceUser): Boolean
-    fun login(user: CloudServiceUser) : String
+    fun login(user: CloudServiceUser) : CloudServiceUser.STATE
     fun logoff(user: CloudServiceUser) : String
 }
