@@ -5,6 +5,7 @@ import javafx.scene.control.MenuItem
 import javafx.scene.layout.VBox
 import javafx.stage.Modality
 import javafx.stage.StageStyle
+import org.springframework.stereotype.Component
 import tornadofx.View
 
 
@@ -13,7 +14,8 @@ import tornadofx.View
  *
  * Startup view
 */
-class MainView : View() {
+@Component
+open class MainView : View() {
     companion object { val LOG by logger() }
     override val root: VBox by fxml()
     val menuFileSetupCloudService : MenuItem by fxid("menuFileSetupCloudService")

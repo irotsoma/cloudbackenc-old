@@ -11,8 +11,8 @@ import java.util.*
  *
  * View model class for binding CloudServiceExtension objects to UI components
 */
-class CloudServiceModel(var source: CloudServiceExtension) : ViewModel() {
-    val uuid: Property<UUID> = bind { source.observable(CloudServiceExtension::uuid)  }
-    val name: Property<String> = bind { source.observable(CloudServiceExtension::name) }
-    val token: Property<String> = bind { source.observable(CloudServiceExtension::token) }
+class CloudServiceModel(var service: CloudServiceExtension) : ViewModel() {
+    val uuid: Property<UUID> = bind { service.observable(CloudServiceExtension::uuid)  }
+    val name: Property<String> = bind { service.observable(CloudServiceExtension::name) }
+    val token: Property<String> = bind { service.observable(CloudServiceExtension::token) }
 }

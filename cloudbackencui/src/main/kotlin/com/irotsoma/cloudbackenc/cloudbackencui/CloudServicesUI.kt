@@ -3,11 +3,15 @@ package com.irotsoma.cloudbackenc.cloudbackencui
 import com.irotsoma.cloudbackenc.cloudservice.CloudServiceException
 import com.irotsoma.cloudbackenc.cloudservice.CloudServiceExtension
 import com.irotsoma.cloudbackenc.cloudservice.CloudServiceExtensionList
+import com.irotsoma.cloudbackenc.cloudservice.CloudServiceUser
 import com.irotsoma.cloudbackenc.common.logger
 import javafx.scene.control.Button
 import javafx.scene.control.Label
 import javafx.scene.control.TableView
 import javafx.scene.layout.VBox
+import org.springframework.http.HttpEntity
+import org.springframework.http.HttpHeaders
+import org.springframework.http.MediaType
 import org.springframework.web.client.ResourceAccessException
 import org.springframework.web.client.RestTemplate
 import tornadofx.*
@@ -26,6 +30,8 @@ class CloudServicesUI() : Fragment() {
     val cloudServicesRemoveButton : Button by fxid("cloudServicesRemoveButton")
     val availableCloudServicesTable : TableView<CloudServiceExtension> by fxid("availableCloudServicesTable")
     val activeCloudServicesTable : TableView<CloudServiceExtension> by fxid("activeCloudServicesTable")
+
+
 
     init {
         title = "CloudBackEnc"
@@ -49,7 +55,6 @@ class CloudServicesUI() : Fragment() {
                     CloudServiceExtensionList().observable() //this isn't used but is necessary to satisfy the compiler
                 }
             }
-
             //uuid column
             with(column("ID", CloudServiceExtension::uuid)){
                 prefWidth=230.0
@@ -59,10 +64,33 @@ class CloudServicesUI() : Fragment() {
                 prefWidth=270.0
             }
             //bind to list of services through model
-            availableCloudServicesModel.rebindOnChange(this){ selectedService -> source = selectedService ?: CloudServiceExtension() }
+            availableCloudServicesModel.rebindOnChange(this){ selectedService -> service = selectedService ?: CloudServiceExtension() }
             //only enable setup button if something is selected
             selectionModel.selectedItemProperty().onChange{
                 cloudServicesSetupButton.isDisable = it == null
+            }
+        }
+
+        with (cloudServicesSetupButton){
+            setOnAction {
+                LOG.debug("Attempting to set up cloud service ${availableCloudServicesModel.service.uuid.toString()}: ${availableCloudServicesModel.service.name}")
+                val protocol = if (applicationProperties["centralcontroller.useSSL"] == "true") "https" else "http"
+                //for testing use a hostname verifier that doesn't do any verification
+                if (applicationProperties["centralcontroller.disableCertificateValidation"] == "true"){
+                    trustSelfSignedSSL()
+                    LOG.warn("SSL is enabled, but certificate validation is disabled.")
+                }
+                val requestHeaders = HttpHeaders()
+                requestHeaders.add(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
+
+                //TODO: popup dialog for user id
+                //TODO: calculate callback address dynamically
+
+                val httpEntity = HttpEntity<CloudServiceUser>(CloudServiceUser("irotsoma","",availableCloudServicesModel.service.uuid.toString(), CloudServiceUser.STATE.INITIALIZED,"http://localhost:9998/cloudservicecallback"), requestHeaders)
+                LOG.debug("Connecting to central controller cloud service login service at $protocol://${applicationProperties["centralcontroller.host"]}:${applicationProperties["centralcontroller.port"]}/cloudservice/login/${availableCloudServicesModel.service.uuid.toString()}")
+                val callResponse = restTemplate.postForEntity("$protocol://${applicationProperties["centralcontroller.host"]}:${applicationProperties["centralcontroller.port"]}/cloudservice/login/${availableCloudServicesModel.service.uuid.toString()}", httpEntity, CloudServiceUser::class.java)
+                LOG.debug("Cloud service setup call response: ${callResponse.statusCode}: ${callResponse.statusCodeValue}")
+                LOG.debug("Cloud service user state: ${callResponse.body.state.name}")
             }
         }
     }

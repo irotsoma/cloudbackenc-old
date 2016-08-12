@@ -7,9 +7,9 @@ package com.irotsoma.cloudbackenc.cloudservice
  * @param userId User ID for the service
  * @param password Password for the service (only for login, should be blank otherwise)
  * @param state Current state of the login process for this user
- * @param authorizationURL Use only if state = AWAITING_AUTHORIZATION.  A browser with this URL should be opened for the user to authorize the service.
+ * @param authorizationCallbackURL Use only if state = AWAITING_AUTHORIZATION.  A browser with this URL should be opened for the user to authorize the service.
  */
-class CloudServiceUser(val userId: String, val password:String, val serviceUUID: String, val state: STATE , val authorizationURL: String){
+class CloudServiceUser(val userId: String, val password:String, val serviceUUID: String, val state: STATE , val authorizationCallbackURL: String){
     enum class STATE{
         INITIALIZED,
         CANCELLED,

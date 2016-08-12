@@ -10,9 +10,9 @@ import java.net.URL
 
 interface CloudServiceAuthenticationService  {
     var authorizationURL: URL?
-    var authorizationCallbackURL: URL?
+    //var authorizationCallbackURL: URL?
 
     fun isLoggedIn(user: CloudServiceUser): Boolean
-    fun login(user: CloudServiceUser) : CloudServiceUser.STATE
+    fun login(user: CloudServiceUser) : CloudServiceUser
     fun logoff(user: CloudServiceUser) : String
 }

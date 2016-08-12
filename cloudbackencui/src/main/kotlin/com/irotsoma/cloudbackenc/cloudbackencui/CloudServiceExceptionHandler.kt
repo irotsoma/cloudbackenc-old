@@ -1,4 +1,4 @@
-package com.irotsoma.cloudbackenc.centralcontroller
+package com.irotsoma.cloudbackenc.cloudbackencui
 
 import com.irotsoma.cloudbackenc.cloudservice.CloudServiceException
 import org.springframework.http.HttpStatus

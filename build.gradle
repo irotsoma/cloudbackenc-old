@@ -131,14 +131,21 @@ project(':centralcontroller'){
     }
 }
 project(':cloudbackencui'){
+    apply plugin: 'spring-boot'
     dependencies {
         //spring
-        compile "org.springframework:spring-web:$springVersion"
+        compile "org.springframework.boot:spring-boot-starter-web"
+        compile "org.springframework.boot:spring-boot-starter-logging"
         //jackson
-        compile "com.fasterxml.jackson.core:jackson-databind:$jacksonVersion"
+        //jackson
+        compile "com.fasterxml.jackson.module:jackson-module-kotlin"
+        compile "com.fasterxml.jackson.core:jackson-databind"
+        compile "com.fasterxml.jackson.core:jackson-annotations"
         //cloud service interfaces
         compile project(':cloudservice')
         compile project(':common')
+        //test
+        testCompile "org.springframework.boot:spring-boot-starter-test"
     }
 
 }

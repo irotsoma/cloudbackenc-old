@@ -7,6 +7,8 @@ import java.util.*
  *
  * Global properties object for the application.properties file
  */
+
+//TODO: now that UI app is using spring, use that to load properties.
 val applicationProperties = Properties().apply {
      load (ClassLoader.getSystemClassLoader().getResourceAsStream("application.properties"))
 }
