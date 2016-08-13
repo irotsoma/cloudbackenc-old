@@ -1,9 +1,22 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Hyperlink?>
+<?import javafx.scene.control.Label?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.web.WebView?>
-<VBox fx:id="webViewParent" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/8.0.65" xmlns:fx="http://javafx.com/fxml/1">
+<VBox fx:id="webViewParent" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/8.0.60" xmlns:fx="http://javafx.com/fxml/1">
    <children>
+      <Label fx:id="cloudServiceWebViewLabel" contentDisplay="TEXT_ONLY" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="800.0" text="Use the web page below to log into your cloud service provider.  If you don't trust this window, copy or click on the link below to open in your browser. " wrapText="true" VBox.vgrow="ALWAYS">
+         <padding>
+            <Insets left="10.0" right="10.0" />
+         </padding>
+      </Label>
+      <Hyperlink fx:id="cloudServiceWebViewHyperlink">
+         <padding>
+            <Insets left="7.0" right="7.0" />
+         </padding>
+      </Hyperlink>
       <WebView fx:id="cloudServiceWebView" VBox.vgrow="ALWAYS" />
    </children>
 </VBox>
