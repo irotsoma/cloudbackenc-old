@@ -83,14 +83,16 @@ class CloudServicesUI() : Fragment() {
                 val requestHeaders = HttpHeaders()
                 requestHeaders.add(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
 
-                //TODO: popup dialog for user id
+                //TODO: add real user IDs instead of defaulting to irotsomadev
                 //TODO: calculate callback address dynamically
 
-                val httpEntity = HttpEntity<CloudServiceUser>(CloudServiceUser("irotsoma","",availableCloudServicesModel.service.uuid.toString(), CloudServiceUser.STATE.INITIALIZED,"http://localhost:9998/cloudservicecallback"), requestHeaders)
+                val httpEntity = HttpEntity<CloudServiceUser>(CloudServiceUser("irotsomadev","",availableCloudServicesModel.service.uuid.toString(), CloudServiceUser.STATE.INITIALIZED,"http://localhost:9998/cloudservicecallback"), requestHeaders)
                 LOG.debug("Connecting to central controller cloud service login service at $protocol://${applicationProperties["centralcontroller.host"]}:${applicationProperties["centralcontroller.port"]}/cloudservice/login/${availableCloudServicesModel.service.uuid.toString()}")
-                val callResponse = restTemplate.postForEntity("$protocol://${applicationProperties["centralcontroller.host"]}:${applicationProperties["centralcontroller.port"]}/cloudservice/login/${availableCloudServicesModel.service.uuid.toString()}", httpEntity, CloudServiceUser::class.java)
-                LOG.debug("Cloud service setup call response: ${callResponse.statusCode}: ${callResponse.statusCodeValue}")
-                LOG.debug("Cloud service user state: ${callResponse.body.state.name}")
+                runAsync {
+                    val callResponse = restTemplate.postForEntity("$protocol://${applicationProperties["centralcontroller.host"]}:${applicationProperties["centralcontroller.port"]}/cloudservice/login/${availableCloudServicesModel.service.uuid.toString()}", httpEntity, CloudServiceUser::class.java)
+                    LOG.debug("Cloud service setup call response: ${callResponse.statusCode}: ${callResponse.statusCodeValue}")
+                    LOG.debug("Cloud service user state: ${callResponse.body.state.name}")
+                }
             }
         }
     }

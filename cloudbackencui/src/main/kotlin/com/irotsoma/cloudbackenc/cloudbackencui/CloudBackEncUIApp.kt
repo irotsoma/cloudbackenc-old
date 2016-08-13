@@ -26,7 +26,6 @@ open class CloudBackEncUIApp : App(MainView::class, CloudBackEncUIStyles::class)
         private var savedArgs: Array<String> = emptyArray()
         fun launchApp(args: Array<String>){
             savedArgs = args
-            @Suppress("JAVA_CLASS_ON_COMPANION")
             launch(CloudBackEncUIApp::class.java, *args)
         }
     }
