@@ -1,0 +1,43 @@
+databaseChangeLog:
+  - changeSet:
+      id: 1
+      author: irotsoma
+      changes:
+        - createTable:
+            tableName: user_account
+            columns:
+              - column:
+                  name: id
+                  type: int
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: username
+                  type: nvarchar(255)
+                  constraints:
+                    unique: true
+                    nullable: false
+              - column:
+                  name: password
+                  type: nvarchar(255)
+              - column:
+                  name: role
+                  type: nvarchar(255)
+  - changeSet:
+      id: 2
+      author: irotsoma
+      changes:
+        - insert:
+            tableName: user_account
+            columns:
+              - column:
+                  name: username
+                  value: test
+              - column:
+                  name: password
+                  value: \$2a\$10\$7C3uEo.kCa5Qo7c/dNDIAeTJyablQ6sznUgzY37sBc.iGsspSpVPK
+              - column:
+                  name: role
+                  value: ROLE_USER_TEST

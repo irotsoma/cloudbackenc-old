@@ -76,7 +76,7 @@ class CloudServicesUI() : Fragment() {
                 LOG.debug("Attempting to set up cloud service ${availableCloudServicesModel.service.uuid.toString()}: ${availableCloudServicesModel.service.name}")
                 val protocol = if (applicationProperties["centralcontroller.useSSL"] == "true") "https" else "http"
                 //for testing use a hostname verifier that doesn't do any verification
-                if (applicationProperties["centralcontroller.disableCertificateValidation"] == "true"){
+                if ((applicationProperties["centralcontroller.useSSL"] == "true") && (applicationProperties["centralcontroller.disableCertificateValidation"] == "true")){
                     trustSelfSignedSSL()
                     LOG.warn("SSL is enabled, but certificate validation is disabled.")
                 }

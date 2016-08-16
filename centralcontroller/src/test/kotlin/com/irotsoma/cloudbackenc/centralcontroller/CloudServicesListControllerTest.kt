@@ -5,7 +5,6 @@ import org.hamcrest.Matchers.containsString
 import org.junit.Assert.assertThat
 import org.junit.Test
 import org.junit.runner.RunWith
-import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.beans.factory.annotation.Value
 import org.springframework.boot.context.embedded.LocalServerPort
 import org.springframework.boot.test.context.SpringBootTest
@@ -30,16 +29,18 @@ open class CloudServicesListControllerTest {
     @Value("\${server.ssl.key-store}")
     private var useSSL: String? = null
     var protocol: String = "http"
-    @Autowired
-    var restTemplate = TestRestTemplate(TestRestTemplate.HttpClientOption.SSL)
+
+    lateinit var restTemplate: TestRestTemplate
 
     //determine if we're using ssl and if so trust self signed certificates for testing.
     fun configureProtocol(){
         if (useSSL!=null && useSSL!="") {
             protocol= "https"
             trustSelfSignedSSL()
+            restTemplate = TestRestTemplate("test", "insecurepassword", TestRestTemplate.HttpClientOption.SSL)
         } else {
             protocol = "http"
+            restTemplate = TestRestTemplate("test", "insecurepassword")
         }
     }
     //test that listing cloud services returns an HttpStatus.OK
