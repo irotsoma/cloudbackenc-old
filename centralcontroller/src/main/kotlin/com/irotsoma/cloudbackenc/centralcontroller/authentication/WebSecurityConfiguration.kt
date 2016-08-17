@@ -1,4 +1,4 @@
-package com.irotsoma.cloudbackenc.centralcontroller
+package com.irotsoma.cloudbackenc.centralcontroller.authentication
 
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.context.annotation.Configuration
@@ -9,6 +9,8 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 
 /**
  * Created by irotsoma on 8/15/2016.
+ *
+ * Security configuration for REST controllers
  */
 
 @Configuration

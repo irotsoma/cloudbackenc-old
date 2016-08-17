@@ -1,4 +1,4 @@
-package com.irotsoma.cloudbackenc.centralcontroller
+package com.irotsoma.cloudbackenc.centralcontroller.controllers
 
 import com.fasterxml.jackson.databind.ObjectMapper
 import com.fasterxml.jackson.module.kotlin.KotlinModule

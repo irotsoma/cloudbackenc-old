@@ -1,4 +1,4 @@
-package com.irotsoma.cloudbackenc.centralcontroller
+package com.irotsoma.cloudbackenc.centralcontroller.authentication
 
 import com.fasterxml.jackson.annotation.JsonIgnore
 
@@ -11,6 +11,8 @@ import javax.persistence.Id
 
 /**
  * Created by irotsoma on 8/15/2016.
+ *
+ * User Account Object
  */
 @Entity
 class UserAccount() {

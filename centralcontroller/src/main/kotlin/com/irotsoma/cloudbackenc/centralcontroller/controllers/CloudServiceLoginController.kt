@@ -1,11 +1,12 @@
-package com.irotsoma.cloudbackenc.centralcontroller
+package com.irotsoma.cloudbackenc.centralcontroller.controllers
 
+import com.irotsoma.cloudbackenc.centralcontroller.cloudservices.CloudServiceRepository
 import com.irotsoma.cloudbackenc.cloudservice.CloudServiceException
 import com.irotsoma.cloudbackenc.cloudservice.CloudServiceFactory
 import com.irotsoma.cloudbackenc.cloudservice.CloudServiceUser
 import com.irotsoma.cloudbackenc.common.logger
 import org.springframework.beans.factory.annotation.Autowired
-import org.springframework.http.HttpHeaders
+import org.springframework.context.MessageSource
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
@@ -19,6 +20,9 @@ import java.util.*
  * Rest Controller that takes an instance of CloudServiceUser as JSON, calls the login method of the requested cloud
  * service as identified in the URL by UUID, and returns an instance of CloudServiceUser with the userId and login
  * token.
+ *
+ * Use POST method to /cloudservice/login/{uuid} where {uuid} is the uuid returned from the cloud service list
+ * controller for the extension.
  */
 @RestController
 open class CloudServiceLoginController {
@@ -26,19 +30,13 @@ open class CloudServiceLoginController {
     @Autowired
     private lateinit var cloudServiceRepository: CloudServiceRepository
 
+    @Autowired
+    lateinit var messageSource: MessageSource
+
     @RequestMapping("cloudservice/login/{uuid}", method = arrayOf(RequestMethod.POST))
-    fun login(@PathVariable(value="uuid")uuid: String, @RequestBody user: CloudServiceUser ) : ResponseEntity<CloudServiceUser> {
-        //TODO:  authentication
+    fun login(@PathVariable(value="uuid")uuid: UUID, @RequestBody user: CloudServiceUser, @RequestParam(value="locale") locale: Locale) : ResponseEntity<CloudServiceUser> {
 
-        //make sure the UUID is well formed before continuing.  Send 400 with warning message in the header otherwise.
-        try{UUID.fromString(uuid)
-        } catch(ex: IllegalArgumentException){
-            val warningHeader: HttpHeaders = HttpHeaders()
-            warningHeader.add(HttpHeaders.WARNING,"UUID in url is invalid.")
-            return ResponseEntity(warningHeader, HttpStatus.BAD_REQUEST)
-        }
-
-        val cloudServiceFactory : Class<CloudServiceFactory> = cloudServiceRepository.cloudServiceExtensions[UUID.fromString(uuid)] ?: throw InvalidPathVariableException("Invalid UUID.")
+        val cloudServiceFactory : Class<CloudServiceFactory> = cloudServiceRepository.cloudServiceExtensions[uuid] ?: throw InvalidPathVariableException("Invalid UUID.")
         val response : CloudServiceUser
         val authenticationService = cloudServiceFactory.newInstance().authenticationService
 
