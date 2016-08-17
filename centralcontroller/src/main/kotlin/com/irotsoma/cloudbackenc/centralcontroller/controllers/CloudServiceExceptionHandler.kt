@@ -45,14 +45,12 @@ open class CloudServiceExceptionHandler : ResponseEntityExceptionHandler() {
 
     override fun handleHttpMessageNotReadable(ex: HttpMessageNotReadableException?, headers: HttpHeaders?, status: HttpStatus?, request: WebRequest?): ResponseEntity<Any> {
         val responseHeaders = headers ?: HttpHeaders()
-        responseHeaders.add(HttpHeaders.WARNING, "Request was not properly formatted.")
+        responseHeaders.add(HttpHeaders.WARNING, messageSource.getMessage("centralcontroller.cloudservices.request.format.invalid", null, LocaleContextHolder.getLocale()))
         return super.handleHttpMessageNotReadable(ex, responseHeaders, status, request)
     }
 
     override fun handleTypeMismatch(ex: TypeMismatchException?, headers: HttpHeaders?, status: HttpStatus?, request: WebRequest?): ResponseEntity<Any> {
         val responseHeaders = headers ?: HttpHeaders()
-        //TODO: figure out why this isn't working
-        val test = LocaleContextHolder.getLocale()
         if (ex?.requiredType == UUID::class.java){
             responseHeaders.add(HttpHeaders.WARNING, messageSource.getMessage("centralcontroller.cloudservices.uuid.invalid.format", null, LocaleContextHolder.getLocale()))
         }
