@@ -1,10 +1,11 @@
 buildscript {
     ext.springBootVersion = '1.4.0.RELEASE'
-    ext.springVersion = '4.3.1.RELEASE' //not used in spring boot application as it is determined automatically
+    ext.tornadofxVersion = '1.5.4'
+    ext.junitVersion = '4.12'
+    ext.log4jVersion = '2.6.2'
     ext.kotlin_version = '1.0.3'
     ext.kotlinVersion = '1.0.3'
-    ext.jacksonVersion = '2.8.0' //not used in spring boot application as it is determined automatically
-    ext.log4jVersion = '2.6.2'
+
     ext.localMavenRepository = "$rootDir/../maven-repository"
     repositories {
         mavenCentral()
@@ -28,7 +29,7 @@ subprojects {
         mavenCentral()
     }
     dependencies {
-        testCompile group: 'junit', name: 'junit', version: '4.12'
+        testCompile "junit:junit:$junitVersion"
     }
 }
 
@@ -56,10 +57,22 @@ project(':common'){
 
 project(':cloudservice'){
     apply plugin: 'maven-publish'
-    dependencies {
-        //tornadofx
-        compile 'no.tornado:tornadofx:1.5.4'
+    publishing {
+        publications {
+            mavenJava(MavenPublication) {
+                from components.java
+            }
+        }
+        repositories {
+            maven {
+                url localMavenRepository
+            }
+        }
     }
+}
+
+project(':encryptionservice'){
+    apply plugin: 'maven-publish'
     publishing {
         publications {
             mavenJava(MavenPublication) {
@@ -80,29 +93,30 @@ project(':centralcontroller'){
     apply plugin: 'org.liquibase.gradle'
 
     dependencies {
-        //spring deps
-        compile "org.springframework.boot:spring-boot-starter-actuator"
-        compile "org.springframework.boot:spring-boot-starter-web"
-        compile "org.springframework.boot:spring-boot-starter-logging"
-        compile "org.springframework.boot:spring-boot-starter-security"
-        compile "org.springframework.boot:spring-boot-starter-data-jpa"
-        optional "org.springframework.boot:spring-boot-devtools"
-        optional "org.springframework.boot:spring-boot-configuration-processor"
+        //spring boot
+        compile 'org.springframework.boot:spring-boot-starter-actuator'
+        compile 'org.springframework.boot:spring-boot-starter-web'
+        compile 'org.springframework.boot:spring-boot-starter-logging'
+        compile 'org.springframework.boot:spring-boot-starter-security'
+        compile 'org.springframework.boot:spring-boot-starter-data-jpa'
+        optional 'org.springframework.boot:spring-boot-devtools'
+        optional 'org.springframework.boot:spring-boot-configuration-processor'
+        testCompile 'org.springframework.boot:spring-boot-starter-test'
         //cloud service interfaces
         compile project(':cloudservice')
+        //encryption service interfaces
+        compile project(':encryptionservice')
+        //common classes
         compile project(':common')
         //jackson
-        compile "com.fasterxml.jackson.module:jackson-module-kotlin"
-        compile "com.fasterxml.jackson.core:jackson-core"
-        compile "com.fasterxml.jackson.core:jackson-databind"
-        compile "com.fasterxml.jackson.core:jackson-annotations"
+        compile 'com.fasterxml.jackson.module:jackson-module-kotlin'
+        compile 'com.fasterxml.jackson.core:jackson-core'
+        compile 'com.fasterxml.jackson.core:jackson-databind'
+        compile 'com.fasterxml.jackson.core:jackson-annotations'
         //h2
-        compile "com.h2database:h2"
+        compile 'com.h2database:h2'
         //liquibase
-        compile "org.liquibase:liquibase-core"
-        //testing deps
-        testCompile "org.springframework.boot:spring-boot-starter-test"
-
+        compile 'org.liquibase:liquibase-core'
     }
     compileJava.dependsOn(processResources)
 
@@ -113,9 +127,6 @@ project(':centralcontroller'){
     springBoot {
         executable = true
     }
-
-
-
 
     apply plugin: 'maven-publish'
     publishing {
@@ -135,17 +146,20 @@ project(':cloudbackencui'){
     apply plugin: 'spring-boot'
     dependencies {
         //spring
-        compile "org.springframework.boot:spring-boot-starter-web"
-        compile "org.springframework.boot:spring-boot-starter-logging"
+        compile 'org.springframework.boot:spring-boot-starter-web'
+        compile 'org.springframework.boot:spring-boot-starter-logging'
         //jackson
-        compile "com.fasterxml.jackson.module:jackson-module-kotlin"
-        compile "com.fasterxml.jackson.core:jackson-databind"
-        compile "com.fasterxml.jackson.core:jackson-annotations"
+        compile 'com.fasterxml.jackson.module:jackson-module-kotlin'
+        compile 'com.fasterxml.jackson.core:jackson-databind'
+        compile 'com.fasterxml.jackson.core:jackson-annotations'
         //cloud service interfaces
         compile project(':cloudservice')
         compile project(':common')
+        //tornadofx
+        compile "no.tornado:tornadofx:$tornadofxVersion"
         //test
-        testCompile "org.springframework.boot:spring-boot-starter-test"
+        testCompile 'org.springframework.boot:spring-boot-starter-test'
     }
 
 }
+

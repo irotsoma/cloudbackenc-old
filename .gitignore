@@ -4,4 +4,6 @@ build
 *.iml
 extensions
 logs
+/cloudservice-googledrive
+/encryptionservice-bouncycastle
 centralcontroller/config/centralcontroller.*.db

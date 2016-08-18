@@ -3,3 +3,5 @@ include 'cloudservice'
 include 'common'
 include 'centralcontroller'
 include 'cloudbackencui'
+include 'encryptionservice'
+
