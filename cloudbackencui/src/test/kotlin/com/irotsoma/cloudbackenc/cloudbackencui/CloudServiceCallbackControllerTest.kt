@@ -22,7 +22,7 @@ class CloudServiceCallbackControllerTest {
     private var port: Int = 0
     //TODO: add SSL test once implemented in controller
     var protocol: String = "http"
-    var restTemplate = TestRestTemplate()
+    val restTemplate = TestRestTemplate()
     val testUUID = "f8bed9c2-c68b-4ab4-a66a-f16a6b46b768"
 
     @Test
@@ -32,6 +32,4 @@ class CloudServiceCallbackControllerTest {
         val httpEntity = HttpEntity<CloudServiceCallbackURL>(CloudServiceCallbackURL(testUUID, "https://irotsoma.com"), requestHeaders)
         val returnValue = restTemplate.postForEntity("$protocol://localhost:$port/cloudservicecallback", httpEntity, Map::class.java)
         assert(returnValue.statusCode == HttpStatus.ACCEPTED)
-
-
 }}

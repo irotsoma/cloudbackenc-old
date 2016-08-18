@@ -5,6 +5,7 @@ import javafx.scene.control.MenuItem
 import javafx.scene.layout.VBox
 import javafx.stage.Modality
 import javafx.stage.StageStyle
+import org.springframework.context.annotation.Lazy
 import org.springframework.stereotype.Component
 import tornadofx.View
 
@@ -13,7 +14,9 @@ import tornadofx.View
 * Created by irotsoma on 7/19/2016.
  *
  * Startup view
+ * @Lazy to allow for tests to run on the Spring services
 */
+@Lazy
 @Component
 open class MainView : View() {
     companion object { val LOG by logger() }
