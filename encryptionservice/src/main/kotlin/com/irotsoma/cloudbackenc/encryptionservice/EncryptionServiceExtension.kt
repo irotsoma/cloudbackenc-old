@@ -4,6 +4,8 @@ import java.util.*
 
 /**
  * Created by irotsoma on 8/18/2016.
+ *
+ * Encryption Service Extension Object
  */
 class EncryptionServiceExtension {
     var uuid: UUID = UUID.randomUUID()

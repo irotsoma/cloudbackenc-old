@@ -6,4 +6,5 @@ extensions
 logs
 /cloudservice-googledrive
 /encryptionservice-bouncycastle
+/encryptionservice-apachecommonscrypto
 centralcontroller/config/centralcontroller.*.db
