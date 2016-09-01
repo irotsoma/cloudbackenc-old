@@ -1,3 +1,20 @@
+/*
+ * Copyright (C) 2016  Irotsoma, LLC
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Lesser General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>
+ */
+
 buildscript {
     ext.springBootVersion = '1.4.0.RELEASE'
     ext.tornadofxVersion = '1.5.4'
@@ -19,7 +36,9 @@ buildscript {
         classpath "org.liquibase:liquibase-gradle-plugin:1.2.1"    }
 
 }
-
+plugins {
+    id "com.github.hierynomus.license" version "0.13.1"
+}
 subprojects {
     group 'com.irotsoma.cloudbackenc'
     version '0.1-SNAPSHOT'
@@ -38,6 +57,22 @@ subprojects {
     sourceSets {
         main.java.srcDirs += 'src/main/kotlin'
     }
+
+    //this section downloads some reports regarding the licenses of various dependencies and includes them in the
+    // META-INF/licenses folder
+    apply plugin: 'com.github.hierynomus.license'
+    license {
+        ignoreFailures true
+        mapping ('kt', 'JAVADOC_STYLE')
+        excludes(['**/*.json', '**/*.properties', '**/LICENSE', '**/*license*.html', '**/*license*.xml'])
+    }
+    task copyLicenseReports(type: Copy){
+        from "$buildDir/reports/license/"
+        into "$buildDir/license-reports/META-INF/licenses"
+    }
+    assemble.dependsOn 'downloadLicenses'
+    assemble.dependsOn 'copyLicenseReports'
+    copyLicenseReports.mustRunAfter 'downloadLicenses'
 }
 
 project(':common'){
