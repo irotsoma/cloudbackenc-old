@@ -15,18 +15,16 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>
  */
 
-package com.irotsoma.cloudbackenc.cloudservice
-
-import java.io.File
-import java.io.InputStream
+package com.irotsoma.cloudbackenc.common.cloudservice
 
 /**
  * Created by irotsoma on 6/20/2016.
  *
- * Interface for Cloud Service IO operations
+ * Cloud Service Factory interface
  */
-interface CloudServiceFileIOService {
-    fun upload(filePath: File) : Boolean
-    fun list(dirPath: File) : List<File>
-    fun download(filePath: File) : InputStream
+interface CloudServiceFactory {
+
+     val authenticationService: CloudServiceAuthenticationService
+     val cloudServiceFileIOService: CloudServiceFileIOService
 }
+

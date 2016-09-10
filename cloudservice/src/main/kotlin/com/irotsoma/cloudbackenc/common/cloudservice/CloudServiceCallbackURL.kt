@@ -15,11 +15,9 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>
  */
 
-package com.irotsoma.cloudbackenc.encryptionservice
+package com.irotsoma.cloudbackenc.common.cloudservice
 
 /**
- * Created by irotsoma on 8/31/2016.
+ * Created by justin on 8/12/16.
  */
-enum class EncryptionServicePBKDFAlgorithms(val value: String) {
-    PBKDF2WithHmacSHA1("PBKDF2WithHmacSHA1")
-}
+class CloudServiceCallbackURL(val uuid: String, val authorizationURL: String)

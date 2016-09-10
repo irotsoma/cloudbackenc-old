@@ -15,16 +15,21 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>
  */
 
-package com.irotsoma.cloudbackenc.cloudservice
+package com.irotsoma.cloudbackenc.common.cloudservice
+
+import java.net.URL
 
 /**
- * Created by irotsoma on 6/20/2016.
+* Created by irotsoma on 6/19/2016.
  *
- * Cloud Service Factory interface
- */
-interface CloudServiceFactory {
+ * Cloud Service Authentication interface
+*/
 
-     val authenticationService: CloudServiceAuthenticationService
-     val cloudServiceFileIOService: CloudServiceFileIOService
+interface CloudServiceAuthenticationService  {
+    var authorizationURL: URL?
+    //var authorizationCallbackURL: URL?
+
+    fun isLoggedIn(user: CloudServiceUser): Boolean
+    fun login(user: CloudServiceUser) : CloudServiceUser
+    fun logoff(user: CloudServiceUser) : String
 }
-

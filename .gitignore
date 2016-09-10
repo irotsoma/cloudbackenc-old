@@ -4,7 +4,10 @@ build
 *.iml
 extensions
 logs
+/secret
 /cloudservice-googledrive
 /encryptionservice-bouncycastle
 /encryptionservice-apachecommonscrypto
-centralcontroller/config/centralcontroller.*.db
+/centralcontroller/config/centralcontroller.mv.db
+/centralcontroller/config/centralcontroller.trace.db
+/gradle.properties

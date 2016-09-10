@@ -15,21 +15,15 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>
  */
 
-package com.irotsoma.cloudbackenc.cloudbackencui
-
-import com.irotsoma.cloudbackenc.common.cloudservice.CloudServiceExtension
-import javafx.beans.property.Property
-import tornadofx.ViewModel
-import tornadofx.observable
-import java.util.*
+package com.irotsoma.cloudbackenc.common.encryptionservice
 
 /**
-* Created by irotsoma on 7/27/2016.
+ * Created by irotsoma on 8/18/2016.
  *
- * View model class for binding CloudServiceExtension objects to UI components
-*/
-class CloudServiceModel(var service: CloudServiceExtension) : ViewModel() {
-    val uuid: Property<UUID> = bind { service.observable(CloudServiceExtension::uuid)  }
-    val name: Property<String> = bind { service.observable(CloudServiceExtension::name) }
-    val token: Property<String> = bind { service.observable(CloudServiceExtension::token) }
+ * Custom Exception class for encryption extensions
+ */
+class EncryptionServiceException :Exception {
+    constructor(message: String?) : super(message)
+    constructor(message: String?, cause: Throwable) : super(message, cause)
+    constructor(cause: Throwable) : super(cause)
 }

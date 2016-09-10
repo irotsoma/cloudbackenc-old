@@ -17,7 +17,7 @@
 
 package com.irotsoma.cloudbackenc.centralcontroller
 
-import com.irotsoma.cloudbackenc.cloudservice.CloudServiceUser
+import com.irotsoma.cloudbackenc.common.cloudservice.CloudServiceUser
 import org.hamcrest.Matchers.containsString
 import org.junit.Assert.assertThat
 import org.junit.Test
@@ -76,7 +76,7 @@ open class CloudServicesListControllerTest {
         configureProtocol()
         val requestHeaders = HttpHeaders()
         requestHeaders.add(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
-        val httpEntity = HttpEntity<CloudServiceUser>(CloudServiceUser("test","","1d3cb21f-5b88-4b3c-8cb8-1afddf1ff375",CloudServiceUser.STATE.INITIALIZED,""), requestHeaders)
+        val httpEntity = HttpEntity<CloudServiceUser>(CloudServiceUser("test","","1d3cb21f-5b88-4b3c-8cb8-1afddf1ff375", CloudServiceUser.STATE.INITIALIZED,""), requestHeaders)
         // TODO: Fix test:  not seeing able to parse response to kotlin class CloudServiceUser.  Using map instead.  Kotlin class mapper is configured outside of test by ObjectMapperConfiguration, but doesn't seem to work here.
         val returnValue = restTemplate.postForEntity("$protocol://localhost:$port/cloudservice/login/1d3cb21f-5b88-4b3c-8cb8-1afddf1ff375", httpEntity, Map::class.java)
         //assertThat(returnValue.body, `is`(CloudServiceUser("test", "", "1d3cb21f-5b88-4b3c-8cb8-1afddf1ff375", "test login")))

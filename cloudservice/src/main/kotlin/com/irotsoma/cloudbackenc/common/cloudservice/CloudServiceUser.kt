@@ -15,7 +15,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>
  */
 
-package com.irotsoma.cloudbackenc.cloudservice
+package com.irotsoma.cloudbackenc.common.cloudservice
 
 /**
  * Created by irotsoma on 7/13/2016.
@@ -26,7 +26,7 @@ package com.irotsoma.cloudbackenc.cloudservice
  * @param state Current state of the login process for this user
  * @param authorizationCallbackURL Use only if state = AWAITING_AUTHORIZATION.  A browser with this URL should be opened for the user to authorize the service.
  */
-class CloudServiceUser(val userId: String, val password:String, val serviceUUID: String, val state: STATE , val authorizationCallbackURL: String){
+class CloudServiceUser(val userId: String, val password:String, val serviceUUID: String, val state: STATE, val authorizationCallbackURL: String){
     enum class STATE{
         INITIALIZED,
         CANCELLED,

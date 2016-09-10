@@ -17,7 +17,7 @@
 
 package com.irotsoma.cloudbackenc.centralcontroller.controllers
 
-import com.irotsoma.cloudbackenc.cloudservice.CloudServiceException
+import com.irotsoma.cloudbackenc.common.cloudservice.CloudServiceException
 import org.springframework.beans.TypeMismatchException
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.context.MessageSource

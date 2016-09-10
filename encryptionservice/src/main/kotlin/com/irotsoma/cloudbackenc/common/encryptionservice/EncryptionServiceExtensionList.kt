@@ -15,21 +15,13 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>
  */
 
-package com.irotsoma.cloudbackenc.encryptionservice
+package com.irotsoma.cloudbackenc.common.encryptionservice
 
 import java.util.*
 
 /**
  * Created by irotsoma on 8/18/2016.
  *
- * Encryption Service Extension Object
+ * Object for passing a list of Encryption Service Extensions through an API
  */
-class EncryptionServiceExtension {
-    var uuid: UUID = UUID.randomUUID()
-    var name: String = ""
-    constructor(){}
-    constructor(uuid: UUID, name: String){
-        this.uuid = uuid
-        this.name = name
-    }
-}
+class EncryptionServiceExtensionList : ArrayList<EncryptionServiceExtension>()

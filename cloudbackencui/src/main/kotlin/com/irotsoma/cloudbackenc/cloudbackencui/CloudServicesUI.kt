@@ -17,10 +17,10 @@
 
 package com.irotsoma.cloudbackenc.cloudbackencui
 
-import com.irotsoma.cloudbackenc.cloudservice.CloudServiceException
-import com.irotsoma.cloudbackenc.cloudservice.CloudServiceExtension
-import com.irotsoma.cloudbackenc.cloudservice.CloudServiceExtensionList
-import com.irotsoma.cloudbackenc.cloudservice.CloudServiceUser
+import com.irotsoma.cloudbackenc.common.cloudservice.CloudServiceException
+import com.irotsoma.cloudbackenc.common.cloudservice.CloudServiceExtension
+import com.irotsoma.cloudbackenc.common.cloudservice.CloudServiceExtensionList
+import com.irotsoma.cloudbackenc.common.cloudservice.CloudServiceUser
 import com.irotsoma.cloudbackenc.common.logger
 import javafx.scene.control.Button
 import javafx.scene.control.Label

@@ -38,9 +38,15 @@ open class UserAccountDetailsService : UserDetailsService {
     constructor(repository: UserAccountRepository){
         this.repository = repository
     }
-
     override fun loadUserByUsername(username: String): UserDetails {
         val userAccount = this.repository.findByUsername(username) ?: throw UsernameNotFoundException(" '$username'")
-        return User(userAccount.username, userAccount.password, AuthorityUtils.createAuthorityList(userAccount.role))
+        return User(userAccount.username, userAccount.password, userAccount.roles?.let {AuthorityUtils.createAuthorityList(*getRoles(it))})
+    }
+    fun getRoles(roles: Collection<Role>) : Array<String>{
+        val roleNames :Array<String> = arrayOf()
+        for (role in roles){
+            role.name?.let{roleNames.plus(it)}
+        }
+        return roleNames
     }
 }

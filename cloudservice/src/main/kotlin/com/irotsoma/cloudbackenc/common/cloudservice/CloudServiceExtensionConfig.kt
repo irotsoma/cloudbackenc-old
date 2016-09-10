@@ -15,17 +15,16 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>
  */
 
-package com.irotsoma.cloudbackenc.encryptionservice
+package com.irotsoma.cloudbackenc.common.cloudservice
 
 /**
- * Created by irotsoma on 8/26/2016.
+ * Created by irotsoma on 7/8/2016.
  *
- * A list of encryption key algorithms that extensions can support.  The value should be the standard string representations of the algorithms.
+ * Cloud Service Extension configuration class populated by cloud-service-extension.json from the extension's resources
+ * @param serviceName Human readable name of service
+ * @param serviceUUID Internal UUID of the service
+ * @param packageName Full package name of the factory class for the service
+ * @param factoryClass Name of the factory class for the service
  */
-enum class EncryptionServiceKeyAlgorithms(val value: String) {
-    AES("AES"),
-    DES("DES"),
-    SKIPJACK("SKIPJACK"),
-    Twofish("Twofish"),
-    Blowfish("Blowfish")
-}
+data class CloudServiceExtensionConfig(val serviceUUID: String, val serviceName: String, val packageName: String, val factoryClass: String)
+

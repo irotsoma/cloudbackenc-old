@@ -15,21 +15,15 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>
  */
 
-package com.irotsoma.cloudbackenc.cloudbackencui
+package com.irotsoma.cloudbackenc.centralcontroller.authentication
 
-import com.irotsoma.cloudbackenc.common.cloudservice.CloudServiceExtension
-import javafx.beans.property.Property
-import tornadofx.ViewModel
-import tornadofx.observable
-import java.util.*
+import org.springframework.data.jpa.repository.JpaRepository
 
 /**
-* Created by irotsoma on 7/27/2016.
+ * Created by irotsoma on 9/2/2016.
  *
- * View model class for binding CloudServiceExtension objects to UI components
-*/
-class CloudServiceModel(var service: CloudServiceExtension) : ViewModel() {
-    val uuid: Property<UUID> = bind { service.observable(CloudServiceExtension::uuid)  }
-    val name: Property<String> = bind { service.observable(CloudServiceExtension::name) }
-    val token: Property<String> = bind { service.observable(CloudServiceExtension::token) }
+ * Repository object for storing user roles
+ */
+interface RoleRepository : JpaRepository<Role, Long> {
+    fun findByName(name: String): Role?
 }

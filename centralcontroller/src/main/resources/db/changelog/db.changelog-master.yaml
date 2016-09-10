@@ -22,9 +22,72 @@ databaseChangeLog:
               - column:
                   name: password
                   type: nvarchar(255)
+                  constraints:
+                    nullable: false
               - column:
-                  name: role
+                  name: email
                   type: nvarchar(255)
+              - column:
+                  name: roles
+                  type: nvarchar (255)
+        - createTable:
+            tableName: role
+            columns:
+              - column:
+                  name: id
+                  type: int
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: name
+                  type: nvarchar(255)
+                  constraints:
+                    nullable: false
+        - createTable:
+            tableName: user_roles
+            columns:
+              - column:
+                  name: id
+                  type: int
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: role_id
+                  type: int
+              - column:
+                  name: user_id
+                  type: int
+        - insert:
+            tableName: role
+            columns:
+              - column:
+                  name: id
+                  value: 1
+              - column:
+                  name: name
+                  value: USER_ADMIN
+        - insert:
+            tableName: role
+            columns:
+              - column:
+                  name: id
+                  value: 2
+              - column:
+                  name: name
+                  value: USER_ROLE
+        - insert:
+            tableName: role
+            columns:
+              - column:
+                  name: id
+                  value: 3
+              - column:
+                  name: name
+                  value: USER_ROLE_TEST
   - changeSet:
       id: 2
       author: irotsoma
@@ -33,11 +96,23 @@ databaseChangeLog:
             tableName: user_account
             columns:
               - column:
+                  name: id
+                  value: 1
+              - column:
                   name: username
                   value: test
               - column:
                   name: password
                   value: \$2a\$10\$7C3uEo.kCa5Qo7c/dNDIAeTJyablQ6sznUgzY37sBc.iGsspSpVPK
+        - insert:
+            tableName: user_roles
+            columns:
               - column:
-                  name: role
-                  value: ROLE_USER_TEST
+                  name: id
+                  value: 1
+              - column:
+                  name: user_id
+                  value: 1
+              - column:
+                  name: role_id
+                  value: 3

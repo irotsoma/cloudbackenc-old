@@ -15,13 +15,12 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>
  */
 
-package com.irotsoma.cloudbackenc.cloudservice
-
-import java.util.*
+package com.irotsoma.cloudbackenc.common.encryptionservice
 
 /**
- * Created by irotsoma on 7/12/2016.
- *
- * Object for passing a list of Cloud Service Extensions through an API
+ * Created by irotsoma on 8/31/2016.
  */
-class CloudServiceExtensionList : ArrayList<CloudServiceExtension>()
+enum class EncryptionServicePBKDFAlgorithms(val value: String) {
+    //TODO:  Add more algorithms
+    PBKDF2WithHmacSHA1("PBKDF2WithHmacSHA1")
+}

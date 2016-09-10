@@ -15,9 +15,15 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>
  */
 
-package com.irotsoma.cloudbackenc.cloudservice
+package com.irotsoma.cloudbackenc.common.cloudservice
 
 /**
- * Created by justin on 8/12/16.
+ * Created by irotsoma on 6/20/2016.
+ *
+ * Exception class for Cloud Service Implementations
  */
-class CloudServiceCallbackURL(val uuid: String, val authorizationURL: String)
+class CloudServiceException : Exception{
+    constructor(message: String?) : super(message)
+    constructor(message: String?, cause: Throwable) : super(message, cause)
+    constructor(cause: Throwable) : super(cause)
+}

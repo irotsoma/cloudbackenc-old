@@ -17,7 +17,7 @@
 
 package com.irotsoma.cloudbackenc.cloudbackencui
 
-import com.irotsoma.cloudbackenc.cloudservice.CloudServiceException
+import com.irotsoma.cloudbackenc.common.cloudservice.CloudServiceException
 import org.springframework.http.HttpStatus
 import org.springframework.web.bind.annotation.ControllerAdvice
 import org.springframework.web.bind.annotation.ExceptionHandler

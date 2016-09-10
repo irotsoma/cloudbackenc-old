@@ -45,7 +45,7 @@ open class WebSecurityConfiguration : WebSecurityConfigurerAdapter() {
         http
             .authorizeRequests()
                 .antMatchers("/cloudservices").permitAll() //no need to secure the list
-                .anyRequest().authenticated()
+                .anyRequest().authenticated() //but anything else requires authentication
                 .and()
             .httpBasic()
                 .and()

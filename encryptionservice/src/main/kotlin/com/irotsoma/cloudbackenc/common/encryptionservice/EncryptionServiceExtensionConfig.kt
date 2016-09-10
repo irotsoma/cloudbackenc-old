@@ -15,21 +15,15 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>
  */
 
-package com.irotsoma.cloudbackenc.cloudservice
-
-import java.net.URL
+package com.irotsoma.cloudbackenc.common.encryptionservice
 
 /**
-* Created by irotsoma on 6/19/2016.
+ * Created by irotsoma on 8/18/2016.
  *
- * Cloud Service Authentication interface
-*/
-
-interface CloudServiceAuthenticationService  {
-    var authorizationURL: URL?
-    //var authorizationCallbackURL: URL?
-
-    fun isLoggedIn(user: CloudServiceUser): Boolean
-    fun login(user: CloudServiceUser) : CloudServiceUser
-    fun logoff(user: CloudServiceUser) : String
-}
+ * Encryption Service Extension configuration class populated by encryption-service-extension.json from the extension's resources
+ * @param serviceName Human readable name of service
+ * @param serviceUUID Internal UUID of the service
+ * @param packageName Full package name of the factory class for the service
+ * @param factoryClass Name of the factory class for the service
+ */
+data class EncryptionServiceExtensionConfig (val serviceUUID: String, val serviceName: String, val packageName: String, val factoryClass: String)

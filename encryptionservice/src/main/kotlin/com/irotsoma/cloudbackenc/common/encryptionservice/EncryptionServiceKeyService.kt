@@ -15,7 +15,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>
  */
 
-package com.irotsoma.cloudbackenc.encryptionservice
+package com.irotsoma.cloudbackenc.common.encryptionservice
 
 import java.security.KeyPair
 import java.security.SecureRandom

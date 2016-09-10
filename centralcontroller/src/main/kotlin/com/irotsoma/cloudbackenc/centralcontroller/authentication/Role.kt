@@ -15,13 +15,27 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>
  */
 
-package com.irotsoma.cloudbackenc.encryptionservice
+package com.irotsoma.cloudbackenc.centralcontroller.authentication
 
-import java.util.*
+import javax.persistence.*
 
 /**
- * Created by irotsoma on 8/18/2016.
+ * Created by irotsoma on 9/2/2016.
  *
- * Object for passing a list of Encryption Service Extensions through an API
+ * User Role object
  */
-class EncryptionServiceExtensionList : ArrayList<EncryptionServiceExtension>()
+@Entity
+@Table(name = "role")
+class Role() {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    var id: Long? = null
+    var name: String? = null
+
+    @ManyToMany(mappedBy = "roles")
+    private var users: Collection<UserAccount>? = null
+
+    constructor(name: String) : this() {
+        this.name = name
+    }
+}

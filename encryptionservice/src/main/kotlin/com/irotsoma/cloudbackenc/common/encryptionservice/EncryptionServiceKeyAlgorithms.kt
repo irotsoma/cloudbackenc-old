@@ -15,18 +15,19 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>
  */
 
-package com.irotsoma.cloudbackenc.encryptionservice
+package com.irotsoma.cloudbackenc.common.encryptionservice
 
 /**
- * Created by irotsoma on 8/18/2016.
+ * Created by irotsoma on 8/26/2016.
  *
- * Encryption Service Factory interface
+ * A list of encryption key algorithms that extensions can support.  The value should be the standard string representations of the algorithms.
  */
-interface EncryptionServiceFactory {
-    val supportedKeyAlgorithms: Array<EncryptionServiceKeyAlgorithms>
-    val supportedEncryptionAlgorithms: Array<EncryptionServiceEncryptionAlgorithms>
-    val supportedPBKDFAlgorithms: Array<EncryptionServicePBKDFAlgorithms>
-    val encryptionServiceKeyService: EncryptionServiceKeyService
-    val encryptionServiceFileService: EncryptionServiceFileService
-    val encryptionServiceStringService: EncryptionServiceStringService
+enum class EncryptionServiceKeyAlgorithms(val value: String) {
+    //TODO:  Add more algorithms and remove insecure ones.
+    // This is just a quick list of ones supported by bouncycastle/apache commons crypto including some insecure ones for testing.
+    AES("AES"),
+    DES("DES"),
+    SKIPJACK("SKIPJACK"),
+    Twofish("Twofish"),
+    Blowfish("Blowfish")
 }

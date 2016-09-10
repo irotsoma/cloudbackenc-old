@@ -21,7 +21,7 @@ import com.fasterxml.jackson.databind.ObjectMapper
 import com.fasterxml.jackson.module.kotlin.KotlinModule
 import com.fasterxml.jackson.module.kotlin.MissingKotlinParameterException
 import com.fasterxml.jackson.module.kotlin.readValue
-import com.irotsoma.cloudbackenc.cloudservice.*
+import com.irotsoma.cloudbackenc.common.cloudservice.*
 import com.irotsoma.cloudbackenc.common.logger
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.context.ApplicationContext
@@ -92,15 +92,20 @@ open class CloudServiceRepository : ApplicationContextAware {
         val classLoader = URLClassLoader(jarURLs,_applicationContext.classLoader)
         //cycle through all of the classes, make sure they inheritors CloudServiceFactory, and add them to the list
         for ((key, value) in factoryClasses) {
-            val gdClass = classLoader.loadClass(value)
-            //verify instance of gdClass is a CloudServiceFactory
-            if (gdClass.newInstance() is CloudServiceFactory) {
-                //add to list -- suppress warning about unchecked class as we did that in the if statement for an instance but it can't be done directly
-                cloudServiceExtensions = cloudServiceExtensions.plus(Pair(key, @Suppress("UNCHECKED_CAST")(gdClass as Class<CloudServiceFactory>)))
+            try {
+                val gdClass = classLoader.loadClass(value)
+                //verify instance of gdClass is a CloudServiceFactory
+                if (gdClass.newInstance() is CloudServiceFactory) {
+                    //add to list -- suppress warning about unchecked class as we did that in the if statement for an instance but it can't be done directly
+                    cloudServiceExtensions = cloudServiceExtensions.plus(Pair(key, @Suppress("UNCHECKED_CAST")(gdClass as Class<CloudServiceFactory>)))
+                }
+                else {
+                    LOG.warn("Error loading cloud service extension: Factory is not an instance of CloudServiceFactory: $value" )
+                }
+            } catch(e: ClassNotFoundException){
+                LOG.warn("Error loading cloud service extension: $value: ${e.message}")
             }
-            else {
-                LOG.warn("Error loading cloud service extension: Factory is not an instance of CloudServiceFactory: $value" )
-            }
+
         }
     }
 }

@@ -15,28 +15,18 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>
  */
 
-package com.irotsoma.cloudbackenc.cloudservice
-
-import java.util.*
+package com.irotsoma.cloudbackenc.common.encryptionservice
 
 /**
-* Created by irotsoma on 7/27/2016.
+ * Created by irotsoma on 8/18/2016.
  *
- * Cloud Service Extension object
-*/
-
-class CloudServiceExtension {
-    var uuid: UUID = UUID.randomUUID()
-    var name: String = ""
-    var token: String = ""
-    constructor(){}
-    constructor(uuid: UUID, name: String){
-        this.uuid = uuid
-        this.name = name
-    }
-    constructor(uuid: UUID, name: String, token: String){
-        this.token = token
-        this.uuid = uuid
-        this.name = name
-    }
+ * Encryption Service Factory interface
+ */
+interface EncryptionServiceFactory {
+    val supportedKeyAlgorithms: Array<EncryptionServiceKeyAlgorithms>
+    val supportedEncryptionAlgorithms: Array<EncryptionServiceEncryptionAlgorithms>
+    val supportedPBKDFAlgorithms: Array<EncryptionServicePBKDFAlgorithms>
+    val encryptionServiceKeyService: EncryptionServiceKeyService
+    val encryptionServiceFileService: EncryptionServiceFileService
+    val encryptionServiceStringService: EncryptionServiceStringService
 }

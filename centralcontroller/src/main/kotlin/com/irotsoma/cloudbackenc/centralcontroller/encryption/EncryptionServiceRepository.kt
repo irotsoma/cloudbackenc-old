@@ -21,8 +21,8 @@ import com.fasterxml.jackson.databind.ObjectMapper
 import com.fasterxml.jackson.module.kotlin.KotlinModule
 import com.fasterxml.jackson.module.kotlin.MissingKotlinParameterException
 import com.fasterxml.jackson.module.kotlin.readValue
+import com.irotsoma.cloudbackenc.common.encryptionservice.*
 import com.irotsoma.cloudbackenc.common.logger
-import com.irotsoma.cloudbackenc.encryptionservice.*
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.context.ApplicationContext
 import org.springframework.context.ApplicationContextAware
@@ -92,14 +92,18 @@ open class EncryptionServiceRepository : ApplicationContextAware {
         val classLoader = URLClassLoader(jarURLs,_applicationContext.classLoader)
         //cycle through all of the classes, make sure they inheritors EncryptionServiceFactory, and add them to the list
         for ((key, value) in factoryClasses) {
-            val gdClass = classLoader.loadClass(value)
-            //verify instance of gdClass is a EncryptionServiceFactory
-            if (gdClass.newInstance() is EncryptionServiceFactory) {
-                //add to list -- suppress warning about unchecked class as we did that in the if statement for an instance but it can't be done directly
-                encryptionServiceExtensions = encryptionServiceExtensions.plus(Pair(key, @Suppress("UNCHECKED_CAST")(gdClass as Class<EncryptionServiceFactory>)))
-            }
-            else {
-                LOG.warn("Error loading encryption service extension: Factory is not an instance of EncryptionServiceFactory: $value" )
+            try{
+                val gdClass = classLoader.loadClass(value)
+                //verify instance of gdClass is a EncryptionServiceFactory
+                if (gdClass.newInstance() is EncryptionServiceFactory) {
+                    //add to list -- suppress warning about unchecked class as we did that in the if statement for an instance but it can't be done directly
+                    encryptionServiceExtensions = encryptionServiceExtensions.plus(Pair(key, @Suppress("UNCHECKED_CAST")(gdClass as Class<EncryptionServiceFactory>)))
+                }
+                else {
+                    LOG.warn("Error loading encryption service extension: Factory is not an instance of EncryptionServiceFactory: $value" )
+                }
+            } catch(e: ClassNotFoundException){
+                LOG.warn("Error loading encryption service extension: $value: ${e.message}")
             }
         }
     }

@@ -17,7 +17,7 @@
 
 package com.irotsoma.cloudbackenc.cloudbackencui
 
-import com.irotsoma.cloudbackenc.cloudservice.CloudServiceCallbackURL
+import com.irotsoma.cloudbackenc.common.cloudservice.CloudServiceCallbackURL
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.springframework.boot.context.embedded.LocalServerPort

@@ -15,15 +15,28 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>
  */
 
-package com.irotsoma.cloudbackenc.encryptionservice
+package com.irotsoma.cloudbackenc.common.cloudservice
+
+import java.util.*
 
 /**
- * Created by irotsoma on 8/18/2016.
+* Created by irotsoma on 7/27/2016.
  *
- * Custom Exception class for encryption extensions
- */
-class EncryptionServiceException :Exception {
-    constructor(message: String?) : super(message)
-    constructor(message: String?, cause: Throwable) : super(message, cause)
-    constructor(cause: Throwable) : super(cause)
+ * Cloud Service Extension object
+*/
+
+class CloudServiceExtension {
+    var uuid: UUID = UUID.randomUUID()
+    var name: String = ""
+    var token: String = ""
+    constructor(){}
+    constructor(uuid: UUID, name: String){
+        this.uuid = uuid
+        this.name = name
+    }
+    constructor(uuid: UUID, name: String, token: String){
+        this.token = token
+        this.uuid = uuid
+        this.name = name
+    }
 }

@@ -15,7 +15,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>
  */
 
-package com.irotsoma.cloudbackenc.encryptionservice
+package com.irotsoma.cloudbackenc.common.encryptionservice
 
 /**
  * Created by irotsoma on 8/26/2016.
@@ -23,6 +23,8 @@ package com.irotsoma.cloudbackenc.encryptionservice
  * A list of encryption algorithms that extensions can support.  The value should be the standard string representations of the algorithms.
  */
 enum class EncryptionServiceEncryptionAlgorithms(val value: String) {
+    //TODO:  Add more algorithms and remove insecure ones.
+    // This is just a quick list of ones supported by bouncycastle/apache commons crypto including some insecure ones for testing.
     AES("AES"),
     AES_CBC_PKCS5Padding("AES/CBC/PKCS5Padding"),
     AES_ECB_WithCTS("AES/ECB/WithCTS"),
