@@ -14,17 +14,36 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>
  */
-
+/*
+ * Created by irotsoma on 7/8/2016.
+ */
 package com.irotsoma.cloudbackenc.common.cloudservice
 
 /**
- * Created by irotsoma on 7/8/2016.
+ * Cloud Service Extension configuration class
  *
- * Cloud Service Extension configuration class populated by cloud-service-extension.json from the extension's resources
+ * Populated by cloud-service-extension.json from the extension's resources.
+ *
  * @param serviceName Human readable name of service
- * @param serviceUUID Internal UUID of the service
+ * @param serviceUUID Internal UUID of the service from the cloud-service-extension.json file.
  * @param packageName Full package name of the factory class for the service
  * @param factoryClass Name of the factory class for the service
  */
-data class CloudServiceExtensionConfig(val serviceUUID: String, val serviceName: String, val packageName: String, val factoryClass: String)
+data class CloudServiceExtensionConfig(
+        /**
+         * Internal UUID of the service from the cloud-service-extension.json file.
+         */
+        val serviceUUID: String,
+        /**
+         * Human readable name of service
+         */
+        val serviceName: String,
+        /**
+         * Full package name of the factory class for the service
+         */
+        val packageName: String,
+        /**
+         * Name of the factory class for the service
+         */
+        val factoryClass: String)
 

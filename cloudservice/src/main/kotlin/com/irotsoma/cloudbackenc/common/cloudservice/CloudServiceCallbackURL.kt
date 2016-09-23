@@ -18,6 +18,23 @@
 package com.irotsoma.cloudbackenc.common.cloudservice
 
 /**
- * Created by justin on 8/12/16.
+ * Callback url object for cloud service authorization flows.
+ *
+ * This object allows the central controller caller (e.g. CloudBackEnc UI) to allow the central controller to provide a
+ * url for the user to complete the authorization process for any service that requires user input to explicitly
+ * authorize CloudBackEnc to access their account.  The central controller calling application must implement a rest
+ * controller that accepts a POST with this object as the body.
+ *
+ * @author Justin Zak
+ * @param uuid The UUID of the cloud service extension
+ * @param authorizationURL The URL that the user must browse to in order to authorize the application to access their account
  */
-class CloudServiceCallbackURL(val uuid: String, val authorizationURL: String)
+data class CloudServiceCallbackURL(
+        /**
+         * The UUID of the cloud service extension
+         */
+        val uuid: String,
+        /**
+         * The URL that the user must browse to in order to authorize the application to access their account
+         */
+        val authorizationURL: String)

@@ -16,15 +16,16 @@
  */
 buildscript {
     ext.springBootVersion = '1.4.0.RELEASE'
-    ext.tornadofxVersion = '1.5.5'
+    ext.tornadofxVersion = '1.5.6'
     ext.junitVersion = '4.12'
     ext.log4jVersion = '2.6.2'
     ext.kotlin_version = '1.0.3'
-    ext.kotlinVersion = '1.0.3'
+    ext.kotlinVersion = '1.0.4'
 
-    ext.localMavenRepository = "$rootDir/../maven-repository"
+    ext.localMavenRepository = "file://$rootDir/../maven-repository"
     repositories {
         mavenCentral()
+        jcenter()
         maven { url 'http://repo.spring.io/plugins-release' }
     }
     dependencies {
@@ -32,24 +33,25 @@ buildscript {
         classpath "org.springframework.boot:spring-boot-gradle-plugin:$springBootVersion"
         classpath 'org.springframework.build.gradle:propdeps-plugin:0.0.7'
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
-        classpath "org.liquibase:liquibase-gradle-plugin:1.2.1"    }
+        classpath "org.liquibase:liquibase-gradle-plugin:1.2.1"
+        classpath "org.jetbrains.dokka:dokka-gradle-plugin:0.9.9"}
 
 }
 plugins {
     id "com.github.hierynomus.license" version "0.13.1"
 }
+
 def secretDir = "$rootDir/secret/"
 
 subprojects {
     group 'com.irotsoma.cloudbackenc'
-    version '0.1-SNAPSHOT'
+    version '0.1'
     description 'test'
     apply plugin: 'java'
     apply plugin: 'kotlin'
     apply plugin: 'signing'
-    //ext.isReleaseVersion = !version.endsWith("SNAPSHOT")
+    apply plugin: 'org.jetbrains.dokka'
     signing {
-        //required { isReleaseVersion }
         sign configurations.archives
     }
     repositories {
@@ -70,10 +72,10 @@ subprojects {
     apply plugin: 'com.github.hierynomus.license'
     license {
         ignoreFailures true
-        mapping ('kt', 'JAVADOC_STYLE')
+        mapping('kt', 'JAVADOC_STYLE')
         excludes(['**/*.json', '**/*.properties', '**/LICENSE', '**/*license*.html', '**/*license*.xml'])
     }
-    task copyLicenseReports(type: Copy){
+    task copyLicenseReports(type: Copy) {
         from "$buildDir/reports/license/"
         into "$buildDir/license-reports/META-INF/licenses"
     }
@@ -81,127 +83,233 @@ subprojects {
     assemble.dependsOn 'copyLicenseReports'
     copyLicenseReports.mustRunAfter 'downloadLicenses'
 
-
-    task javadocJar(type: Jar, dependsOn: javadoc) {
+    //javadoc stuff for Kotlin
+    dokka {
+        moduleName = 'data'
+        outputFormat = 'javadoc'
+        outputDirectory = "$buildDir/docs/javadoc"
+        linkMapping {
+            dir = "src/main/kotlin"
+            url = "https://github.com/cy6erGn0m/vertx3-lang-kotlin/blob/master/src/main/kotlin"
+            suffix = "#L"
+        }
+        sourceDirs = files('src/main/kotlin')
+    }
+    task javadocJar(type: Jar, dependsOn: dokka) {
         classifier = 'javadoc'
-        from tasks.javadoc.destinationDir
+        from dokka.outputDirectory
+    }
+    task sourceJar(type: Jar) {
+        classifier = 'sources'
+        from sourceSets.main.allSource
     }
 
-    task sourcesJar(type: Jar) {
-        from sourceSets.main.allSource
-        classifier = 'sources'
-    }
+//    configurations {
+//        archives
+//        pom
+//    }
+//    ext {
+//        pomFilePath = "$buildDir/tmp/pom.xml"
+//        pomFile = file(pomFilePath)
+//    }
+
     artifacts {
         archives jar
-
+        archives sourceJar
         archives javadocJar
-        archives sourcesJar
+//        if (pomFile.exists()) {
+//            pom pomFile
+//        }
+    }
+//    task signJars(type: Sign, dependsOn: [jar, javadocJar, sourceJar]) {
+//        sign configurations.archives
+//    }
+//    task signPom(type: Sign) {
+//        sign configurations.pom
+//    }
+//    ext.getSignatureFiles = {
+//        def allFiles = project.tasks.signJars.signatureFiles.collect { it }
+//        def signedSources = allFiles.find { it.name.contains('-sources') }
+//        def signedJavadoc = allFiles.find { it.name.contains('-javadoc') }
+//        def signedJar = (allFiles - [signedSources, signedJavadoc])[0]
+//        return [
+//                [archive: signedSources, classifier: 'sources', extension: 'jar.asc'],
+//                [archive: signedJavadoc, classifier: 'javadoc', extension: 'jar.asc'],
+//                [archive: signedJar, classifier: null, extension: 'jar.asc']
+//        ]
+//    }
+//    ext.getPomSignature = {
+//        return project.tasks.signPom.signatureFiles.collect { it }[0]
+//    }
+//    if (project.ext.pomFile.exists()) {
+//        task preparePublication(dependsOn: [signJars, signPom])
+//    } else {
+//        task preparePublication(dependsOn: signJars)
+//    }
+    repositories {
+        maven {
+            url localMavenRepository
+        }
     }
 }
 
-project(':common'){
-    apply plugin: 'maven-publish'
-    publishing {
-        publications {
-            mavenJava(MavenPublication) {
-                from components.java
-                pom.withXml {
-                    def root = asNode()
-                    root.appendNode('description', 'Common library for CloudBackEnc.')
-                    root.appendNode('url', 'https://irotsoma.github.io/cloudbackenc/')
-                    def license = root.appendNode('licenses').appendNode('license')
-                    license.appendNode('name', 'GNU Lesser General Public License, Version 3.0')
-                    license.appendNode('url', 'http://www.gnu.org/licenses/lgpl.txt')
-                    license.appendNode('distribution', 'repo')
-                    def developers = root.appendNode('developers')
-                    def developer1 = developers.appendNode('developer')
-                    developer1.appendNode('id','irotsoma')
-                    developer1.appendNode('name', 'Justin Zak')
-                    developer1.appendNode('email','irotsomadev@gmail.com')
-                    developer1.appendNode('organization', 'Irotsoma, LLC')
-                    developer1.appendNode('organizationUrl','https://www.irotsoma.com')
-                    def scm = root.appendNode('scm')
-                    scm.appendNode('connection','scm:git:git@github.com:irotsoma/cloudbackenc.git')
-                    scm.appendNode('developerConnection','scm:git:git@github.com:irotsoma/cloudbackenc.git')
-                    scm.appendNode('url','git@github.com:irotsoma/cloudbackenc.git')
-                }
-            }
-        }
+project(':common') {
+    apply plugin: 'maven'
+
+
+    uploadArchives {
         repositories {
-            maven {
-                url localMavenRepository
+            mavenDeployer {
+                beforeDeployment { MavenDeployment deployment -> signing.signPom(deployment) }
+
+                repository(url: "https://oss.sonatype.org/service/local/staging/deploy/maven2") {
+                    authentication(userName: ossrhUsername, password: ossrhPassword)
+                }
+
+                snapshotRepository(url: "https://oss.sonatype.org/content/repositories/snapshots") {
+                    authentication(userName: ossrhUsername, password: ossrhPassword)
+                }
+
+                pom {
+                    project {
+                        groupId project.group
+                        artifactId project.name
+                        version project.version
+
+                        name 'CloudBackEnc Common'
+                        description 'Common library for CloudBackEnc.'
+                        url 'https://irotsoma.github.io/cloudbackenc/'
+                        licenses{
+                            license{
+                                name 'GNU Lesser General Public License, Version 3.0'
+                                url 'http://www.gnu.org/licenses/lgpl.txt'
+                                distribution 'repo'
+                            }
+                        }
+                        developers{
+                            developer{
+                                id 'irotsoma'
+                                name 'Justin Zak'
+                                email 'irotsomadev@gmail.com'
+                                organization = 'Irotsoma, LLC'
+                                organizationUrl 'https://www.irotsoma.com'
+                            }
+                        }
+                        scm{
+                            connection 'scm:git:git@github.com:irotsoma/cloudbackenc.git'
+                            developerConnection 'scm:git:git@github.com:irotsoma/cloudbackenc.git'
+                            url 'git@github.com:irotsoma/cloudbackenc.git'
+                        }
+                    }
+                }
             }
         }
     }
 }
 
 project(':cloudservice'){
-    apply plugin: 'maven-publish'
-    publishing {
-        publications {
-            mavenJava(MavenPublication) {
-                from components.java
-                pom.withXml {
-                    def root = asNode()
-                    root.appendNode('description', 'Cloud service interface library for CloudBackEnc.')
-                    root.appendNode('url', 'https://irotsoma.github.io/cloudbackenc/')
-                    def license = root.appendNode('licenses').appendNode('license')
-                    license.appendNode('name', 'GNU Lesser General Public License, Version 3.0')
-                    license.appendNode('url', 'http://www.gnu.org/licenses/lgpl.txt')
-                    license.appendNode('distribution', 'repo')
-                    def developers = root.appendNode('developers')
-                    def developer1 = developers.appendNode('developer')
-                    developer1.appendNode('id','irotsoma')
-                    developer1.appendNode('name', 'Justin Zak')
-                    developer1.appendNode('email','irotsomadev@gmail.com')
-                    developer1.appendNode('organization', 'Irotsoma, LLC')
-                    developer1.appendNode('organizationUrl','https://www.irotsoma.com')
-                    def scm = root.appendNode('scm')
-                    scm.appendNode('connection','scm:git:git@github.com:irotsoma/cloudbackenc.git')
-                    scm.appendNode('developerConnection','scm:git:git@github.com:irotsoma/cloudbackenc.git')
-                    scm.appendNode('url','git@github.com:irotsoma/cloudbackenc.git')
-                }
-            }
-        }
+    apply plugin: 'maven'
+
+    uploadArchives {
         repositories {
-            maven {
-                url localMavenRepository
+            mavenDeployer {
+                beforeDeployment { MavenDeployment deployment -> signing.signPom(deployment) }
+
+                repository(url: "https://oss.sonatype.org/service/local/staging/deploy/maven2") {
+                    authentication(userName: ossrhUsername, password: ossrhPassword)
+                }
+
+                snapshotRepository(url: "https://oss.sonatype.org/content/repositories/snapshots") {
+                    authentication(userName: ossrhUsername, password: ossrhPassword)
+                }
+
+                pom {
+                    project {
+                        groupId project.group
+                        artifactId project.name
+                        version project.version
+
+                        name 'CloudBackEnc Cloud Service Interfaces'
+                        description 'Cloud service interface library for CloudBackEnc extensions.'
+                        url 'https://irotsoma.github.io/cloudbackenc/'
+                        licenses{
+                            license{
+                                name 'GNU Lesser General Public License, Version 3.0'
+                                url 'http://www.gnu.org/licenses/lgpl.txt'
+                                distribution 'repo'
+                            }
+                        }
+                        developers{
+                            developer{
+                                id 'irotsoma'
+                                name 'Justin Zak'
+                                email 'irotsomadev@gmail.com'
+                                organization = 'Irotsoma, LLC'
+                                organizationUrl 'https://www.irotsoma.com'
+                            }
+                        }
+                        scm{
+                            connection 'scm:git:git@github.com:irotsoma/cloudbackenc.git'
+                            developerConnection 'scm:git:git@github.com:irotsoma/cloudbackenc.git'
+                            url 'git@github.com:irotsoma/cloudbackenc.git'
+                        }
+                    }
+                }
             }
         }
     }
+
 }
 
 project(':encryptionservice'){
-    apply plugin: 'maven-publish'
-    publishing {
-        publications {
-            mavenJava(MavenPublication) {
-                from components.java
-                pom.withXml {
-                    def root = asNode()
-                    root.appendNode('description', 'Encryption service interface library for CloudBackEnc.')
-                    root.appendNode('url', 'https://irotsoma.github.io/cloudbackenc/')
-                    def license = root.appendNode('licenses').appendNode('license')
-                    license.appendNode('name', 'GNU Lesser General Public License, Version 3.0')
-                    license.appendNode('url', 'http://www.gnu.org/licenses/lgpl.txt')
-                    license.appendNode('distribution', 'repo')
-                    def developers = root.appendNode('developers')
-                    def developer1 = developers.appendNode('developer')
-                    developer1.appendNode('id','irotsoma')
-                    developer1.appendNode('name', 'Justin Zak')
-                    developer1.appendNode('email','irotsomadev@gmail.com')
-                    developer1.appendNode('organization', 'Irotsoma, LLC')
-                    developer1.appendNode('organizationUrl','https://www.irotsoma.com')
-                    def scm = root.appendNode('scm')
-                    scm.appendNode('connection','scm:git:git@github.com:irotsoma/cloudbackenc.git')
-                    scm.appendNode('developerConnection','scm:git:git@github.com:irotsoma/cloudbackenc.git')
-                    scm.appendNode('url','git@github.com:irotsoma/cloudbackenc.git')
-                }
-            }
-        }
+
+    apply plugin: 'maven'
+
+    uploadArchives {
         repositories {
-            maven {
-                url localMavenRepository
+            mavenDeployer {
+                beforeDeployment { MavenDeployment deployment -> signing.signPom(deployment) }
+
+                repository(url: "https://oss.sonatype.org/service/local/staging/deploy/maven2") {
+                    authentication(userName: ossrhUsername, password: ossrhPassword)
+                }
+
+                snapshotRepository(url: "https://oss.sonatype.org/content/repositories/snapshots") {
+                    authentication(userName: ossrhUsername, password: ossrhPassword)
+                }
+
+                pom {
+                    project {
+                        groupId project.group
+                        artifactId project.name
+                        version project.version
+
+                        name 'CloudBackEnc Encryption Interfaces'
+                        description 'Encryption service interface library for CloudBackEnc extensions.'
+                        url 'https://irotsoma.github.io/cloudbackenc/'
+                        licenses{
+                            license{
+                                name 'GNU Lesser General Public License, Version 3.0'
+                                url 'http://www.gnu.org/licenses/lgpl.txt'
+                                distribution 'repo'
+                            }
+                        }
+                        developers{
+                            developer{
+                                id 'irotsoma'
+                                name 'Justin Zak'
+                                email 'irotsomadev@gmail.com'
+                                organization = 'Irotsoma, LLC'
+                                organizationUrl 'https://www.irotsoma.com'
+                            }
+                        }
+                        scm{
+                            connection 'scm:git:git@github.com:irotsoma/cloudbackenc.git'
+                            developerConnection 'scm:git:git@github.com:irotsoma/cloudbackenc.git'
+                            url 'git@github.com:irotsoma/cloudbackenc.git'
+                        }
+                    }
+                }
             }
         }
     }
@@ -268,4 +376,3 @@ project(':cloudbackencui'){
     }
 
 }
-

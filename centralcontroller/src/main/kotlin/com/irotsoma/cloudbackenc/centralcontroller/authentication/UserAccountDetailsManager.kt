@@ -24,6 +24,8 @@ import org.springframework.security.core.userdetails.UserDetails
 import org.springframework.security.core.userdetails.UserDetailsService
 import org.springframework.security.core.userdetails.UsernameNotFoundException
 import org.springframework.stereotype.Component
+import javax.persistence.EntityManager
+import javax.persistence.PersistenceContext
 
 /**
  * Created by irotsoma on 8/15/2016.
@@ -31,8 +33,14 @@ import org.springframework.stereotype.Component
  * User Account Details Service with Autowired Repository
  */
 @Component
-open class UserAccountDetailsService : UserDetailsService {
+open class UserAccountDetailsManager : UserDetailsService {
     private lateinit var repository: UserAccountRepository
+
+    @PersistenceContext
+    private var test : EntityManager? = null
+
+
+
 
     @Autowired
     constructor(repository: UserAccountRepository){

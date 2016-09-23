@@ -14,26 +14,45 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>
  */
-
+/*
+ * Created by irotsoma on 7/27/2016.
+ */
 package com.irotsoma.cloudbackenc.common.cloudservice
 
 import java.util.*
 
 /**
-* Created by irotsoma on 7/27/2016.
- *
  * Cloud Service Extension object
+ *
+ * Used to refer to an extension.
+ *
+ * @author Justin Zak
 */
 
 class CloudServiceExtension {
+    /**
+     * UUID of the cloud service extension from the cloud-service-extension.json
+     */
     var uuid: UUID = UUID.randomUUID()
+    /**
+     * Human readable name of service
+     */
     var name: String = ""
+    /**
+     * Token for the application to access the cloud service provider (if needed).
+     */
     var token: String = ""
-    constructor(){}
+
+    /**
+     * Initialize the extension object with the uuid and name of the extension
+     */
     constructor(uuid: UUID, name: String){
         this.uuid = uuid
         this.name = name
     }
+    /**
+     * Initialize the extension object with the uuid, name, and authorization token
+     */
     constructor(uuid: UUID, name: String, token: String){
         this.token = token
         this.uuid = uuid

@@ -14,22 +14,44 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>
  */
-
+/*
+* Created by irotsoma on 6/19/2016.
+**/
 package com.irotsoma.cloudbackenc.common.cloudservice
 
 import java.net.URL
 
 /**
-* Created by irotsoma on 6/19/2016.
+ * Cloud Service Authentication Interface
  *
- * Cloud Service Authentication interface
-*/
+ * Interface that should be implemented with logic for authorization flows for a cloud service extension.
+ *
+ * @author Justin Zak
+ */
 
 interface CloudServiceAuthenticationService  {
-    var authorizationURL: URL?
-    //var authorizationCallbackURL: URL?
 
+    /**
+     * The URL of the calling application that handles presenting an authorization URL to the user during the
+     * authorization process.
+     */
+    var authorizationCallbackServiceURL: URL?
+    /**
+     * Requests the login status
+     * @param user A [CloudServiceUser] object whose status is requested
+     * @return True if user is currently logged in to the cloud service. Otherwise, false.
+     */
     fun isLoggedIn(user: CloudServiceUser): Boolean
+    /**
+     * Requests the system to log into the cloud service.
+     * @param user A [CloudServiceUser] object with username and password for login as well as callback url if needed.
+     * @return A copy of the [user] object with updated [CloudServiceUser.state] depending on the result of the login.  Also strips out the password for security.
+     */
     fun login(user: CloudServiceUser) : CloudServiceUser
+    /**
+     * Requests the system to log off the cloud service.
+     * @param user A [CloudServiceUser] object to log out of the cloud service.
+     * @return Message returned from the cloud service if applicable.
+     */
     fun logoff(user: CloudServiceUser) : String
 }

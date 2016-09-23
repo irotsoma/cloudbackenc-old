@@ -40,30 +40,25 @@ import org.springframework.test.context.junit4.SpringRunner
 
 @RunWith(SpringRunner::class)
 @SpringBootTest(webEnvironment=SpringBootTest.WebEnvironment.DEFINED_PORT)
-open class CloudServicesListControllerTest {
+open class CloudServicesControllerTests {
     @LocalServerPort
     private var port: Int = 0
     @Value("\${server.ssl.key-store}")
     private var useSSL: String? = null
     var protocol: String = "http"
 
-    lateinit var restTemplate: TestRestTemplate
-
-    //determine if we're using ssl and if so trust self signed certificates for testing.
-    fun configureProtocol(){
-        if (useSSL!=null && useSSL!="") {
-            protocol= "https"
-            trustSelfSignedSSL()
-            restTemplate = TestRestTemplate("test", "insecurepassword", TestRestTemplate.HttpClientOption.SSL)
-        } else {
-            protocol = "http"
-            restTemplate = TestRestTemplate("test", "insecurepassword")
-        }
-    }
     //test that listing cloud services returns an HttpStatus.OK
     @Test
     fun testGetCloudServicesList(){
-        configureProtocol()
+        val restTemplate: TestRestTemplate
+        if (useSSL!=null && useSSL!="") {
+            protocol= "https"
+            trustSelfSignedSSL()
+            restTemplate = TestRestTemplate(TestRestTemplate.HttpClientOption.SSL)
+        } else {
+            protocol = "http"
+            restTemplate = TestRestTemplate()
+        }
         val testValue = restTemplate.getForEntity("$protocol://localhost:$port/cloudservices", String::class.java)
         assert(testValue.statusCode==HttpStatus.OK)
         //below is only valid when google drive plugin is installed in extensions folder
@@ -73,7 +68,15 @@ open class CloudServicesListControllerTest {
     //below is only valid when google drive plugin is installed in extensions folder
     @Test
     fun testLoginGoogleDrive(){
-        configureProtocol()
+        val restTemplate: TestRestTemplate
+        if (useSSL!=null && useSSL!="") {
+            protocol= "https"
+            trustSelfSignedSSL()
+            restTemplate = TestRestTemplate("test", "insecurepassword", TestRestTemplate.HttpClientOption.SSL)
+        } else {
+            protocol = "http"
+            restTemplate = TestRestTemplate("test", "insecurepassword")
+        }
         val requestHeaders = HttpHeaders()
         requestHeaders.add(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
         val httpEntity = HttpEntity<CloudServiceUser>(CloudServiceUser("test","","1d3cb21f-5b88-4b3c-8cb8-1afddf1ff375", CloudServiceUser.STATE.INITIALIZED,""), requestHeaders)

@@ -35,10 +35,10 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 open class WebSecurityConfiguration : WebSecurityConfigurerAdapter() {
 
     @Autowired
-    lateinit var userDetailsService : UserAccountDetailsService
+    lateinit var userDetailsManager: UserAccountDetailsManager
 
     override fun configure(auth: AuthenticationManagerBuilder){
-        auth.userDetailsService(this.userDetailsService).passwordEncoder(UserAccount.PASSWORD_ENCODER)
+        auth.userDetailsService(this.userDetailsManager).passwordEncoder(UserAccount.PASSWORD_ENCODER)
     }
 
     override fun configure(http: HttpSecurity){

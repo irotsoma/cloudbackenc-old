@@ -19,17 +19,31 @@ package com.irotsoma.cloudbackenc.common
 
 import kotlin.reflect.companionObject
 
-/**
+/*
  * Created by irotsoma on 7/8/2016.
  * Logging functionality
  * from example: https://stackoverflow.com/questions/34416869/idiomatic-way-of-logging-in-kotlin
- * @code usage:  companion object { val LOG by logger() }
+ */
+
+/**
+ * Logger
+ *
+ * usage: companion object { val LOG by logger() }
+ *
+ * @author Justin Zak
  * @return instance of a log4j logger
  */
 fun <R : Any> R.logger(): Lazy<org.apache.log4j.Logger> {
     return lazy { org.apache.log4j.Logger.getLogger(unwrapCompanionClass(this.javaClass).name)}
 }
 
+/**
+ * Unwraps a companion object so it can reference the enclosing class.
+ *
+ * @author Justin Zak
+ * @param ofClass Class to be unwrapped
+ * @return Unwrapped, enclosing class of the companion object
+ */
 fun <T: Any> unwrapCompanionClass(ofClass: Class<T>): Class<*> {
     return if (ofClass.enclosingClass != null && ofClass.enclosingClass.kotlin.companionObject?.java == ofClass) {
         ofClass.enclosingClass
