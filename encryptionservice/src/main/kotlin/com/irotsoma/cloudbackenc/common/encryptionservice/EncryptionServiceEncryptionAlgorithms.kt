@@ -14,23 +14,54 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>
  */
-
+/*
+ * Created by irotsoma on 8/26/2016.
+ */
 package com.irotsoma.cloudbackenc.common.encryptionservice
 
 /**
- * Created by irotsoma on 8/26/2016.
+ * A list of encryption algorithms that extensions can support.
  *
- * A list of encryption algorithms that extensions can support.  The value should be the standard string representations of the algorithms.
+ * @author Justin Zak
+ * @param value The value should be the standard string representations of the algorithms.
  */
-enum class EncryptionServiceEncryptionAlgorithms(val value: String) {
+enum class EncryptionServiceEncryptionAlgorithms(
+        /**
+         * The value should be the standard string representations of the algorithms.
+         */
+        val value: String) {
     //TODO:  Add more algorithms and remove insecure ones.
-    // This is just a quick list of ones supported by bouncycastle/apache commons crypto including some insecure ones for testing.
+    // This is just a quick list of algorithms supported by bouncycastle/apache commons crypto
+    /**
+     * AES algorithm using default mode for the library used
+     */
     AES("AES"),
+    /**
+     * AES algorithm in CBC mode with PKCS5Padding padding algorithm
+     */
     AES_CBC_PKCS5Padding("AES/CBC/PKCS5Padding"),
+    /**
+     * AES algorithm in CBC mode with CTS padding algorithm
+     */
+    AES_CBC_WithCTS("AES/CBC/WithCTS"),
+    /**
+     * AES algorithm in ECB mode with PKCS5Padding padding algorithm
+     */
+    AES_ECB_PKCS5Padding("AES/ECB/PKCS5Padding"),
+    /**
+     * AES algorithm in ECB mode with CTS padding algorithm
+     */
     AES_ECB_WithCTS("AES/ECB/WithCTS"),
-    DES_CBC_PKCS5Padding("DES/CBC/PKCS5Padding"),
-    DES_ECB_WithCTS("DES/ECB/WithCTS"),
+    /**
+     * SKIPJACK algorithm in ECB mode with PKCS7Padding padding algorithm
+     */
     SKIPJACK_ECB_PKCS7Padding("SKIPJACK/ECB/PKCS7Padding"),
+    /**
+     * Twofish algorithm in CBC mode with PKCS5Padding padding algorithm
+     */
     Twofish_CBC_PKCS5Padding("Twofish/CBC/PKCS5Padding"),
+    /**
+     * Blowfish algorithm in CBC mode with PKCS5Padding padding algorithm
+     */
     Blowfish_CBC_PKCS5Padding("Blowfish/CBC/PKCS5Padding")
 }

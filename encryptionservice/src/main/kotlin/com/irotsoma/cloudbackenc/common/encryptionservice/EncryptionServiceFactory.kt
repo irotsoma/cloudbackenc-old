@@ -14,19 +14,45 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>
  */
-
+/*
+ * Created by irotsoma on 8/18/2016.
+ */
 package com.irotsoma.cloudbackenc.common.encryptionservice
 
 /**
- * Created by irotsoma on 8/18/2016.
- *
  * Encryption Service Factory interface
+ *
+ * @author Justin Zak
  */
 interface EncryptionServiceFactory {
+    /**
+     * List of key algorithms that the extension supports
+     *
+     * @see EncryptionServiceKeyAlgorithms for list of possible values
+     */
     val supportedKeyAlgorithms: Array<EncryptionServiceKeyAlgorithms>
+    /**
+     * List of encryption algorithms that the extension supports
+     *
+     * @see EncryptionServiceEncryptionAlgorithms for list of possible values
+     */
     val supportedEncryptionAlgorithms: Array<EncryptionServiceEncryptionAlgorithms>
+    /**
+     * List of PBKDF Algorithms that the extension supports
+     *
+     * @see EncryptionServicePBKDFAlgorithms for list of possible values
+     */
     val supportedPBKDFAlgorithms: Array<EncryptionServicePBKDFAlgorithms>
+    /**
+     * Service that handles generation and processing of encryption keys
+     */
     val encryptionServiceKeyService: EncryptionServiceKeyService
+    /**
+     * Service that handles encryption and decryption of files
+     */
     val encryptionServiceFileService: EncryptionServiceFileService
+    /**
+     * Service that handles encryption and decryption of strings
+     */
     val encryptionServiceStringService: EncryptionServiceStringService
 }

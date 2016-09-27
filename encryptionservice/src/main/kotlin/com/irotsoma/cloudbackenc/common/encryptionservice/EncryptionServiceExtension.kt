@@ -14,20 +14,30 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>
  */
-
+/*
+ * Created by irotsoma on 8/18/2016.
+ */
 package com.irotsoma.cloudbackenc.common.encryptionservice
 
 import java.util.*
 
 /**
- * Created by irotsoma on 8/18/2016.
- *
  * Encryption Service Extension Object
+ *
+ * @author Justin Zak
  */
 class EncryptionServiceExtension {
+    /**
+     * UUID of the encryption service extension from the encryption-service-extension.json
+     */
     var uuid: UUID = UUID.randomUUID()
+    /**
+     * Human readable name of service
+     */
     var name: String = ""
-    constructor(){}
+    /**
+     * Initialize the extension object with the uuid and name of the extension
+     */
     constructor(uuid: UUID, name: String){
         this.uuid = uuid
         this.name = name

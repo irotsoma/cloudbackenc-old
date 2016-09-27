@@ -14,16 +14,34 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>
  */
-
+/*
+ * Created by irotsoma on 8/18/2016.
+ */
 package com.irotsoma.cloudbackenc.common.encryptionservice
 
 /**
- * Created by irotsoma on 8/18/2016.
- *
  * Custom Exception class for encryption extensions
+ *
+ * @author Justin Zak
  */
 class EncryptionServiceException :Exception {
+    /**
+     * Creates an instance with only a message.
+     *
+     * @param message Exception description.
+     */
     constructor(message: String?) : super(message)
+    /**
+     * Creates an instance with a message and the [Throwable] that caused the exception.
+     *
+     * @param message Exception description.
+     * @param cause The [Throwable] that caused the exception to occur.
+     */
     constructor(message: String?, cause: Throwable) : super(message, cause)
+    /**
+     * Creates an instance with no specific message but include the [Throwable] that caused the exception.
+     *
+     * @param cause The [Throwable] that caused the exception to occur.
+     */
     constructor(cause: Throwable) : super(cause)
 }

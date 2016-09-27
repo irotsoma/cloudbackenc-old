@@ -45,7 +45,7 @@ def secretDir = "$rootDir/secret/"
 
 subprojects {
     group 'com.irotsoma.cloudbackenc'
-    version '0.1'
+    version '0.2-SNAPSHOT'
     description 'test'
     apply plugin: 'java'
     apply plugin: 'kotlin'
@@ -73,7 +73,7 @@ subprojects {
     license {
         ignoreFailures true
         mapping('kt', 'JAVADOC_STYLE')
-        excludes(['**/*.json', '**/*.properties', '**/LICENSE', '**/*license*.html', '**/*license*.xml'])
+        excludes(['**/*.json', '**/*.properties', '**/LICENSE', '**/*license*.html', '**/*license*.xml', '**COPYING', '**COPYING.LESSER'])
     }
     task copyLicenseReports(type: Copy) {
         from "$buildDir/reports/license/"

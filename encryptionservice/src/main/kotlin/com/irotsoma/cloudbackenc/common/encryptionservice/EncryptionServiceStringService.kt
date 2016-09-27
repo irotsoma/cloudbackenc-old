@@ -14,7 +14,9 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>
  */
-
+/*
+ * Created by irotsoma on 8/18/2016.
+ */
 package com.irotsoma.cloudbackenc.common.encryptionservice
 
 import java.security.PrivateKey
@@ -24,14 +26,56 @@ import javax.crypto.SecretKey
 import javax.crypto.spec.IvParameterSpec
 
 /**
- * Created by irotsoma on 8/18/2016.
- *
  * Service for encrypting strings.
+ *
+ * @author Justin Zak
  */
 interface EncryptionServiceStringService {
+    /**
+     * Implement to encrypt strings using symmetric (secret key) encryption.
+     *
+     * @param input String data to be encrypted.
+     * @param key Secret key to be used to encrypt the string
+     * @param algorithm Algorithm from [EncryptionServiceEncryptionAlgorithms] to be used to encrypt the string.
+     * @param ivParameterSpec An instance of [IvParameterSpec] that contains the initialization vector for encryption algorithms that require it.  Use null if not required by the algorithm.
+     * @param secureRandom An instance of a [SecureRandom] random number generator.  If not sent, a new one will be generated using the default Java algorithm.  If encrypting or decrypting lots of files or strings, it is recommended to generate the [SecureRandom] once rather than once per call as it can be a resource intensive operation.
+     * @returns String value containing the encrypted data.
+     */
     fun encrypt(input: String, key: SecretKey, algorithm: EncryptionServiceEncryptionAlgorithms, ivParameterSpec: IvParameterSpec?, secureRandom: SecureRandom?): String
-    fun encrypt(input: String, key: PublicKey, algorithm: EncryptionServiceEncryptionAlgorithms, ivParameterSpec: IvParameterSpec?, secureRandom: SecureRandom?): String
 
+    /**
+     * Implement to encrypt strings using asymmetric (public key) encryption.
+     *
+     * @param input String data to be encrypted.
+     * @param key Public key to be used to encrypt the string
+     * @param algorithm Algorithm from [EncryptionServiceEncryptionAlgorithms] to be used to encrypt the string.
+     * @param ivParameterSpec An instance of [IvParameterSpec] that contains the initialization vector for encryption algorithms that require it.  Use null if not required by the algorithm.
+     * @param secureRandom An instance of a [SecureRandom] random number generator.  If not sent, a new one will be generated using the default Java algorithm.  If encrypting or decrypting lots of files or strings, it is recommended to generate the [SecureRandom] once rather than once per call as it can be a resource intensive operation.
+     * @returns String value containing the encrypted data.
+     */
+
+    fun encrypt(input: String, key: PublicKey, algorithm: EncryptionServiceEncryptionAlgorithms, ivParameterSpec: IvParameterSpec?, secureRandom: SecureRandom?): String
+    /**
+     * Implement to decrypt strings using symmetric (secret key) encryption.
+     *
+     * @param input String data to be decrypted.
+     * @param key Secret key to be used to decrypt the string
+     * @param algorithm Algorithm from [EncryptionServiceEncryptionAlgorithms] to be used to decrypt the string.
+     * @param ivParameterSpec An instance of [IvParameterSpec] that contains the initialization vector for encryption algorithms that require it.  Use null if not required by the algorithm.
+     * @param secureRandom An instance of a [SecureRandom] random number generator.  If not sent, a new one will be generated using the default Java algorithm.  If encrypting or decrypting lots of files or strings, it is recommended to generate the [SecureRandom] once rather than once per call as it can be a resource intensive operation.
+     * @returns String value containing the encrypted data.
+     */
     fun decrypt(input: String, key: SecretKey, algorithm: EncryptionServiceEncryptionAlgorithms, ivParameterSpec: IvParameterSpec?, secureRandom: SecureRandom?): String
+
+    /**
+     * Implement to decrypt strings using asymmetric (public key) encryption.
+     *
+     * @param input String data to be decrypted.
+     * @param key Public key to be used to decrypt the string
+     * @param algorithm Algorithm from [EncryptionServiceEncryptionAlgorithms] to be used to decrypt the string.
+     * @param ivParameterSpec An instance of [IvParameterSpec] that contains the initialization vector for encryption algorithms that require it.  Use null if not required by the algorithm.
+     * @param secureRandom An instance of a [SecureRandom] random number generator.  If not sent, a new one will be generated using the default Java algorithm.  If encrypting or decrypting lots of files or strings, it is recommended to generate the [SecureRandom] once rather than once per call as it can be a resource intensive operation.
+     * @returns String value containing the encrypted data.
+     */
     fun decrypt(input: String, key: PrivateKey, algorithm: EncryptionServiceEncryptionAlgorithms, ivParameterSpec: IvParameterSpec?, secureRandom: SecureRandom?): String
 }

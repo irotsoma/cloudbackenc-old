@@ -14,14 +14,16 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>
  */
-
+/*
+ * Created by irotsoma on 8/18/2016.
+ */
 package com.irotsoma.cloudbackenc.common.encryptionservice
 
 import java.util.*
 
 /**
- * Created by irotsoma on 8/18/2016.
- *
  * Object for passing a list of Encryption Service Extensions through an API
+ *
+ * @author Justin Zak
  */
 class EncryptionServiceExtensionList : ArrayList<EncryptionServiceExtension>()

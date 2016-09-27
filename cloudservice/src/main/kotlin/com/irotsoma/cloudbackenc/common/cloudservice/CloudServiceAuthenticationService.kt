@@ -19,8 +19,6 @@
 **/
 package com.irotsoma.cloudbackenc.common.cloudservice
 
-import java.net.URL
-
 /**
  * Cloud Service Authentication Interface
  *
@@ -31,11 +29,6 @@ import java.net.URL
 
 interface CloudServiceAuthenticationService  {
 
-    /**
-     * The URL of the calling application that handles presenting an authorization URL to the user during the
-     * authorization process.
-     */
-    var authorizationCallbackServiceURL: URL?
     /**
      * Requests the login status
      * @param user A [CloudServiceUser] object whose status is requested
