@@ -26,12 +26,15 @@ import javafx.scene.control.Button
 import javafx.scene.control.Label
 import javafx.scene.control.TableView
 import javafx.scene.layout.VBox
+import javafx.stage.Modality
+import javafx.stage.StageStyle
 import org.springframework.http.HttpEntity
 import org.springframework.http.HttpHeaders
 import org.springframework.http.MediaType
 import org.springframework.web.client.ResourceAccessException
 import org.springframework.web.client.RestTemplate
 import tornadofx.*
+import java.util.*
 
 /**
 * Created by irotsoma on 7/28/2016.
@@ -41,7 +44,7 @@ import tornadofx.*
 class CloudServicesUI() : Fragment() {
     companion object { val LOG by logger() }
     override val root: VBox by fxml()
-    val availableCloudServicesModel: CloudServiceModel = CloudServiceModel(CloudServiceExtension())
+    val availableCloudServicesModel: CloudServiceModel = CloudServiceModel(CloudServiceExtension(UUID.randomUUID(),""))
     val cloudServicesSetupButton : Button by fxid("cloudServicesSetupButton")
     val cloudServicesRefreshButton : Button by fxid("cloudServiceRefreshButton")
     val cloudServicesRemoveButton : Button by fxid("cloudServicesRemoveButton")
@@ -81,7 +84,7 @@ class CloudServicesUI() : Fragment() {
                 prefWidth=270.0
             }
             //bind to list of services through model
-            availableCloudServicesModel.rebindOnChange(this){ selectedService -> service = selectedService ?: CloudServiceExtension() }
+            availableCloudServicesModel.rebindOnChange(this){ selectedService -> service = selectedService ?: CloudServiceExtension(UUID.randomUUID(),"") }
             //only enable setup button if something is selected
             selectionModel.selectedItemProperty().onChange{
                 cloudServicesSetupButton.isDisable = it == null
@@ -90,25 +93,32 @@ class CloudServicesUI() : Fragment() {
 
         with (cloudServicesSetupButton){
             setOnAction {
-                LOG.debug("Attempting to set up cloud service ${availableCloudServicesModel.service.uuid.toString()}: ${availableCloudServicesModel.service.name}")
-                val protocol = if (applicationProperties["centralcontroller.useSSL"] == "true") "https" else "http"
-                //for testing use a hostname verifier that doesn't do any verification
-                if ((applicationProperties["centralcontroller.useSSL"] == "true") && (applicationProperties["centralcontroller.disableCertificateValidation"] == "true")){
-                    trustSelfSignedSSL()
-                    LOG.warn("SSL is enabled, but certificate validation is disabled.")
-                }
-                val requestHeaders = HttpHeaders()
-                requestHeaders.add(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
 
-                //TODO: add real user IDs instead of defaulting to irotsomadev
-                //TODO: calculate callback address dynamically
+                val userInfoPopup = CloudServiceUserInfoFragment(availableCloudServicesModel.service.name)
+                userInfoPopup.openModal(StageStyle.DECORATED,Modality.APPLICATION_MODAL, false)
+                if (userInfoPopup.userId != null) {
 
-                val httpEntity = HttpEntity<CloudServiceUser>(CloudServiceUser("irotsomadev","",availableCloudServicesModel.service.uuid.toString(), CloudServiceUser.STATE.INITIALIZED,"http://localhost:9998/cloudservicecallback"), requestHeaders)
-                LOG.debug("Connecting to central controller cloud service login service at $protocol://${applicationProperties["centralcontroller.host"]}:${applicationProperties["centralcontroller.port"]}/cloudservice/login/${availableCloudServicesModel.service.uuid.toString()}")
-                runAsync {
-                    val callResponse = restTemplate.postForEntity("$protocol://${applicationProperties["centralcontroller.host"]}:${applicationProperties["centralcontroller.port"]}/cloudservice/login/${availableCloudServicesModel.service.uuid.toString()}", httpEntity, CloudServiceUser::class.java)
-                    LOG.debug("Cloud service setup call response: ${callResponse.statusCode}: ${callResponse.statusCodeValue}")
-                    LOG.debug("Cloud service user state: ${callResponse.body.state.name}")
+                    LOG.debug("Attempting to set up cloud service ${availableCloudServicesModel.service.uuid}: ${availableCloudServicesModel.service.name}")
+                    val protocol = if (applicationProperties["centralcontroller.useSSL"] == "true") "https" else "http"
+                    val hostname = applicationProperties["server.address"]
+                    val port = applicationProperties["server.port"]
+                    //for testing use a hostname verifier that doesn't do any verification
+                    if ((applicationProperties["centralcontroller.useSSL"] == "true") && (applicationProperties["centralcontroller.disableCertificateValidation"] == "true")) {
+                        trustSelfSignedSSL()
+                        LOG.warn("SSL is enabled, but certificate validation is disabled.")
+                    }
+                    val requestHeaders = HttpHeaders()
+                    requestHeaders.add(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
+
+                    val callbackURL = "$protocol://$hostname:$port/cloudservicecallback"
+                    LOG.debug("Calculated callback address: $callbackURL")
+                    val httpEntity = HttpEntity<CloudServiceUser>(CloudServiceUser(userInfoPopup.userId!!, null, availableCloudServicesModel.service.uuid.toString(), CloudServiceUser.STATE.INITIALIZED, callbackURL), requestHeaders)
+                    LOG.debug("Connecting to central controller cloud service login service at $protocol://${applicationProperties["centralcontroller.host"]}:${applicationProperties["centralcontroller.port"]}/cloudservice/login/${availableCloudServicesModel.service.uuid}")
+                    runAsync {
+                        val callResponse = restTemplate.postForEntity("$protocol://${applicationProperties["centralcontroller.host"]}:${applicationProperties["centralcontroller.port"]}/cloudservice/login/${availableCloudServicesModel.service.uuid}", httpEntity, CloudServiceUser::class.java)
+                        LOG.debug("Cloud service setup call response: ${callResponse.statusCode}: ${callResponse.statusCodeValue}")
+                        LOG.debug("Cloud service user state: ${callResponse.body.state.name}")
+                    }
                 }
             }
         }

@@ -23,14 +23,14 @@
    <children>
       <MenuBar>
         <menus>
-          <Menu mnemonicParsing="false" text="Cloud Services">
+          <Menu mnemonicParsing="false" text="%cloudbackencui.menu.cloud.services">
             <items>
-              <MenuItem fx:id="menuFileSetupCloudService" mnemonicParsing="false" text="Setup Cloud Service" />
+              <MenuItem fx:id="menuFileSetupCloudService" mnemonicParsing="false" text="%cloudbackencui.menuitem.setup.cloud.services" />
             </items>
           </Menu>
-          <Menu mnemonicParsing="false" text="Help">
+          <Menu mnemonicParsing="false" text="%cloudbackencui.menu.help">
             <items>
-              <MenuItem mnemonicParsing="false" text="About" />
+              <MenuItem mnemonicParsing="false" text="%cloudbackencui.menuitem.about" />
             </items>
           </Menu>
         </menus>

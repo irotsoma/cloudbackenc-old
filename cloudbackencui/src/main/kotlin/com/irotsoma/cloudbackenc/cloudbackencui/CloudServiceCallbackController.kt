@@ -59,10 +59,8 @@ open class CloudServiceCallbackController {
                 LOG.debug("Error getting desktop to display authorization URL to user.  Will try custom view")
             }
             if (!browserSuccess) {
-
                 CloudServiceWebView(url.authorizationURL).openModal()
             }
-
         })
         return(ResponseEntity(HttpStatus.ACCEPTED))
     }

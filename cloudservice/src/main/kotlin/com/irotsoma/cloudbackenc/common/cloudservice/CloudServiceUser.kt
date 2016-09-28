@@ -29,9 +29,9 @@ class CloudServiceUser(
          */
         val userId: String,
         /**
-         * Password for the service (only for login, should be blank otherwise)
+         * Password for the service (only for login, and only if the service has no external authorization page, should be null otherwise)
          */
-        val password:String,
+        val password:String?,
         /**
          * UUID for the cloud service extension.  Defined by the extension author as part of a cloud-service-extension.json file under resources.
          */

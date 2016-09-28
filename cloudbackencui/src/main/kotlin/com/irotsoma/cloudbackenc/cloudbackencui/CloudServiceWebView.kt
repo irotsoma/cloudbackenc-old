@@ -14,7 +14,9 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>
  */
-
+/*
+ * Created by irotsoma on 8/12/16.
+ */
 package com.irotsoma.cloudbackenc.cloudbackencui
 
 import javafx.scene.control.Hyperlink
@@ -23,9 +25,7 @@ import javafx.scene.layout.VBox
 import javafx.scene.web.WebView
 import tornadofx.View
 
-/**
- * Created by irotsoma on 8/12/16.
- */
+
 class CloudServiceWebView(url: String) : View() {
     override val root: VBox by fxml()
     val cloudServiceWebView: WebView by fxid("cloudServiceWebView")

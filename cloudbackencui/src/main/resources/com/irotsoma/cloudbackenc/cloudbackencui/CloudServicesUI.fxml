@@ -23,19 +23,19 @@
    <children>
       <AnchorPane prefHeight="374.0" prefWidth="1133.0">
          <children>
-            <AnchorPane layoutX="7.0" layoutY="7.0" AnchorPane.bottomAnchor="75.0" AnchorPane.leftAnchor="7.0" AnchorPane.rightAnchor="624.0" AnchorPane.topAnchor="7.0">
+            <AnchorPane layoutX="7.0" layoutY="7.0" AnchorPane.bottomAnchor="14.0" AnchorPane.leftAnchor="7.0" AnchorPane.rightAnchor="620.0" AnchorPane.topAnchor="7.0">
                <children>
-                  <TableView fx:id="availableCloudServicesTable" prefHeight="250.0" prefWidth="502.0" />
-                  <Button fx:id="cloudServicesRefreshButton" layoutX="223.0" layoutY="273.0" mnemonicParsing="false" text="Refresh" AnchorPane.leftAnchor="223.0" AnchorPane.topAnchor="273.0" />
+                  <TableView fx:id="availableCloudServicesTable" prefHeight="250.0" prefWidth="502.0" AnchorPane.bottomAnchor="42.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+                  <Button fx:id="cloudServicesRefreshButton" layoutX="223.0" layoutY="273.0" mnemonicParsing="false" text="%cloudbackencui.button.refresh" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="223.0" />
                </children>
             </AnchorPane>
-            <AnchorPane layoutX="624.0" layoutY="7.0" AnchorPane.bottomAnchor="75.0" AnchorPane.leftAnchor="624.0" AnchorPane.rightAnchor="7.0" AnchorPane.topAnchor="7.0">
+            <AnchorPane layoutX="624.0" layoutY="7.0" AnchorPane.bottomAnchor="14.0" AnchorPane.leftAnchor="620.0" AnchorPane.rightAnchor="7.0" AnchorPane.topAnchor="7.0">
                <children>
                   <TableView fx:id="activeCloudServicesTable" prefHeight="250.0" prefWidth="502.0" AnchorPane.bottomAnchor="42.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
-                  <Button fx:id="cloudServicesRemoveButton" disable="true" layoutX="220.0" layoutY="266.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="63.0" text="Remove" AnchorPane.rightAnchor="219.0" AnchorPane.topAnchor="266.0" />
+                  <Button fx:id="cloudServicesRemoveButton" disable="true" layoutX="220.0" layoutY="266.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="63.0" text="%cloudbackencui.button.remove" AnchorPane.bottomAnchor="0.0" AnchorPane.rightAnchor="219.0" />
                </children>
             </AnchorPane>
-            <Button fx:id="cloudServicesSetupButton" disable="true" layoutX="535.0" layoutY="52.0" mnemonicParsing="false" text="Setup -&gt;" AnchorPane.topAnchor="52.0" />
+            <Button fx:id="cloudServicesSetupButton" disable="true" layoutX="535.0" layoutY="52.0" mnemonicParsing="false" text="%cloudbackencui.button.setup.with.arrow" AnchorPane.topAnchor="52.0" />
          </children>
       </AnchorPane>
    </children>
