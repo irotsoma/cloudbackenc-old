@@ -30,7 +30,7 @@ import tornadofx.Fragment
  * @author Justin Zak
  *
  */
-class CloudServiceUserInfoFragment(val serviceName:String) : Fragment() {
+class CloudServiceUserInfoFragment(serviceName:String) : Fragment("Enter User ID for $serviceName") {
     override val root: VBox by fxml()
 
     var userId: String? = null

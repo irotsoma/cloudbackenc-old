@@ -33,15 +33,21 @@ class CloudServiceExtension {
     /**
      * UUID of the cloud service extension from the cloud-service-extension.json
      */
-    var uuid: UUID = UUID.randomUUID()
+    var uuid: UUID
     /**
      * Human readable name of service
      */
-    var name: String = ""
+    var name: String
     /**
      * Token for the application to access the cloud service provider (if needed).
      */
-    var token: String = ""
+    var token: String
+
+    constructor(){
+        this.uuid = UUID.randomUUID()
+        name = ""
+        token = ""
+    }
 
     /**
      * Initialize the extension object with the uuid and name of the extension
@@ -49,6 +55,7 @@ class CloudServiceExtension {
     constructor(uuid: UUID, name: String){
         this.uuid = uuid
         this.name = name
+        token = ""
     }
     /**
      * Initialize the extension object with the uuid, name, and authorization token
