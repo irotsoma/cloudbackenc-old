@@ -23,14 +23,14 @@ import javafx.scene.control.Button
 import javafx.scene.control.TextField
 import javafx.scene.layout.VBox
 import tornadofx.Fragment
+import tornadofx.get
 
 /**
  * Cloud User Login ID Screen
  *
  * @author Justin Zak
- *
  */
-class CloudServiceUserInfoFragment(serviceName:String) : Fragment("Enter User ID for $serviceName") {
+class CloudServiceUserInfoFragment(serviceName:String) : Fragment() {
     override val root: VBox by fxml()
 
     var userId: String? = null
@@ -40,6 +40,7 @@ class CloudServiceUserInfoFragment(serviceName:String) : Fragment("Enter User ID
     val cloudServiceUserInfoCancelButton: Button by fxid("cloudServiceUserInfoCancelButton")
 
     init {
+        title = "${messages["cloudbackencui.title.enter.user.id"]} $serviceName"
         with(cloudServiceUserInfoOkButton){
             setOnAction{
                 userId = cloudServiceUserInfoUserIDField.text

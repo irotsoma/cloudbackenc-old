@@ -14,6 +14,9 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>
  */
+/*
+ * Created by irotsoma on 7/19/2016.
+ */
 
 package com.irotsoma.cloudbackenc.cloudbackencui
 
@@ -28,10 +31,11 @@ import tornadofx.View
 
 
 /**
-* Created by irotsoma on 7/19/2016.
- *
  * Startup view
- * @Lazy to allow for tests to run on the Spring services
+ *
+ * Using @Lazy to allow for tests to run on the Spring services without launching the UI
+ *
+ * @author Justin Zak *
 */
 @Lazy
 @Component

@@ -14,8 +14,10 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>
  */
-
-package com.irotsoma.cloudbackenc.centralcontroller
+/*
+ * Created by irotsoma on 7/14/2016.
+ */
+package com.irotsoma.cloudbackenc.cloudbackencui
 
 import com.fasterxml.jackson.databind.ObjectMapper
 import com.fasterxml.jackson.module.kotlin.KotlinModule
@@ -24,7 +26,7 @@ import org.springframework.context.annotation.Configuration
 import org.springframework.context.annotation.Primary
 
 /**
- * Created by irotsoma on 7/14/2016.
+ * Register Kotlin module for Jackson
  */
 @Configuration
 open class ObjectMapperConfiguration {

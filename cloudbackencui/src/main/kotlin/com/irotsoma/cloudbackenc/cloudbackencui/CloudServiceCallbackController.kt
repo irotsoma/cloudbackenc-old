@@ -14,7 +14,9 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>
  */
-
+/*
+ * Created by irotsoma on 8/12/16.
+ */
 package com.irotsoma.cloudbackenc.cloudbackencui
 
 import com.irotsoma.cloudbackenc.common.cloudservice.CloudServiceCallbackURL
@@ -30,8 +32,12 @@ import java.awt.Desktop
 import java.net.URI
 
 /**
-* Created by irotsoma on 8/12/16.
-*/
+ * Callback Controller for Cloud Services
+ *
+ * Rest controller that receives a callback from the central controller if a cloud service provider requests user input.
+ *
+ * @author Justin Zak
+ */
 @RestController
 open class CloudServiceCallbackController {
     companion object { val LOG by logger() }

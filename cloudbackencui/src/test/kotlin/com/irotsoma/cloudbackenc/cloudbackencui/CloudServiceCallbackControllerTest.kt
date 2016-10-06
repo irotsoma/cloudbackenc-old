@@ -14,7 +14,9 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>
  */
-
+/*
+ * Created by irotsoma on 8/12/16.
+ */
 package com.irotsoma.cloudbackenc.cloudbackencui
 
 import com.irotsoma.cloudbackenc.common.cloudservice.CloudServiceCallbackURL
@@ -30,9 +32,7 @@ import org.springframework.http.HttpStatus
 import org.springframework.http.MediaType
 import org.springframework.test.context.junit4.SpringRunner
 
-/**
- * Created by irotsoma on 8/12/16.
- */
+
 @RunWith(SpringRunner::class)
 @SpringBootTest(webEnvironment=SpringBootTest.WebEnvironment.DEFINED_PORT)
 class CloudServiceCallbackControllerTest {

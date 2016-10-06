@@ -16,20 +16,22 @@
  */
 
 package com.irotsoma.cloudbackenc.centralcontroller.controllers
-
+/*
+ * Created by irotsoma on 9/22/2016.
+ */
 import com.irotsoma.cloudbackenc.centralcontroller.authentication.UserAccountDetailsManager
-import com.irotsoma.cloudbackenc.common.cloudservice.CloudServiceUser
+import com.irotsoma.cloudbackenc.common.CloudBackEncUser
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
+import org.springframework.security.core.GrantedAuthority
+import org.springframework.security.core.context.SecurityContextHolder
 import org.springframework.stereotype.Controller
 import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RequestMethod
 
-/**
- * Created by irotsoma on 9/22/2016.
- */
+
 @Controller
 @RequestMapping("/users")
 open class UserController {
@@ -37,11 +39,29 @@ open class UserController {
     private lateinit var userAccountDetailsManager: UserAccountDetailsManager
 
     @RequestMapping(method = arrayOf(RequestMethod.POST))
-    fun createUser(@RequestBody user: CloudServiceUser): ResponseEntity<CloudServiceUser>{
+    fun createUser(@RequestBody user: CloudBackEncUser): ResponseEntity<CloudBackEncUser>{
 
-    //fix this
-    return ResponseEntity(user, HttpStatus.OK)
+        //TODO implement this
+        return ResponseEntity(user, HttpStatus.OK)
+    }
+
+    @RequestMapping(method = arrayOf(RequestMethod.PUT))
+    fun updateUser(@RequestBody updatedUser:CloudBackEncUser) : ResponseEntity<CloudBackEncUser>{
+        val auth = SecurityContextHolder.getContext().authentication
+        if ((updatedUser.userId != auth.name) && (!auth.authorities.contains(GrantedAuthority{"USER_ADMIN"})))
+        {
+            return ResponseEntity(null, HttpStatus.FORBIDDEN)
+        }
+        userAccountDetailsManager.
+        //TODO implement this
+        return ResponseEntity(updatedUser, HttpStatus.OK)
+    }
+    @RequestMapping(method = arrayOf(RequestMethod.DELETE))
+    fun deleteUser(@RequestBody updatedUser:CloudBackEncUser) : ResponseEntity<CloudBackEncUser>{
+        val authorizedUser = SecurityContextHolder.getContext().authentication.name
 
 
+        //TODO implement this
+        return ResponseEntity(updatedUser, HttpStatus.OK)
     }
 }

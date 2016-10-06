@@ -14,7 +14,9 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>
  */
-
+/*
+ * Created by irotsoma on 7/27/2016.
+ */
 package com.irotsoma.cloudbackenc.cloudbackencui
 
 import com.irotsoma.cloudbackenc.common.cloudservice.CloudServiceExtension
@@ -24,10 +26,10 @@ import tornadofx.observable
 import java.util.*
 
 /**
-* Created by irotsoma on 7/27/2016.
- *
  * View model class for binding CloudServiceExtension objects to UI components
-*/
+ *
+ * @author Justin Zak
+ */
 class CloudServiceModel(var service: CloudServiceExtension) : ViewModel() {
     val uuid: Property<UUID> = bind { service.observable(CloudServiceExtension::uuid)  }
     val name: Property<String> = bind { service.observable(CloudServiceExtension::name) }

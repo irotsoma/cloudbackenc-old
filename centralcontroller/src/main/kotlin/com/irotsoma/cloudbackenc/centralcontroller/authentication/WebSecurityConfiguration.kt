@@ -34,6 +34,8 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 @EnableWebSecurity
 open class WebSecurityConfiguration : WebSecurityConfigurerAdapter() {
 
+    //TODO:  Try using JdbcUserDetailsManager instead:  http://stackoverflow.com/questions/25631791/cannot-get-userdetailsmanager-injected-with-spring-boot-and-java-based-configura
+
     @Autowired
     lateinit var userDetailsManager: UserAccountDetailsManager
 

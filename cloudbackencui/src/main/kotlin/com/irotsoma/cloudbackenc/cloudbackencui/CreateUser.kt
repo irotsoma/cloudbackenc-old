@@ -19,13 +19,24 @@
  */
 package com.irotsoma.cloudbackenc.cloudbackencui
 
+import javafx.scene.control.Button
+import javafx.scene.control.PasswordField
+import javafx.scene.control.TextField
 import javafx.scene.layout.VBox
 import tornadofx.Fragment
+import tornadofx.get
 
-class CreateUser : Fragment("Create User") {
+class CreateUser : Fragment() {
     override val root: VBox by fxml()
 
+    val cloudServiceCreateUserIDField : TextField by fxid("cloudServiceCreateUserIDField")
+    val cloudServiceCreateUserPasswordField: PasswordField by fxid("cloudServiceCreateUserPasswordField")
+    val cloudServiceCreateUserConfirmPasswordField : PasswordField by fxid("cloudServiceCreateUserConfirmPasswordField")
+    val cloudServiceCreateUserOkButton : Button by fxid("cloudServiceCreateUserOkButton")
+    val cloudServiceCreateUserCancelButton : Button by fxid("cloudServiceCreateUserCancelButton")
+
     init {
+        title = messages["cloudbackencui.title.create.user"]
 
     }
 }

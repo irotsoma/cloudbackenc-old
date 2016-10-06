@@ -14,7 +14,9 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>
  */
-
+/*
+ * Created by irotsoma on 7/28/2016.
+ */
 package com.irotsoma.cloudbackenc.cloudbackencui
 
 import com.irotsoma.cloudbackenc.common.cloudservice.CloudServiceException
@@ -38,9 +40,9 @@ import tornadofx.*
 import java.util.*
 
 /**
-* Created by irotsoma on 7/28/2016.
- *
  * Cloud Services UI functionality
+ *
+ * @author Justin Zak
 */
 class CloudServicesUI() : Fragment() {
     companion object { val LOG by logger() }
@@ -55,21 +57,21 @@ class CloudServicesUI() : Fragment() {
 
 
     init {
-        title = "CloudBackEnc"
+        title = messages["cloudbackencui.title.application"]
         //val restTemplate = RestTemplate()
         //populate available cloud services list
         with (availableCloudServicesTable) {
-            placeholder = Label("Loading Services from Central Controller")
+            placeholder = Label(messages["cloudbackencui.message.loading.services"])
             //asynchronously access the central controller and get a list of available cloud service extensions
             asyncItems {
                 getCloudServices()
             }
             //uuid column
-            with(column("ID", CloudServiceExtension::uuid)){
+            with(column(messages["cloudbackencui.column.cloud.service.id"], CloudServiceExtension::uuid)){
                 prefWidth=230.0
             }
             //name column
-            with(column("Name", CloudServiceExtension::name)){
+            with(column(messages["cloudbackencui.column.cloud.service.name"], CloudServiceExtension::name)){
                 prefWidth=270.0
             }
             //bind to list of services through model
@@ -83,7 +85,7 @@ class CloudServicesUI() : Fragment() {
         with (cloudServicesSetupButton){
             setOnAction {
                 val userInfoPopup = CloudServiceUserInfoFragment(availableCloudServicesModel.service.name)
-                LOG.debug("Attempting to open userID Popup.")
+                LOG.debug("Attempting to open user ID popup.")
                 userInfoPopup.openModal(StageStyle.UTILITY, Modality.WINDOW_MODAL, false, this.scene.window,true)
                 LOG.debug("User entered: ${userInfoPopup.userId}")
                 if (userInfoPopup.userId != null) {
@@ -120,7 +122,7 @@ class CloudServicesUI() : Fragment() {
             return RestTemplate().getForObject("$protocol://${applicationProperties["centralcontroller.host"]}:${applicationProperties["centralcontroller.port"]}/cloudservices", CloudServiceExtensionList::class.java).observable()
         }
         catch (e: ResourceAccessException){
-            throwError("Error retrieving list of cloud service providers.  Make sure the Central Controller service is running.", e)
+            throwError(messages["cloudbackencui.error.getting.cloud.services.list"], e)
             return CloudServiceExtensionList().observable() //this isn't used but is necessary to satisfy the compiler
         }
     }

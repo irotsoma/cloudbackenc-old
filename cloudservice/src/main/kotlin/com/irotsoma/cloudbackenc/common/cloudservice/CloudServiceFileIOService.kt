@@ -24,6 +24,8 @@ import java.io.InputStream
 
 /**
  * Interface for Cloud Service IO operations
+ *
+ * @author Justin Zak
  */
 interface CloudServiceFileIOService {
     /**

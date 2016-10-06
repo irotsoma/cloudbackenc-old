@@ -24,6 +24,7 @@ import javafx.scene.control.Label
 import javafx.scene.layout.VBox
 import javafx.scene.web.WebView
 import tornadofx.View
+import tornadofx.get
 
 
 class CloudServiceWebView(url: String) : View() {
@@ -35,5 +36,6 @@ class CloudServiceWebView(url: String) : View() {
         //TODO: label should come from resource bundle
         cloudServiceWebView.engine.load(url)
         cloudServiceWebViewHyperlink.text = url
+        cloudServiceWebViewLabel.text = messages["cloudbackencui.webview.header"]
     }
 }

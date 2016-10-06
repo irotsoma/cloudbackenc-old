@@ -14,10 +14,14 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>
  */
-
+/*
+ * Created by irotsoma on 8/15/2016.
+ */
 package com.irotsoma.cloudbackenc.centralcontroller.authentication
 
+import com.irotsoma.cloudbackenc.common.logger
 import org.springframework.beans.factory.annotation.Autowired
+import org.springframework.security.core.GrantedAuthority
 import org.springframework.security.core.authority.AuthorityUtils
 import org.springframework.security.core.userdetails.User
 import org.springframework.security.core.userdetails.UserDetails
@@ -28,33 +32,29 @@ import javax.persistence.EntityManager
 import javax.persistence.PersistenceContext
 
 /**
- * Created by irotsoma on 8/15/2016.
- *
- * User Account Details Service with Autowired Repository
+ * User Account Details Service with Autowired Repositories
  */
 @Component
 open class UserAccountDetailsManager : UserDetailsService {
-    private lateinit var repository: UserAccountRepository
+    companion object { val LOG by logger() }
+    private lateinit var userRepository: UserAccountRepository
 
     @PersistenceContext
     private var test : EntityManager? = null
 
-
-
-
     @Autowired
-    constructor(repository: UserAccountRepository){
-        this.repository = repository
+    constructor(userRepository: UserAccountRepository){
+        this.userRepository = userRepository
     }
     override fun loadUserByUsername(username: String): UserDetails {
-        val userAccount = this.repository.findByUsername(username) ?: throw UsernameNotFoundException(" '$username'")
-        return User(userAccount.username, userAccount.password, userAccount.roles?.let {AuthorityUtils.createAuthorityList(*getRoles(it))})
+        val userAccount = this.userRepository.findByUsername(username) ?: throw UsernameNotFoundException(" '$username'")
+        return User(userAccount.username, userAccount.password, userAccount.roles?.let {getRoles(it)})
     }
-    fun getRoles(roles: Collection<Role>) : Array<String>{
+    fun getRoles(roles: Collection<Role>) : List<GrantedAuthority>{
         val roleNames :Array<String> = arrayOf()
         for (role in roles){
-            role.name?.let{roleNames.plus(it)}
+                role.name?.let { roleNames.plus(it) }
         }
-        return roleNames
+        return AuthorityUtils.createAuthorityList(*roleNames)
     }
 }

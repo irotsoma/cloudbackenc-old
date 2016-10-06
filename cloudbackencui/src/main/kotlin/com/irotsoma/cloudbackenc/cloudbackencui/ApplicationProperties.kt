@@ -14,15 +14,17 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>
  */
-
+/*
+ * Created by justin on 7/29/2016.
+ */
 package com.irotsoma.cloudbackenc.cloudbackencui
 
 import java.util.*
 
 /**
- * Created by justin on 7/29/2016.
- *
  * Global properties object for the application.properties file
+ *
+ * @author Justin Zak
  */
 
 //TODO: now that UI app is using spring, use that to load properties.

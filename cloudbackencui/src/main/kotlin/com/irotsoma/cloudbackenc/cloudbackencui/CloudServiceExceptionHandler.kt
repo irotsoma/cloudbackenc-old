@@ -14,7 +14,9 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>
  */
-
+/*
+ * Created by irotsoma on 7/13/2016.
+ */
 package com.irotsoma.cloudbackenc.cloudbackencui
 
 import com.irotsoma.cloudbackenc.common.cloudservice.CloudServiceException
@@ -26,7 +28,9 @@ import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExcep
 import javax.servlet.http.HttpServletResponse
 
 /**
- * Created by irotsoma on 7/13/2016.
+ * Controller Advice for handling errors
+ *
+ * @author Justin Zak
  */
 @ControllerAdvice
 open class CloudServiceExceptionHandler : ResponseEntityExceptionHandler() {

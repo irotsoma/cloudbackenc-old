@@ -14,16 +14,18 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>
  */
-
+/*
+ * Created by irotsoma on 7/19/2016.
+ */
 package com.irotsoma.cloudbackenc.cloudbackencui
 
 import tornadofx.Stylesheet
 
 /**
-* Created by irotsoma on 7/19/2016.
- *
  * Stylesheet class for TornadoFX
-*/
+ *
+ * @author Justin Zak
+ */
 class CloudBackEncUIStyles : Stylesheet(){
     companion object{
     }

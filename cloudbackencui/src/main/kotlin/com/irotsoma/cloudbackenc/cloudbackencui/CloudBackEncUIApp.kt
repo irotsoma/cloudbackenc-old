@@ -14,7 +14,9 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>
  */
-
+/*
+ * Created by irotsoma on 7/19/2016.
+ */
 package com.irotsoma.cloudbackenc.cloudbackencui
 
 import javafx.scene.Scene
@@ -29,11 +31,12 @@ import tornadofx.App
 import tornadofx.FX
 
 /**
-* Created by irotsoma on 7/19/2016.
- *
  * TornadoFX app class launched by spring boot
+ *
  * Based on JavaFx example:  https://github.com/thomasdarimont/spring-labs/tree/master/spring-boot-javafx
  * App param = startup view class, style class
+ *
+ * @author Justin Zak
 */
 
 @Lazy

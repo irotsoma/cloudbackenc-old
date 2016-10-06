@@ -24,6 +24,7 @@ package com.irotsoma.cloudbackenc.common.cloudservice
  *
  * Populated by cloud-service-extension.json from the extension's resources.
  *
+ * @author Justin Zak
  * @param serviceName Human readable name of service
  * @param serviceUUID Internal UUID of the service from the cloud-service-extension.json file.
  * @param packageName Full package name of the factory class for the service
