@@ -19,7 +19,7 @@
  */
 package com.irotsoma.cloudbackenc.cloudbackencui
 
-import tornadofx.Stylesheet
+import tornadofx.*
 
 /**
  * Stylesheet class for TornadoFX
@@ -28,7 +28,14 @@ import tornadofx.Stylesheet
  */
 class CloudBackEncUIStyles : Stylesheet(){
     companion object{
+        val error by cssclass()
     }
     init {
+        textField{
+            add(error){
+                borderColor += box(c("red"))
+                borderWidth += box(3.px)
+            }
+        }
     }
 }

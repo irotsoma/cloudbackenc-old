@@ -52,7 +52,6 @@ open class UserController {
         {
             return ResponseEntity(null, HttpStatus.FORBIDDEN)
         }
-        userAccountDetailsManager.
         //TODO implement this
         return ResponseEntity(updatedUser, HttpStatus.OK)
     }

@@ -42,10 +42,14 @@ import tornadofx.View
 open class MainView : View() {
     companion object { val LOG by logger() }
     override val root: VBox by fxml()
-    val menuFileSetupCloudService : MenuItem by fxid("menuFileSetupCloudService")
+    val menuCloudServicesSetup : MenuItem by fxid("menuCloudServicesSetup")
+    val menuUsersCreateUser : MenuItem by fxid("menuUsersCreateUser")
     init{
-        menuFileSetupCloudService.setOnAction{
-            CloudServicesUI().openModal(StageStyle.DECORATED,Modality.APPLICATION_MODAL,false)
+        menuCloudServicesSetup.setOnAction{
+            CloudServicesUI().openModal(StageStyle.DECORATED, Modality.APPLICATION_MODAL, false)
+        }
+        menuUsersCreateUser.setOnAction {
+            CreateUser().openModal(StageStyle.UTILITY, Modality.APPLICATION_MODAL, false)
         }
     }
 

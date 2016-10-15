@@ -19,13 +19,18 @@
 
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.VBox?>
-<VBox xmlns="http://javafx.com/javafx/8.0.60" xmlns:fx="http://javafx.com/fxml/1">
+<VBox xmlns="http://javafx.com/javafx/8.0.65" xmlns:fx="http://javafx.com/fxml/1">
    <children>
       <MenuBar>
         <menus>
+            <Menu mnemonicParsing="false" text="%cloudbackencui.menu.users">
+               <items>
+                  <MenuItem fx:id="menuUsersCreateUser" mnemonicParsing="false" text="%cloudbackencui.menuitem.create.user" />
+               </items>
+            </Menu>
           <Menu mnemonicParsing="false" text="%cloudbackencui.menu.cloud.services">
             <items>
-              <MenuItem fx:id="menuFileSetupCloudService" mnemonicParsing="false" text="%cloudbackencui.menuitem.setup.cloud.services" />
+              <MenuItem fx:id="menuCloudServicesSetup" mnemonicParsing="false" text="%cloudbackencui.menuitem.setup.cloud.services" />
             </items>
           </Menu>
           <Menu mnemonicParsing="false" text="%cloudbackencui.menu.help">

@@ -20,6 +20,7 @@
 package com.irotsoma.cloudbackenc.cloudbackencui
 
 import javafx.scene.control.Button
+import javafx.scene.control.Label
 import javafx.scene.control.PasswordField
 import javafx.scene.control.TextField
 import javafx.scene.layout.VBox
@@ -34,9 +35,29 @@ class CreateUser : Fragment() {
     val cloudServiceCreateUserConfirmPasswordField : PasswordField by fxid("cloudServiceCreateUserConfirmPasswordField")
     val cloudServiceCreateUserOkButton : Button by fxid("cloudServiceCreateUserOkButton")
     val cloudServiceCreateUserCancelButton : Button by fxid("cloudServiceCreateUserCancelButton")
+    val cloudServiceCreateUserErrorLabel : Label by fxid("cloudServiceCreateUserErrorLabel")
 
     init {
         title = messages["cloudbackencui.title.create.user"]
-
+        with (cloudServiceCreateUserCancelButton){
+            setOnAction{
+                closeModal()
+            }
+        }
+        with (cloudServiceCreateUserOkButton){
+            setOnAction{
+                cloudServiceCreateUserErrorLabel.text = ""
+                cloudServiceCreateUserConfirmPasswordField.styleClass.removeAll("error")
+                if (cloudServiceCreateUserPasswordField.text != cloudServiceCreateUserConfirmPasswordField.text) {
+                    cloudServiceCreateUserErrorLabel.text = messages["cloudbackencui.message.password.mismatch.error"]
+                    with(cloudServiceCreateUserConfirmPasswordField) {
+                        if (!styleClass.contains("error")) {
+                            styleClass.add("error")
+                        }
+                    }
+                    it.consume()
+                }
+            }
+        }
     }
 }
