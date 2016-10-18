@@ -14,7 +14,9 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>
  */
-
+/*
+ * Created by irotsoma on 8/15/2016.
+ */
 package com.irotsoma.cloudbackenc.centralcontroller.authentication
 
 import com.fasterxml.jackson.annotation.JsonIgnore
@@ -24,8 +26,6 @@ import org.springframework.security.crypto.password.PasswordEncoder
 import javax.persistence.*
 
 /**
- * Created by irotsoma on 8/15/2016.
- *
  * User Account Object
  */
 @Entity
@@ -39,6 +39,7 @@ class UserAccount() {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     var id: Long? = null
     var username: String? = null
+    //TODO: Add validation for email formatting
     var email: String? = null
     @JsonIgnore
     var password: String? = null

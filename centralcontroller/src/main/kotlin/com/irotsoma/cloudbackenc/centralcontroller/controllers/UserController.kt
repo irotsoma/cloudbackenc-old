@@ -19,8 +19,11 @@ package com.irotsoma.cloudbackenc.centralcontroller.controllers
 /*
  * Created by irotsoma on 9/22/2016.
  */
+import com.irotsoma.cloudbackenc.centralcontroller.authentication.Role
+import com.irotsoma.cloudbackenc.centralcontroller.authentication.UserAccount
 import com.irotsoma.cloudbackenc.centralcontroller.authentication.UserAccountDetailsManager
 import com.irotsoma.cloudbackenc.common.CloudBackEncUser
+import com.irotsoma.cloudbackenc.common.logger
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
@@ -35,13 +38,30 @@ import org.springframework.web.bind.annotation.RequestMethod
 @Controller
 @RequestMapping("/users")
 open class UserController {
+    companion object { val LOG by logger() }
     @Autowired
     private lateinit var userAccountDetailsManager: UserAccountDetailsManager
 
     @RequestMapping(method = arrayOf(RequestMethod.POST))
     fun createUser(@RequestBody user: CloudBackEncUser): ResponseEntity<CloudBackEncUser>{
+        val auth = SecurityContextHolder.getContext().authentication
+        val currentUser = userAccountDetailsManager.loadUserByUsername(auth.name)
+        if (!currentUser.authorities.contains(GrantedAuthority{"ROLE_ADMIN"}))
+        {
+            return ResponseEntity(null, HttpStatus.FORBIDDEN)
+        }
+        val roles : Collection<Role> = emptyList()
+        for(role in user.roles){
+            if (userAccountDetailsManager.roleRepository.findByName(role) == null){
+                LOG.error("Invalid role while creating new user:  $role")
+                return ResponseEntity(null, HttpStatus.UNPROCESSABLE_ENTITY)
+            } else {
+                roles.plus(userAccountDetailsManager.roleRepository.findByName(role))
+            }
+        }
+        val newUserAccount = UserAccount(user.userId, user.password,user.emailAddress,roles)
+        userAccountDetailsManager.userRepository.saveAndFlush(newUserAccount)
 
-        //TODO implement this
         return ResponseEntity(user, HttpStatus.OK)
     }
 

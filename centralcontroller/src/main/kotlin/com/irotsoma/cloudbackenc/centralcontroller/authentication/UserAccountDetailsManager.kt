@@ -28,8 +28,6 @@ import org.springframework.security.core.userdetails.UserDetails
 import org.springframework.security.core.userdetails.UserDetailsService
 import org.springframework.security.core.userdetails.UsernameNotFoundException
 import org.springframework.stereotype.Component
-import javax.persistence.EntityManager
-import javax.persistence.PersistenceContext
 
 /**
  * User Account Details Service with Autowired Repositories
@@ -37,24 +35,25 @@ import javax.persistence.PersistenceContext
 @Component
 open class UserAccountDetailsManager : UserDetailsService {
     companion object { val LOG by logger() }
-    private lateinit var userRepository: UserAccountRepository
-
-    @PersistenceContext
-    private var test : EntityManager? = null
+    @Autowired
+    lateinit var userRepository: UserAccountRepository
 
     @Autowired
-    constructor(userRepository: UserAccountRepository){
-        this.userRepository = userRepository
-    }
+    lateinit var roleRepository: RoleRepository
+
     override fun loadUserByUsername(username: String): UserDetails {
-        val userAccount = this.userRepository.findByUsername(username) ?: throw UsernameNotFoundException(" '$username'")
+        val userAccount = userRepository.findByUsername(username) ?: throw UsernameNotFoundException(" '$username'")
         return User(userAccount.username, userAccount.password, userAccount.roles?.let {getRoles(it)})
     }
     fun getRoles(roles: Collection<Role>) : List<GrantedAuthority>{
-        val roleNames :Array<String> = arrayOf()
+        var roleNames :Array<String> = emptyArray()
         for (role in roles){
-                role.name?.let { roleNames.plus(it) }
+
+            if (role.name?.let { roleRepository.findByName(it) } != null){
+                roleNames = roleNames.plus(role.name!!)
+            }
         }
+        val test = AuthorityUtils.createAuthorityList(*roleNames)
         return AuthorityUtils.createAuthorityList(*roleNames)
     }
 }

@@ -14,14 +14,14 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>
  */
-
+/*
+ * Created by irotsoma on 9/2/2016.
+ */
 package com.irotsoma.cloudbackenc.centralcontroller.authentication
 
 import javax.persistence.*
 
 /**
- * Created by irotsoma on 9/2/2016.
- *
  * User Role object
  */
 @Entity

@@ -3,10 +3,9 @@
  */
 package com.irotsoma.cloudbackenc.common
 
-import javax.crypto.SealedObject
-
-interface CloudBackEncUser {
-    val userId : String
-    val password : SealedObject
-    val isActive: Boolean
+class CloudBackEncUser(val userId : String,
+                       val password : String,
+                       val emailAddress : String?,
+                       val isActive: Boolean,
+                       val roles : List<String>){
 }
