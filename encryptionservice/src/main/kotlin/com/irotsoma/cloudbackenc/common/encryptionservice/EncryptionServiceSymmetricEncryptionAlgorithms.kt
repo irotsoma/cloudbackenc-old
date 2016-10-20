@@ -25,7 +25,7 @@ package com.irotsoma.cloudbackenc.common.encryptionservice
  * @author Justin Zak
  * @param value The value should be the standard string representations of the algorithms.
  */
-enum class EncryptionServiceEncryptionAlgorithms(
+enum class EncryptionServiceSymmetricEncryptionAlgorithms(
         /**
          * The value should be the standard string representations of the algorithms.
          */

@@ -42,7 +42,7 @@ interface EncryptionServiceKeyService {
      * @param algorithm Algorithm to use to generate the key.
      * @param keySize Size of the key to generate in bits.
      */
-    fun generateSymmetricKey(algorithm: EncryptionServiceKeyAlgorithms, keySize: Int): SecretKey?
+    fun generateSymmetricKey(algorithm: EncryptionServiceSymmetricKeyAlgorithms, keySize: Int): SecretKey?
     /**
      * Generate a symmetric [SecretKey] specifying the algorithm, key size, and implementation of [SecureRandom]
      *
@@ -52,7 +52,7 @@ interface EncryptionServiceKeyService {
      * @param keySize Size of the key to generate in bits.
      * @param secureRandom An instance of a [SecureRandom] random number generator.  If not sent, a new one will be generated using the default Java algorithm.  If encrypting or decrypting lots of files or strings, it is recommended to generate the [SecureRandom] once rather than once per call as it can be a resource intensive operation.
      */
-    fun generateSymmetricKey(algorithm: EncryptionServiceKeyAlgorithms, keySize: Int, secureRandom: SecureRandom): SecretKey?
+    fun generateSymmetricKey(algorithm: EncryptionServiceSymmetricKeyAlgorithms, keySize: Int, secureRandom: SecureRandom): SecretKey?
 
     /**
      * Generate an asymmetric [KeyPair] using the default options of the extension
@@ -66,7 +66,7 @@ interface EncryptionServiceKeyService {
      * @param algorithm Algorithm to use to generate the keys.
      * @param keySize Size of the keys to generate in bits.
      */
-    fun generateAsymmetricKeys(algorithm: EncryptionServiceKeyAlgorithms, keySize: Int): KeyPair?
+    fun generateAsymmetricKeys(algorithm: EncryptionServiceSymmetricKeyAlgorithms, keySize: Int): KeyPair?
     /**
      * Generate an asymmetric [KeyPair] specifying the algorithm, key size, and implementation of [SecureRandom]
      *
@@ -76,7 +76,7 @@ interface EncryptionServiceKeyService {
      * @param keySize Size of the keys to generate in bits.
      * @param secureRandom An instance of a [SecureRandom] random number generator.  If not sent, a new one will be generated using the default Java algorithm.  If encrypting or decrypting lots of files or strings, it is recommended to generate the [SecureRandom] once rather than once per call as it can be a resource intensive operation.
      */
-    fun generateAsymmetricKeys(algorithm: EncryptionServiceKeyAlgorithms, keySize: Int, secureRandom: SecureRandom): KeyPair?
+    fun generateAsymmetricKeys(algorithm: EncryptionServiceSymmetricKeyAlgorithms, keySize: Int, secureRandom: SecureRandom): KeyPair?
 
     /**
      * Generate a password based symmetric [SecretKey] using the default options of the extension
