@@ -49,7 +49,7 @@ open class MainView : View() {
             CloudServicesUI().openModal(StageStyle.DECORATED, Modality.APPLICATION_MODAL, false)
         }
         menuUsersCreateUser.setOnAction {
-            CreateUser().openModal(StageStyle.UTILITY, Modality.APPLICATION_MODAL, false)
+            CreateUserUI().openModal(StageStyle.UTILITY, Modality.APPLICATION_MODAL, false)
         }
     }
 

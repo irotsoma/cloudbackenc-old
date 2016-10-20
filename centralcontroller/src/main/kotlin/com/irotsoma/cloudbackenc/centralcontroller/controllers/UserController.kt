@@ -19,14 +19,15 @@ package com.irotsoma.cloudbackenc.centralcontroller.controllers
 /*
  * Created by irotsoma on 9/22/2016.
  */
-import com.irotsoma.cloudbackenc.centralcontroller.authentication.Role
 import com.irotsoma.cloudbackenc.centralcontroller.authentication.UserAccount
 import com.irotsoma.cloudbackenc.centralcontroller.authentication.UserAccountDetailsManager
+import com.irotsoma.cloudbackenc.common.CloudBackEncRoles
 import com.irotsoma.cloudbackenc.common.CloudBackEncUser
 import com.irotsoma.cloudbackenc.common.logger
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
+import org.springframework.security.access.annotation.Secured
 import org.springframework.security.core.GrantedAuthority
 import org.springframework.security.core.context.SecurityContextHolder
 import org.springframework.stereotype.Controller
@@ -43,23 +44,25 @@ open class UserController {
     private lateinit var userAccountDetailsManager: UserAccountDetailsManager
 
     @RequestMapping(method = arrayOf(RequestMethod.POST))
+    //@Secured("ROLE_ADMIN")
     fun createUser(@RequestBody user: CloudBackEncUser): ResponseEntity<CloudBackEncUser>{
         val auth = SecurityContextHolder.getContext().authentication
         val currentUser = userAccountDetailsManager.loadUserByUsername(auth.name)
-        if (!currentUser.authorities.contains(GrantedAuthority{"ROLE_ADMIN"}))
+        if (!currentUser.authorities.contains(GrantedAuthority{CloudBackEncRoles.ROLE_ADMIN.name}))
         {
             return ResponseEntity(null, HttpStatus.FORBIDDEN)
         }
-        val roles : Collection<Role> = emptyList()
-        for(role in user.roles){
-            if (userAccountDetailsManager.roleRepository.findByName(role) == null){
-                LOG.error("Invalid role while creating new user:  $role")
-                return ResponseEntity(null, HttpStatus.UNPROCESSABLE_ENTITY)
-            } else {
-                roles.plus(userAccountDetailsManager.roleRepository.findByName(role))
-            }
-        }
-        val newUserAccount = UserAccount(user.userId, user.password,user.emailAddress,roles)
+//        val roles : Collection<CloudBackEncRoles> = emptyList()
+//        for(role in user.roles){
+//            if (userAccountDetailsManager.roleRepository.findByName(role) == null){
+//                LOG.error("Invalid role while creating new user:  $role")
+//                return ResponseEntity(null, HttpStatus.UNPROCESSABLE_ENTITY)
+//            } else {
+//                roles.plus(userAccountDetailsManager.roleRepository.findByName(role))
+//            }
+//        }
+        //TODO: validate for duplicates
+        val newUserAccount = UserAccount(user.userId, user.password,user.emailAddress, user.roles.map { CloudBackEncRoles.valueOf(it) })
         userAccountDetailsManager.userRepository.saveAndFlush(newUserAccount)
 
         return ResponseEntity(user, HttpStatus.OK)
@@ -76,6 +79,7 @@ open class UserController {
         return ResponseEntity(updatedUser, HttpStatus.OK)
     }
     @RequestMapping(method = arrayOf(RequestMethod.DELETE))
+    @Secured("ROLE_ADMIN")
     fun deleteUser(@RequestBody updatedUser:CloudBackEncUser) : ResponseEntity<CloudBackEncUser>{
         val authorizedUser = SecurityContextHolder.getContext().authentication.name
 

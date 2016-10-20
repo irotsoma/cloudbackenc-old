@@ -14,16 +14,24 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>
  */
+
 /*
- * Created by irotsoma on 9/2/2016.
+ * Created by irotsoma on 10/19/2016.
  */
-package com.irotsoma.cloudbackenc.centralcontroller.authentication
+package com.irotsoma.cloudbackenc.common
 
-import org.springframework.data.jpa.repository.JpaRepository
 
-/**
- * Repository object for storing user roles
- */
-interface RoleRepository : JpaRepository<Role, Long> {
-    fun findByName(name: String): Role?
+enum class CloudBackEncRoles {
+    /**
+     * Role used for running integration tests
+     */
+    ROLE_TEST,
+    /**
+     * Standard user
+     */
+    ROLE_USER,
+    /**
+     * Administrative user
+     */
+    ROLE_ADMIN;
 }

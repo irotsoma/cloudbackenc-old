@@ -90,7 +90,6 @@ open class CloudServiceRepository : ApplicationContextAware {
         }
         //create a class loader with all of the jars
         val classLoader = URLClassLoader(jarURLs,_applicationContext.classLoader)
-        Thread.currentThread().contextClassLoader = classLoader
         //cycle through all of the classes, make sure they inheritors CloudServiceFactory, and add them to the list
         for ((key, value) in factoryClasses) {
             try {

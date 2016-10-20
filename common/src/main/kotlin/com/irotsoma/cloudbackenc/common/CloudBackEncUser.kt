@@ -6,6 +6,6 @@ package com.irotsoma.cloudbackenc.common
 class CloudBackEncUser(val userId : String,
                        val password : String,
                        val emailAddress : String?,
-                       val isActive: Boolean,
+                       val active: Boolean,
                        val roles : List<String>){
 }

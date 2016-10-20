@@ -20,6 +20,7 @@
 package com.irotsoma.cloudbackenc.centralcontroller.authentication
 
 import com.fasterxml.jackson.annotation.JsonIgnore
+import com.irotsoma.cloudbackenc.common.CloudBackEncRoles
 
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder
 import org.springframework.security.crypto.password.PasswordEncoder
@@ -47,11 +48,23 @@ class UserAccount() {
             field = PASSWORD_ENCODER.encode(value)
         }
 
-    @ManyToMany(fetch = FetchType.EAGER)
-    @JoinTable(name = "user_roles", joinColumns = arrayOf(JoinColumn(name = "user_id", referencedColumnName = "id")), inverseJoinColumns = arrayOf(JoinColumn(name = "role_id", referencedColumnName = "id")))
-    var roles: Collection<Role>? = null
+    //@ManyToMany(fetch = FetchType.EAGER)
+    //@JoinTable(name = "user_roles", joinColumns = arrayOf(JoinColumn(name = "user_id", referencedColumnName = "id")), inverseJoinColumns = arrayOf(JoinColumn(name = "role_id", referencedColumnName = "id")))
+    //var roles: Collection<Role>? = null
 
-    constructor(username: String, password: String, email: String?, roles: Collection<Role>) : this() {
+    @ElementCollection(fetch = FetchType.EAGER)
+    @CollectionTable(name = "user_roles", joinColumns = arrayOf(JoinColumn(name = "user_id", referencedColumnName = "id")))
+    @Column(name="role")
+    var roleList: List<String>? = null
+    var roles: List<CloudBackEncRoles>?
+        set(value){
+            roleList = value?.map{it.name}
+        }
+        get(){
+            return roleList?.map{ CloudBackEncRoles.valueOf(it)}
+        }
+
+    constructor(username: String, password: String, email: String?, roles: List<CloudBackEncRoles>) : this() {
         this.username = username
         this.password = password
         this.email = email

@@ -19,6 +19,7 @@
  */
 package com.irotsoma.cloudbackenc.centralcontroller.authentication
 
+import com.irotsoma.cloudbackenc.common.CloudBackEncRoles
 import com.irotsoma.cloudbackenc.common.logger
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.security.core.GrantedAuthority
@@ -35,23 +36,22 @@ import org.springframework.stereotype.Component
 @Component
 open class UserAccountDetailsManager : UserDetailsService {
     companion object { val LOG by logger() }
-    @Autowired
+
     lateinit var userRepository: UserAccountRepository
 
     @Autowired
-    lateinit var roleRepository: RoleRepository
+    constructor(userRepository: UserAccountRepository){
+        this.userRepository = userRepository
+    }
 
     override fun loadUserByUsername(username: String): UserDetails {
         val userAccount = userRepository.findByUsername(username) ?: throw UsernameNotFoundException(" '$username'")
         return User(userAccount.username, userAccount.password, userAccount.roles?.let {getRoles(it)})
     }
-    fun getRoles(roles: Collection<Role>) : List<GrantedAuthority>{
+    fun getRoles(roles: Collection<CloudBackEncRoles>) : List<GrantedAuthority>{
         var roleNames :Array<String> = emptyArray()
         for (role in roles){
-
-            if (role.name?.let { roleRepository.findByName(it) } != null){
-                roleNames = roleNames.plus(role.name!!)
-            }
+            roleNames = roleNames.plus(role.name)
         }
         val test = AuthorityUtils.createAuthorityList(*roleNames)
         return AuthorityUtils.createAuthorityList(*roleNames)

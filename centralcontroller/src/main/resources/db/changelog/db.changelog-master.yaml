@@ -27,24 +27,6 @@ databaseChangeLog:
               - column:
                   name: email
                   type: nvarchar(255)
-              - column:
-                  name: roles
-                  type: nvarchar (255)
-        - createTable:
-            tableName: role
-            columns:
-              - column:
-                  name: id
-                  type: int
-                  autoIncrement: true
-                  constraints:
-                    primaryKey: true
-                    nullable: false
-              - column:
-                  name: name
-                  type: nvarchar(255)
-                  constraints:
-                    nullable: false
         - createTable:
             tableName: user_roles
             columns:
@@ -56,38 +38,15 @@ databaseChangeLog:
                     primaryKey: true
                     nullable: false
               - column:
-                  name: role_id
-                  type: int
-              - column:
                   name: user_id
                   type: int
-        - insert:
-            tableName: role
-            columns:
+                  constraints:
+                   nullable: false
               - column:
-                  name: id
-                  value: 1
-              - column:
-                  name: name
-                  value: ROLE_ADMIN
-        - insert:
-            tableName: role
-            columns:
-              - column:
-                  name: id
-                  value: 2
-              - column:
-                  name: name
-                  value: ROLE_USER
-        - insert:
-            tableName: role
-            columns:
-              - column:
-                  name: id
-                  value: 3
-              - column:
-                  name: name
-                  value: ROLE_TEST
+                  name: role
+                  type: nvarchar(255)
+                  constraints:
+                   nullable: false
   - changeSet:
       id: 2
       author: irotsoma
@@ -103,7 +62,7 @@ databaseChangeLog:
                   value: test
               - column:
                   name: password
-                  value: \$2a\$06\$ncXfcuTwtLaktLL0epJYJuflWSjgaQuiMIFwxRt8e1wyhoKvllY3q
+                  value: "\$2a\$06\$ncXfcuTwtLaktLL0epJYJuflWSjgaQuiMIFwxRt8e1wyhoKvllY3q"
         - insert:
             tableName: user_roles
             columns:
@@ -114,5 +73,41 @@ databaseChangeLog:
                   name: user_id
                   value: 1
               - column:
-                  name: role_id
+                  name: role
+                  value: ROLE_TEST
+        - insert:
+            tableName: user_account
+            columns:
+              - column:
+                  name: id
+                  value: 2
+              - column:
+                  name: username
+                  value: admin
+              - column:
+                  name: password
+                  value: "\$2a\$06\$8SUHH8rSwhF/KsAPGmjYy.CatNNV3GSv4YgkyKNcG47cdO6uccqTu"
+        - insert:
+            tableName: user_roles
+            columns:
+              - column:
+                  name: id
+                  value: 2
+              - column:
+                  name: user_id
+                  value: 2
+              - column:
+                  name: role
+                  value: ROLE_ADMIN
+        - insert:
+            tableName: user_roles
+            columns:
+              - column:
+                  name: id
                   value: 3
+              - column:
+                  name: user_id
+                  value: 2
+              - column:
+                  name: role
+                  value: ROLE_USER
