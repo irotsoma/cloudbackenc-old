@@ -18,6 +18,7 @@
 package com.irotsoma.cloudbackenc.centralcontroller.controllers
 
 import com.irotsoma.cloudbackenc.centralcontroller.cloudservices.CloudServiceRepository
+import com.irotsoma.cloudbackenc.centralcontroller.controllers.exceptions.InvalidCloudServiceUUID
 import com.irotsoma.cloudbackenc.common.cloudservice.CloudServiceException
 import com.irotsoma.cloudbackenc.common.cloudservice.CloudServiceFactory
 import com.irotsoma.cloudbackenc.common.cloudservice.CloudServiceUser
@@ -56,7 +57,7 @@ open class CloudServiceLoginController {
 
         val locale = LocaleContextHolder.getLocale()
 
-        val cloudServiceFactory : Class<CloudServiceFactory> = cloudServiceRepository.cloudServiceExtensions[uuid] ?: throw InvalidPathVariableException(messageSource.getMessage("centralcontroller.cloudservices.uuid.dne", arrayOf(uuid.toString()),locale))
+        val cloudServiceFactory : Class<CloudServiceFactory> = cloudServiceRepository.cloudServiceExtensions[uuid] ?: throw InvalidCloudServiceUUID()
         val authenticationService = cloudServiceFactory.newInstance().authenticationService
         val response : CloudServiceUser
         //debug message: ignore and let it default to null if URL is invalid or missing

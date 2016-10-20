@@ -21,6 +21,7 @@ package com.irotsoma.cloudbackenc.centralcontroller.controllers
  */
 import com.irotsoma.cloudbackenc.centralcontroller.authentication.UserAccount
 import com.irotsoma.cloudbackenc.centralcontroller.authentication.UserAccountDetailsManager
+import com.irotsoma.cloudbackenc.centralcontroller.controllers.exceptions.DuplicateUserException
 import com.irotsoma.cloudbackenc.common.CloudBackEncRoles
 import com.irotsoma.cloudbackenc.common.CloudBackEncUser
 import com.irotsoma.cloudbackenc.common.logger
@@ -30,6 +31,7 @@ import org.springframework.http.ResponseEntity
 import org.springframework.security.access.annotation.Secured
 import org.springframework.security.core.GrantedAuthority
 import org.springframework.security.core.context.SecurityContextHolder
+import org.springframework.security.core.userdetails.UsernameNotFoundException
 import org.springframework.stereotype.Controller
 import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.bind.annotation.RequestMapping
@@ -44,7 +46,7 @@ open class UserController {
     private lateinit var userAccountDetailsManager: UserAccountDetailsManager
 
     @RequestMapping(method = arrayOf(RequestMethod.POST))
-    //@Secured("ROLE_ADMIN")
+    @Secured("ROLE_ADMIN")
     fun createUser(@RequestBody user: CloudBackEncUser): ResponseEntity<CloudBackEncUser>{
         val auth = SecurityContextHolder.getContext().authentication
         val currentUser = userAccountDetailsManager.loadUserByUsername(auth.name)
@@ -52,16 +54,16 @@ open class UserController {
         {
             return ResponseEntity(null, HttpStatus.FORBIDDEN)
         }
-//        val roles : Collection<CloudBackEncRoles> = emptyList()
-//        for(role in user.roles){
-//            if (userAccountDetailsManager.roleRepository.findByName(role) == null){
-//                LOG.error("Invalid role while creating new user:  $role")
-//                return ResponseEntity(null, HttpStatus.UNPROCESSABLE_ENTITY)
-//            } else {
-//                roles.plus(userAccountDetailsManager.roleRepository.findByName(role))
-//            }
-//        }
-        //TODO: validate for duplicates
+        //check to see if there is a duplicate user by attempting to load the user and catching the exception for username not found
+        var duplicateUser:Boolean = true
+        try{
+            userAccountDetailsManager.loadUserByUsername(user.userId)
+        } catch(e: UsernameNotFoundException){
+            duplicateUser = false
+        }
+        if (duplicateUser){
+            throw DuplicateUserException()
+        }
         val newUserAccount = UserAccount(user.userId, user.password,user.emailAddress, user.roles.map { CloudBackEncRoles.valueOf(it) })
         userAccountDetailsManager.userRepository.saveAndFlush(newUserAccount)
 

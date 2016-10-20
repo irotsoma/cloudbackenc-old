@@ -14,9 +14,12 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>
  */
-
+/*
+ * Created by irotsoma on 7/13/2016.
+ */
 package com.irotsoma.cloudbackenc.centralcontroller.controllers
 
+import com.irotsoma.cloudbackenc.common.RestException
 import com.irotsoma.cloudbackenc.common.cloudservice.CloudServiceException
 import org.springframework.beans.TypeMismatchException
 import org.springframework.beans.factory.annotation.Autowired
@@ -28,15 +31,12 @@ import org.springframework.http.ResponseEntity
 import org.springframework.http.converter.HttpMessageNotReadableException
 import org.springframework.web.bind.annotation.ControllerAdvice
 import org.springframework.web.bind.annotation.ExceptionHandler
-import org.springframework.web.bind.annotation.ResponseStatus
 import org.springframework.web.context.request.WebRequest
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler
 import java.util.*
 import javax.servlet.http.HttpServletResponse
 
 /**
- * Created by irotsoma on 7/13/2016.
- *
  * Controller advice for custom exceptions.  Allows for customizing the messages returned to the REST client.
  */
 @ControllerAdvice
@@ -45,19 +45,16 @@ open class CloudServiceExceptionHandler : ResponseEntityExceptionHandler() {
     @Autowired
     lateinit var messageSource: MessageSource
 
-
     @ExceptionHandler(CloudServiceException::class)
-    @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
-    fun handleCloudServiceException(response: HttpServletResponse, exception:Exception) : String?{
+    fun handleCloudServiceException(response: HttpServletResponse, exception: CloudServiceException) : String?{
         response.sendError(HttpStatus.INTERNAL_SERVER_ERROR.value(), exception.message)
         return exception.message
     }
 
-    @ExceptionHandler(InvalidPathVariableException::class)
-    @ResponseStatus(HttpStatus.BAD_REQUEST)
-    fun handleInvalidPathVariableException(response: HttpServletResponse, exception:Exception) : String?{
-        response.sendError(HttpStatus.BAD_REQUEST.value(), exception.message)
-        return exception.message
+    @ExceptionHandler(RestException::class)
+    fun handleRestException(response: HttpServletResponse, exception: RestException) : String?{
+        response.sendError(exception.type.httpStatusCode(),exception.type.friendlyMessage(LocaleContextHolder.getLocale()))
+        return exception.type.friendlyMessage(LocaleContextHolder.getLocale())
     }
 
     override fun handleHttpMessageNotReadable(ex: HttpMessageNotReadableException?, headers: HttpHeaders?, status: HttpStatus?, request: WebRequest?): ResponseEntity<Any> {
