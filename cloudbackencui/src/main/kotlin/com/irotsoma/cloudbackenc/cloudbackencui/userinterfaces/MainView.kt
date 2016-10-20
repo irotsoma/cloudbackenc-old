@@ -46,10 +46,10 @@ open class MainView : View() {
     val menuUsersCreateUser : MenuItem by fxid("menuUsersCreateUser")
     init{
         menuCloudServicesSetup.setOnAction{
-            CloudServicesUI().openModal(StageStyle.DECORATED, Modality.APPLICATION_MODAL, false)
+            CloudServicesFragment().openModal(StageStyle.DECORATED, Modality.APPLICATION_MODAL, false)
         }
         menuUsersCreateUser.setOnAction {
-            CreateUserUI().openModal(StageStyle.UTILITY, Modality.APPLICATION_MODAL, false)
+            CreateUserFragment().openModal(StageStyle.UTILITY, Modality.APPLICATION_MODAL, false)
         }
     }
 

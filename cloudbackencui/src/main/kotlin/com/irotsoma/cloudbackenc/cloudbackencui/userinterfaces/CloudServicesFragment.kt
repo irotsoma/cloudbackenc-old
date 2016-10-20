@@ -47,7 +47,7 @@ import java.util.*
  *
  * @author Justin Zak
 */
-class CloudServicesUI() : Fragment() {
+class CloudServicesFragment() : Fragment() {
     companion object { val LOG by logger() }
     override val root: VBox by fxml()
     val availableCloudServicesModel: CloudServiceModel = CloudServiceModel(CloudServiceExtension(UUID.randomUUID(),""))
@@ -56,8 +56,6 @@ class CloudServicesUI() : Fragment() {
     val cloudServicesRemoveButton : Button by fxid("cloudServicesRemoveButton")
     val availableCloudServicesTable : TableView<CloudServiceExtension> by fxid("availableCloudServicesTable")
     val activeCloudServicesTable : TableView<CloudServiceExtension> by fxid("activeCloudServicesTable")
-
-
 
     init {
         title = messages["cloudbackencui.title.application"]

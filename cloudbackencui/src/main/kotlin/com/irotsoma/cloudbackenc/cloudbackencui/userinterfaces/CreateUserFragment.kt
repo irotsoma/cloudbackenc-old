@@ -35,7 +35,7 @@ import org.springframework.web.client.RestTemplate
 import tornadofx.Fragment
 import tornadofx.get
 
-class CreateUserUI : Fragment() {
+class CreateUserFragment : Fragment() {
     companion object { val LOG by logger() }
     override val root: VBox by fxml()
 
