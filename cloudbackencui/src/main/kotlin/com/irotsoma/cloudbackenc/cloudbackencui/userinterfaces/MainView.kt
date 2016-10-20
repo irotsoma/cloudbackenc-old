@@ -18,7 +18,7 @@
  * Created by irotsoma on 7/19/2016.
  */
 
-package com.irotsoma.cloudbackenc.cloudbackencui
+package com.irotsoma.cloudbackenc.cloudbackencui.userinterfaces
 
 import com.irotsoma.cloudbackenc.common.logger
 import javafx.scene.control.MenuItem

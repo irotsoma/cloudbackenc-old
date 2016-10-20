@@ -17,8 +17,10 @@
 /*
  * Created by irotsoma on 10/4/2016.
  */
-package com.irotsoma.cloudbackenc.cloudbackencui
+package com.irotsoma.cloudbackenc.cloudbackencui.userinterfaces
 
+import com.irotsoma.cloudbackenc.cloudbackencui.applicationProperties
+import com.irotsoma.cloudbackenc.cloudbackencui.trustSelfSignedSSL
 import com.irotsoma.cloudbackenc.common.CloudBackEncRoles
 import com.irotsoma.cloudbackenc.common.CloudBackEncUser
 import com.irotsoma.cloudbackenc.common.logger

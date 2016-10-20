@@ -17,7 +17,7 @@
 /*
  * Created by irotsoma on 8/12/16.
  */
-package com.irotsoma.cloudbackenc.cloudbackencui
+package com.irotsoma.cloudbackenc.cloudbackencui.userinterfaces
 
 import javafx.scene.control.Hyperlink
 import javafx.scene.control.Label

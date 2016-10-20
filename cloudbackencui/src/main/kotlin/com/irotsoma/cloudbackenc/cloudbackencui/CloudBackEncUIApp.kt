@@ -19,6 +19,7 @@
  */
 package com.irotsoma.cloudbackenc.cloudbackencui
 
+import com.irotsoma.cloudbackenc.cloudbackencui.userinterfaces.MainView
 import javafx.scene.Scene
 import javafx.stage.Stage
 import org.springframework.beans.factory.annotation.Autowired

@@ -19,6 +19,7 @@
  */
 package com.irotsoma.cloudbackenc.cloudbackencui
 
+import com.irotsoma.cloudbackenc.cloudbackencui.userinterfaces.CloudServiceWebView
 import com.irotsoma.cloudbackenc.common.cloudservice.CloudServiceCallbackURL
 import com.irotsoma.cloudbackenc.common.logger
 import javafx.application.Platform

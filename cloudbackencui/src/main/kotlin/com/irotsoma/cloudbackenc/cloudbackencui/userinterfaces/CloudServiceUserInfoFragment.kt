@@ -17,7 +17,7 @@
 /*
  * Created by irotsoma on 9/28/2016.
  */
-package com.irotsoma.cloudbackenc.cloudbackencui
+package com.irotsoma.cloudbackenc.cloudbackencui.userinterfaces
 
 import javafx.scene.control.Button
 import javafx.scene.control.TextField
