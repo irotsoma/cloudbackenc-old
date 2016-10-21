@@ -32,6 +32,10 @@ import org.springframework.stereotype.Component
 
 /**
  * User Account Details Service with Autowired Repositories
+ *
+ * For use by basic authentication in spring boot controllers
+ *
+ * @author Justin Zak
  */
 @Component
 open class UserAccountDetailsManager : UserDetailsService {
@@ -46,14 +50,13 @@ open class UserAccountDetailsManager : UserDetailsService {
 
     override fun loadUserByUsername(username: String): UserDetails {
         val userAccount = userRepository.findByUsername(username) ?: throw UsernameNotFoundException(" '$username'")
-        return User(userAccount.username, userAccount.password, userAccount.roles?.let {getRoles(it)})
+        return User(userAccount.username, userAccount.password, userAccount.enabled, true,true,true, userAccount.roles?.let {getRoles(it)})
     }
     fun getRoles(roles: Collection<CloudBackEncRoles>) : List<GrantedAuthority>{
         var roleNames :Array<String> = emptyArray()
         for (role in roles){
             roleNames = roleNames.plus(role.name)
         }
-        val test = AuthorityUtils.createAuthorityList(*roleNames)
         return AuthorityUtils.createAuthorityList(*roleNames)
     }
 }

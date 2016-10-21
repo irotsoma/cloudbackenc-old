@@ -21,6 +21,7 @@ package com.irotsoma.cloudbackenc.centralcontroller.authentication
 
 import com.fasterxml.jackson.annotation.JsonIgnore
 import com.irotsoma.cloudbackenc.common.CloudBackEncRoles
+import com.irotsoma.cloudbackenc.common.CloudBackEncUser
 
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder
 import org.springframework.security.crypto.password.PasswordEncoder
@@ -47,10 +48,7 @@ class UserAccount() {
         set(value) {
             field = PASSWORD_ENCODER.encode(value)
         }
-
-    //@ManyToMany(fetch = FetchType.EAGER)
-    //@JoinTable(name = "user_roles", joinColumns = arrayOf(JoinColumn(name = "user_id", referencedColumnName = "id")), inverseJoinColumns = arrayOf(JoinColumn(name = "role_id", referencedColumnName = "id")))
-    //var roles: Collection<Role>? = null
+    var enabled: Boolean = true
 
     @ElementCollection(fetch = FetchType.EAGER)
     @CollectionTable(name = "user_roles", joinColumns = arrayOf(JoinColumn(name = "user_id", referencedColumnName = "id")))
@@ -64,10 +62,14 @@ class UserAccount() {
             return roleList?.map{ CloudBackEncRoles.valueOf(it)}
         }
 
-    constructor(username: String, password: String, email: String?, roles: List<CloudBackEncRoles>) : this() {
+    constructor(username: String, password: String, email: String?, enabled: Boolean?, roles: List<CloudBackEncRoles>): this() {
         this.username = username
         this.password = password
         this.email = email
         this.roles = roles
+        this.enabled = enabled ?: true
+    }
+    fun cloudBackEncUser(): CloudBackEncUser{
+        return CloudBackEncUser(username!!, CloudBackEncUser.PASSWORD_MASKED, email, enabled, roles?: emptyList())
     }
 }

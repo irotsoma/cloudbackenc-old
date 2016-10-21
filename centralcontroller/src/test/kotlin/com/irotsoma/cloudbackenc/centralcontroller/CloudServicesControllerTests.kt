@@ -79,7 +79,7 @@ open class CloudServicesControllerTests {
         }
         val requestHeaders = HttpHeaders()
         requestHeaders.add(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
-        val httpEntity = HttpEntity<CloudServiceUser>(CloudServiceUser("test",null,"1d3cb21f-5b88-4b3c-8cb8-1afddf1ff375", CloudServiceUser.STATE.INITIALIZED,""), requestHeaders)
+        val httpEntity = HttpEntity<CloudServiceUser>(CloudServiceUser("test",null,"1d3cb21f-5b88-4b3c-8cb8-1afddf1ff375", null), requestHeaders)
         // TODO: Fix test:  not seeing able to parse response to kotlin class CloudServiceUser.  Using map instead.  Kotlin class mapper is configured outside of test by ObjectMapperConfiguration, but doesn't seem to work here.
         val returnValue = restTemplate.postForEntity("$protocol://localhost:$port/cloudservice/login/1d3cb21f-5b88-4b3c-8cb8-1afddf1ff375", httpEntity, Map::class.java)
         assert(returnValue.body["userId"]== "test")

@@ -19,6 +19,8 @@
 **/
 package com.irotsoma.cloudbackenc.common.cloudservice
 
+import com.irotsoma.cloudbackenc.common.CloudBackEncUser
+
 /**
  * Cloud Service Authentication Interface
  *
@@ -37,14 +39,15 @@ interface CloudServiceAuthenticationService  {
     fun isLoggedIn(user: CloudServiceUser): Boolean
     /**
      * Requests the system to log into the cloud service.
-     * @param user A [CloudServiceUser] object with username and password for login as well as callback url if needed.
-     * @return A copy of the [user] object with updated [CloudServiceUser.state] depending on the result of the login.  Also strips out the password for security.
+     * @param user Internal [CloudBackEncUser] that is attempting to login.  Used for persistent credential storage.
+     * @param cloudServiceUser A [CloudServiceUser] object with username and password for login as well as callback url if needed.
+     * @return [CloudServiceUser.STATE] depending on the result of the login.
      */
-    fun login(user: CloudServiceUser) : CloudServiceUser
+    fun login(user: CloudBackEncUser, cloudServiceUser: CloudServiceUser) : CloudServiceUser.STATE
     /**
      * Requests the system to log off the cloud service.
      * @param user A [CloudServiceUser] object to log out of the cloud service.
      * @return Message returned from the cloud service if applicable.
      */
-    fun logoff(user: CloudServiceUser) : String
+    fun logoff(user: CloudServiceUser) : CloudServiceUser.STATE
 }
