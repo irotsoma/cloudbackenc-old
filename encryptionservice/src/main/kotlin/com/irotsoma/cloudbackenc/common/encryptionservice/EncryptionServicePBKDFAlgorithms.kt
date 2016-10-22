@@ -35,5 +35,9 @@ enum class EncryptionServicePBKDFAlgorithms(
     /**
      * PBKDF2 with Hmac using SHA1
      */
-    PBKDF2WithHmacSHA1("PBKDF2WithHmacSHA1")
+    PBKDF2WithHmacSHA1("PBKDF2WithHmacSHA1"),
+    /**
+     * PBKDF2 with Hmac using SHA512
+     */
+    PBKDF2WithHmacSHA512("PBKDF2WithHmacSHA512")
 }

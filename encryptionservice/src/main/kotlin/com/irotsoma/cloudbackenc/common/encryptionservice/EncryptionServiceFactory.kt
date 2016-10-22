@@ -28,15 +28,15 @@ interface EncryptionServiceFactory {
     /**
      * List of key algorithms that the extension supports
      *
-     * @see EncryptionServiceKeyAlgorithms for list of possible values
+     * @see EncryptionServiceSymmetricKeyAlgorithms for list of possible values
      */
-    val supportedKeyAlgorithms: Array<EncryptionServiceKeyAlgorithms>
+    val supportedSymmetricKeyAlgorithms: Array<EncryptionServiceSymmetricKeyAlgorithms>
     /**
      * List of encryption algorithms that the extension supports
      *
-     * @see EncryptionServiceEncryptionAlgorithms for list of possible values
+     * @see EncryptionServiceSymmetricEncryptionAlgorithms for list of possible values
      */
-    val supportedEncryptionAlgorithms: Array<EncryptionServiceEncryptionAlgorithms>
+    val supportedSymmetricEncryptionAlgorithms: Array<EncryptionServiceSymmetricEncryptionAlgorithms>
     /**
      * List of PBKDF Algorithms that the extension supports
      *

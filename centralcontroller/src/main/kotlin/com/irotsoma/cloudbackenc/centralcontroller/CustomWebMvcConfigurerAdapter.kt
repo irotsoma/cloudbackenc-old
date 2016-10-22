@@ -14,7 +14,9 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>
  */
-
+/*
+ * Created by irotsoma on 8/17/2016.
+ */
 package com.irotsoma.cloudbackenc.centralcontroller
 
 import org.springframework.context.annotation.Bean
@@ -27,8 +29,6 @@ import org.springframework.web.servlet.i18n.SessionLocaleResolver
 import java.util.*
 
 /**
- * Created by irotsoma on 8/17/2016.
- *
  * Configuration to allow for the application to use a session based locale resolver
  */
 

@@ -17,8 +17,11 @@
 /*
  * Created by irotsoma on 7/28/2016.
  */
-package com.irotsoma.cloudbackenc.cloudbackencui
+package com.irotsoma.cloudbackenc.cloudbackencui.userinterfaces
 
+import com.irotsoma.cloudbackenc.cloudbackencui.CloudServiceModel
+import com.irotsoma.cloudbackenc.cloudbackencui.applicationProperties
+import com.irotsoma.cloudbackenc.cloudbackencui.trustSelfSignedSSL
 import com.irotsoma.cloudbackenc.common.cloudservice.CloudServiceException
 import com.irotsoma.cloudbackenc.common.cloudservice.CloudServiceExtension
 import com.irotsoma.cloudbackenc.common.cloudservice.CloudServiceExtensionList
@@ -44,7 +47,7 @@ import java.util.*
  *
  * @author Justin Zak
 */
-class CloudServicesUI() : Fragment() {
+class CloudServicesFragment() : Fragment() {
     companion object { val LOG by logger() }
     override val root: VBox by fxml()
     val availableCloudServicesModel: CloudServiceModel = CloudServiceModel(CloudServiceExtension(UUID.randomUUID(),""))
@@ -53,8 +56,6 @@ class CloudServicesUI() : Fragment() {
     val cloudServicesRemoveButton : Button by fxid("cloudServicesRemoveButton")
     val availableCloudServicesTable : TableView<CloudServiceExtension> by fxid("availableCloudServicesTable")
     val activeCloudServicesTable : TableView<CloudServiceExtension> by fxid("activeCloudServicesTable")
-
-
 
     init {
         title = messages["cloudbackencui.title.application"]

@@ -21,32 +21,60 @@
 package com.irotsoma.cloudbackenc.common.encryptionservice
 
 /**
- * A list of encryption key algorithms that extensions can support.
+ * A list of symmetric encryption key algorithms that extensions can support.
  *
  * @author Justin Zak
  * @param value The value should be the standard string representations of the algorithms.
  */
-enum class EncryptionServiceKeyAlgorithms(
+enum class EncryptionServiceSymmetricKeyAlgorithms(
         /**
          * The value should be the standard string representations of the algorithms.
          */
         val value: String) {
     //TODO:  Add more algorithms and remove insecure ones.
-    // This is just a quick list of ones supported by bouncycastle/apache commons crypto including some insecure ones for testing.
     /**
      * AES encryption key algorithm
      */
-    AES("AES"),
+    AES("AES") {
+        override fun validKeyLengths(): List<Int>
+        {
+            return listOf(128, 192, 256)
+        }
+    },
     /**
      * SKIPJACK encryption key algorithm
      */
-    SKIPJACK("SKIPJACK"),
+    SKIPJACK("SKIPJACK"){
+        override fun validKeyLengths(): List<Int>
+        {
+            return listOf(80)
+        }
+    },
     /**
      * Twofish encryption key algorithm
      */
-    Twofish("Twofish"),
+    Twofish("Twofish"){
+        override fun validKeyLengths(): List<Int>
+        {
+            return listOf(128, 192, 256)
+        }
+    },
     /**
      * Blowfish encryption key algorithm
      */
-    Blowfish("Blowfish")
+    Blowfish("Blowfish"){
+        override fun validKeyLengths(): List<Int>
+        {
+            return listOf(32, 64, 96, 128, 160, 192, 224, 256, 288, 320, 352, 384, 416, 448)
+        }
+    };
+
+    /**
+     * The list of valid key strengths in bits
+     *
+     * Suggest to be put in ascending numeric order.  And for algorithms with ranges, use steps.  For example Blowfish is 32-448, so I've used steps of 32 to simplify things.
+     *
+     * @return A list of integer values that the user should be allowed to select for the key size of the algorithm.
+     */
+    abstract fun validKeyLengths() : List<Int>
 }

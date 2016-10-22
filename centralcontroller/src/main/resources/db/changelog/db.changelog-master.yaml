@@ -27,6 +27,12 @@ databaseChangeLog:
               - column:
                   name: email
                   type: nvarchar(255)
+              - column:
+                  name: enabled
+                  type: boolean
+                  defaultValueBoolean: true
+                  constraints:
+                    nullable: false
         - createTable:
             tableName: user_roles
             columns:
@@ -41,12 +47,12 @@ databaseChangeLog:
                   name: user_id
                   type: int
                   constraints:
-                   nullable: false
+                    nullable: false
               - column:
                   name: role
                   type: nvarchar(255)
                   constraints:
-                   nullable: false
+                    nullable: false
   - changeSet:
       id: 2
       author: irotsoma

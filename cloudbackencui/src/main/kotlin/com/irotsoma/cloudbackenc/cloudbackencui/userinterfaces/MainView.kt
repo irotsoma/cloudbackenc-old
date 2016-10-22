@@ -18,7 +18,7 @@
  * Created by irotsoma on 7/19/2016.
  */
 
-package com.irotsoma.cloudbackenc.cloudbackencui
+package com.irotsoma.cloudbackenc.cloudbackencui.userinterfaces
 
 import com.irotsoma.cloudbackenc.common.logger
 import javafx.scene.control.MenuItem
@@ -46,10 +46,10 @@ open class MainView : View() {
     val menuUsersCreateUser : MenuItem by fxid("menuUsersCreateUser")
     init{
         menuCloudServicesSetup.setOnAction{
-            CloudServicesUI().openModal(StageStyle.DECORATED, Modality.APPLICATION_MODAL, false)
+            CloudServicesFragment().openModal(StageStyle.DECORATED, Modality.APPLICATION_MODAL, false)
         }
         menuUsersCreateUser.setOnAction {
-            CreateUserUI().openModal(StageStyle.UTILITY, Modality.APPLICATION_MODAL, false)
+            CreateUserFragment().openModal(StageStyle.UTILITY, Modality.APPLICATION_MODAL, false)
         }
     }
 

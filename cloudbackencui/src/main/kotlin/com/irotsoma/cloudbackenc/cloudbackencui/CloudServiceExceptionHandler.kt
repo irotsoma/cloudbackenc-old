@@ -28,7 +28,7 @@ import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExcep
 import javax.servlet.http.HttpServletResponse
 
 /**
- * Controller Advice for handling errors
+ * Controller Advice for handling callback controller errors
  *
  * @author Justin Zak
  */

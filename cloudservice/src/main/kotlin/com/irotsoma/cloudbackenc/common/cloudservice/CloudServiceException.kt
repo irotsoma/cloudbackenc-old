@@ -24,7 +24,7 @@ package com.irotsoma.cloudbackenc.common.cloudservice
  *
  * @author Justin Zak
  */
-class CloudServiceException : Exception{
+open class CloudServiceException : Exception{
     /**
      * Creates an instance with only a message.
      *

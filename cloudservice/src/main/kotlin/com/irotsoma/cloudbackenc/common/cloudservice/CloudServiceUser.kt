@@ -39,10 +39,6 @@ class CloudServiceUser(
          */
         val serviceUUID: String,
         /**
-         * Current state of the authorization process for this user
-         */
-        val state: STATE = CloudServiceUser.STATE.INITIALIZED,
-        /**
          * Use only if state = AWAITING_AUTHORIZATION.  A browser with this URL should be opened for the user to authorize the service.
          */
         val authorizationCallbackURL: String?){
@@ -78,5 +74,11 @@ class CloudServiceUser(
          * Used to indicate an error ocured when attempting to log into the cloud service.
          */
         ERROR
+    }
+    companion object{
+        const val PASSWORD_MASKED = "PASSWORD_MASKED"
+    }
+    fun maskedPasswordInstance(): CloudServiceUser{
+        return CloudServiceUser(userId, PASSWORD_MASKED, serviceUUID, authorizationCallbackURL)
     }
 }
