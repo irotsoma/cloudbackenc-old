@@ -16,10 +16,9 @@
  */
 buildscript {
     ext.springBootVersion = '1.4.1.RELEASE'
-    ext.tornadofxVersion = '1.5.6'
+    ext.tornadofxVersion = '1.5.7'
     ext.junitVersion = '4.12'
     ext.log4jVersion = '2.6.2'
-    ext.kotlin_version = '1.0.3'
     ext.kotlinVersion = '1.0.4'
 
     ext.localMavenRepository = "file://$rootDir/../maven-repository"
