@@ -32,7 +32,7 @@ class CloudBackEncUIStyles : Stylesheet(){
     }
     init {
         textField{
-            add(error){
+            and(error){
                 borderColor += box(c("red"))
                 borderWidth += box(3.px)
             }

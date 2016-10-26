@@ -100,7 +100,7 @@ class CreateUserFragment : Fragment() {
         val requestHeaders = HttpHeaders()
         requestHeaders.add(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
         requestHeaders.add("Authorization", "Basic " + base64Creds)
-        val httpEntity = HttpEntity<CloudBackEncUser>(CloudBackEncUser(cloudServiceCreateUserIDField.text,cloudServiceCreateUserPasswordField.text,cloudServiceCreateUserEmailField.text,true, cloudServiceCreateUserRoleList.selectionModel.selectedItems), requestHeaders)
+        val httpEntity = HttpEntity<CloudBackEncUser>(CloudBackEncUser(cloudServiceCreateUserIDField.text,cloudServiceCreateUserPasswordField.text,cloudServiceCreateUserEmailField.text,true, cloudServiceCreateUserRoleList.selectionModel.selectedItems.map{ it -> CloudBackEncRoles.valueOf(it)}), requestHeaders)
         runAsync {
             val callResponse = RestTemplate().postForEntity("$protocol://${applicationProperties["centralcontroller.host"]}:${applicationProperties["centralcontroller.port"]}/users", httpEntity, CloudBackEncUser::class.java)
             LOG.debug("Create User call response: ${callResponse.statusCode}: ${callResponse.statusCodeValue}")

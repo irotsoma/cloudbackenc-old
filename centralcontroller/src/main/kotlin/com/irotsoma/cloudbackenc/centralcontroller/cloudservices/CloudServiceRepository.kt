@@ -16,7 +16,9 @@
  */
 
 package com.irotsoma.cloudbackenc.centralcontroller.cloudservices
-
+/*
+ * Created by irotsoma on 6/20/2016.
+ */
 import com.fasterxml.jackson.databind.ObjectMapper
 import com.fasterxml.jackson.module.kotlin.KotlinModule
 import com.fasterxml.jackson.module.kotlin.MissingKotlinParameterException
@@ -36,9 +38,9 @@ import java.util.jar.JarFile
 import javax.annotation.PostConstruct
 
 /**
- * Created by irotsoma on 6/20/2016.
- *
  * Imports and stores information about installed Cloud Service Extensions
+ *
+ * @author Justin Zak
  */
 @Component
 open class CloudServiceRepository : ApplicationContextAware {

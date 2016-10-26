@@ -20,6 +20,7 @@ buildscript {
     ext.junitVersion = '4.12'
     ext.log4jVersion = '2.6.2'
     ext.kotlinVersion = '1.0.4'
+    ext.apacheCommonsValidatorVersion = '1.5.1'
 
     ext.localMavenRepository = "file://$rootDir/../maven-repository"
     repositories {
@@ -38,8 +39,6 @@ buildscript {
 plugins {
     id "com.github.hierynomus.license" version "0.13.1"
 }
-
-def secretDir = "$rootDir/secret/"
 
 subprojects {
     group 'com.irotsoma.cloudbackenc'
@@ -314,6 +313,8 @@ project(':centralcontroller'){
         compile 'com.h2database:h2'
         //liquibase
         compile 'org.liquibase:liquibase-core'
+        //apache commons
+        compile "commons-validator:commons-validator:$apacheCommonsValidatorVersion"
     }
     compileJava.dependsOn(processResources)
 

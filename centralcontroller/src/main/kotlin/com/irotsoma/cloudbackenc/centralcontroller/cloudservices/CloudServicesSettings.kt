@@ -14,7 +14,9 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>
  */
-
+/*
+ * Created by irotsoma on 6/28/2016.
+ */
 package com.irotsoma.cloudbackenc.centralcontroller.cloudservices
 
 import org.springframework.boot.context.properties.ConfigurationProperties
@@ -23,10 +25,10 @@ import org.springframework.context.annotation.Configuration
 
 
 /**
- * Created by irotsoma on 6/28/2016.
- *
  * Configuration object for cloud services.
  * Loads application.properties settings that start with "cloudservices".
+ *
+ * @author Justin Zak
  */
 @Configuration
 @EnableConfigurationProperties

@@ -14,7 +14,9 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>
  */
-
+/*
+ * Created by irotsoma on 7/14/2016.
+ */
 package com.irotsoma.cloudbackenc.centralcontroller.controllers
 
 import com.fasterxml.jackson.databind.ObjectMapper
@@ -23,9 +25,7 @@ import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
 import org.springframework.context.annotation.Primary
 
-/**
- * Created by irotsoma on 7/14/2016.
- */
+
 @Configuration
 open class ObjectMapperConfiguration {
     @Bean

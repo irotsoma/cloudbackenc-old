@@ -14,7 +14,9 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>
  */
-
+/*
+ * Created by irotsoma on 7/13/2016.
+ */
 package com.irotsoma.cloudbackenc.centralcontroller
 
 import com.irotsoma.cloudbackenc.common.cloudservice.CloudServiceUser
@@ -33,14 +35,14 @@ import org.springframework.http.MediaType
 import org.springframework.test.context.junit4.SpringRunner
 
 /**
- * Created by irotsoma on 7/13/2016.
+ * Integration tests for cloud services list controllers.  Assumes Google Drive extension is installed as noted in comments.
  *
- * Tests for services list controllers.  Assumes Google Drive extension is installed as noted in comments.
+ * @author Justin Zak
  */
 
 @RunWith(SpringRunner::class)
 @SpringBootTest(webEnvironment=SpringBootTest.WebEnvironment.DEFINED_PORT)
-open class CloudServicesControllerTests {
+open class CloudServicesControllerIntegrationTests {
     @LocalServerPort
     private var port: Int = 0
     @Value("\${server.ssl.key-store}")
@@ -80,12 +82,9 @@ open class CloudServicesControllerTests {
         val requestHeaders = HttpHeaders()
         requestHeaders.add(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
         val httpEntity = HttpEntity<CloudServiceUser>(CloudServiceUser("test",null,"1d3cb21f-5b88-4b3c-8cb8-1afddf1ff375", null), requestHeaders)
-        // TODO: Fix test:  not seeing able to parse response to kotlin class CloudServiceUser.  Using map instead.  Kotlin class mapper is configured outside of test by ObjectMapperConfiguration, but doesn't seem to work here.
-        val returnValue = restTemplate.postForEntity("$protocol://localhost:$port/cloudservice/login/1d3cb21f-5b88-4b3c-8cb8-1afddf1ff375", httpEntity, Map::class.java)
-        assert(returnValue.body["userId"]== "test")
-        assert(returnValue.body["password"]== null)
-        assert(returnValue.body["serviceUUID"]=="1d3cb21f-5b88-4b3c-8cb8-1afddf1ff375")
-        assert(returnValue.body["state"]== "LOGGED_IN")
+        val returnValue = restTemplate.postForEntity("$protocol://localhost:$port/cloudservice/login/1d3cb21f-5b88-4b3c-8cb8-1afddf1ff375", httpEntity, CloudServiceUser.STATE::class.java)
+        assert(returnValue.body== CloudServiceUser.STATE.LOGGED_IN)
+
     }
 
 }
