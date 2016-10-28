@@ -295,7 +295,8 @@ project(':centralcontroller'){
         compile 'org.springframework.boot:spring-boot-starter-logging'
         compile 'org.springframework.boot:spring-boot-starter-security'
         compile 'org.springframework.boot:spring-boot-starter-data-jpa'
-        optional 'org.springframework.boot:spring-boot-devtools'
+        //compile 'org.springframework.cloud:spring-cloud-starter-eureka-server:1.2.1.RELEASE'
+        //optional 'org.springframework.boot:spring-boot-devtools'
         optional 'org.springframework.boot:spring-boot-configuration-processor'
         testCompile 'org.springframework.boot:spring-boot-starter-test'
         //cloud service interfaces
@@ -330,10 +331,12 @@ project(':cloudbackencui'){
     apply plugin: 'spring-boot'
     dependencies {
         //spring
+        compile 'org.springframework.boot:spring-boot-starter-actuator'
         compile 'org.springframework.boot:spring-boot-starter-web'
         compile 'org.springframework.boot:spring-boot-starter-logging'
         //jackson
         compile 'com.fasterxml.jackson.module:jackson-module-kotlin'
+        compile 'com.fasterxml.jackson.core:jackson-core'
         compile 'com.fasterxml.jackson.core:jackson-databind'
         compile 'com.fasterxml.jackson.core:jackson-annotations'
         //cloud service interfaces
@@ -341,6 +344,36 @@ project(':cloudbackencui'){
         compile project(':common')
         //tornadofx
         compile "no.tornado:tornadofx:$tornadofxVersion"
+        //test
+        testCompile 'org.springframework.boot:spring-boot-starter-test'
+    }
+    compileJava.dependsOn(processResources)
+
+    processResources {
+        expand(project.properties)
+    }
+
+    springBoot {
+        executable = true
+    }
+}
+project(':filecontroller'){
+    apply plugin: 'spring-boot'
+    apply plugin: 'propdeps'
+    dependencies {
+        //spring
+        compile 'org.springframework.boot:spring-boot-starter-actuator'
+        compile 'org.springframework.boot:spring-boot-starter-web'
+        compile 'org.springframework.boot:spring-boot-starter-logging'
+        optional 'org.springframework.boot:spring-boot-configuration-processor'
+        //jackson
+        compile 'com.fasterxml.jackson.module:jackson-module-kotlin'
+        compile 'com.fasterxml.jackson.core:jackson-core'
+        compile 'com.fasterxml.jackson.core:jackson-databind'
+        compile 'com.fasterxml.jackson.core:jackson-annotations'
+        //cloud service interfaces
+        compile project(':encryptionservice')
+        compile project(':common')
         //test
         testCompile 'org.springframework.boot:spring-boot-starter-test'
     }

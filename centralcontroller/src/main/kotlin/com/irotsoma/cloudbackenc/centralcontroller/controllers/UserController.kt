@@ -23,9 +23,11 @@ import com.irotsoma.cloudbackenc.centralcontroller.authentication.UserAccount
 import com.irotsoma.cloudbackenc.centralcontroller.authentication.UserAccountDetailsManager
 import com.irotsoma.cloudbackenc.centralcontroller.controllers.exceptions.CloudBackEncUserNotFound
 import com.irotsoma.cloudbackenc.centralcontroller.controllers.exceptions.DuplicateUserException
+import com.irotsoma.cloudbackenc.centralcontroller.controllers.exceptions.InvalidEmailAddressException
 import com.irotsoma.cloudbackenc.common.CloudBackEncRoles
 import com.irotsoma.cloudbackenc.common.CloudBackEncUser
 import com.irotsoma.cloudbackenc.common.logger
+import org.apache.commons.validator.routines.EmailValidator
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.context.MessageSource
 import org.springframework.context.i18n.LocaleContextHolder
@@ -68,14 +70,19 @@ open class UserController {
         } catch (e: Exception){
             return ResponseEntity(HttpStatus.FORBIDDEN)
         }
-        //TODO: check format of user ID which must contain only certain characters (probably alphanumeric plus _ and -)
-        //TODO: check email address format
-        //TODO: check password format based on configurable pattern in properties file
 
         //check to see if there is a duplicate user
         if (userAccountDetailsManager.userRepository.findByUsername(user.userId) != null){
             throw DuplicateUserException()
         }
+
+        //TODO: check format of user ID which must contain only certain characters (probably alphanumeric plus _ and -)
+        //TODO: check password format based on configurable pattern in properties file
+
+        if (!EmailValidator.getInstance().isValid(user.email)){
+            throw InvalidEmailAddressException()
+        }
+
         //create and save new user
         val newUserAccount = UserAccount(user.userId, user.password,user.email, user.enabled, user.roles)
         userAccountDetailsManager.userRepository.saveAndFlush(newUserAccount)

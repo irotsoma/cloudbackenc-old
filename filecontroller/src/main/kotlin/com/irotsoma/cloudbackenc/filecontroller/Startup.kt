@@ -14,12 +14,18 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>
  */
+/*
+ * Created by irotsoma on 10/28/16.
+ */
+package com.irotsoma.cloudbackenc.filecontroller
 
-rootProject.name = 'cloudbackenc-parent'
-include 'cloudservice'
-include 'common'
-include 'centralcontroller'
-include 'cloudbackencui'
-include 'encryptionservice'
-include 'filecontroller'
+import org.springframework.boot.SpringApplication
+import org.springframework.boot.autoconfigure.SpringBootApplication
 
+@SpringBootApplication
+open class FileController
+
+fun main(args: Array<String>) {
+    //val context =
+    SpringApplication.run(FileController::class.java, *args)
+}

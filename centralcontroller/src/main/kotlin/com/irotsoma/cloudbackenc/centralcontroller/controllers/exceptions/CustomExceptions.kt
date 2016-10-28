@@ -36,3 +36,5 @@ class InvalidCloudServiceUUIDException() : RestException(RestExceptionExceptions
  * Custom exception for trying to access /users with an invalid user ID
  */
 class CloudBackEncUserNotFound() : RestException(RestExceptionExceptions.User_Not_Found)
+
+class InvalidEmailAddressException() : RestException(RestExceptionExceptions.Invalid_Email_Address)

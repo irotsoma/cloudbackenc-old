@@ -51,6 +51,11 @@ enum class RestExceptionExceptions {
         override fun httpStatusCode(): Int{
             return 404
         }
+    },
+    Invalid_Email_Address{
+        override fun httpStatusCode(): Int{
+            return 400
+        }
     }
     ;
 
