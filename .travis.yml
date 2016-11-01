@@ -11,4 +11,4 @@ cache:
     - $HOME/.gradle/caches/
     - $HOME/.gradle/wrapper/
 script:
-  - bundle exec gradlew build :common
+  - bundle exec gradlew :common:build
