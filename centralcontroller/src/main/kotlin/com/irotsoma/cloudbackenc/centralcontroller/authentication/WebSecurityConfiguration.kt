@@ -34,7 +34,7 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 @EnableWebSecurity
 open class WebSecurityConfiguration : WebSecurityConfigurerAdapter() {
 
-    //TODO:  Try using JdbcUserDetailsManager instead:  http://stackoverflow.com/questions/25631791/cannot-get-userdetailsmanager-injected-with-spring-boot-and-java-based-configura
+    //TODO:  Check out JdbcUserDetailsManager:  http://stackoverflow.com/questions/25631791/cannot-get-userdetailsmanager-injected-with-spring-boot-and-java-based-configura
 
     @Autowired
     lateinit var userDetailsManager: UserAccountDetailsManager
@@ -46,7 +46,7 @@ open class WebSecurityConfiguration : WebSecurityConfigurerAdapter() {
     override fun configure(http: HttpSecurity){
         http
             .authorizeRequests()
-                .antMatchers("/cloudservices").permitAll() //no need to secure the list
+                .antMatchers("/eureka").permitAll() //no need to secure the eureka server
                 .anyRequest().authenticated() //but anything else requires authentication
                 .and()
             .httpBasic()
@@ -54,6 +54,6 @@ open class WebSecurityConfiguration : WebSecurityConfigurerAdapter() {
             .headers()
                 .frameOptions().disable() //needed to get h2 console working
                 .and()
-            .csrf().disable() //TODO: enable CSRF protection
+            .csrf().disable()
     }
 }

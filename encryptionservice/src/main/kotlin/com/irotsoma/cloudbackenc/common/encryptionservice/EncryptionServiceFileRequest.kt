@@ -15,22 +15,19 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>
  */
 /*
- * Created by irotsoma on 6/19/2016.
+ * Created by irotsoma on 10/31/16.
  */
-package com.irotsoma.cloudbackenc.centralcontroller
+package com.irotsoma.cloudbackenc.common.encryptionservice
 
-import org.springframework.boot.SpringApplication
-import org.springframework.boot.autoconfigure.SpringBootApplication
-import org.springframework.boot.system.ApplicationPidFileWriter
-import org.springframework.cloud.netflix.eureka.server.EnableEurekaServer
+import java.security.Key
+import java.security.SecureRandom
+import javax.crypto.spec.IvParameterSpec
 
-@SpringBootApplication
-@EnableEurekaServer
-open class CentralController
 
-fun main(args: Array<String>) {
-    val centralController = SpringApplication(CentralController::class.java, *args)
-    centralController.addListeners(ApplicationPidFileWriter("eureka-server.pid"))
-    centralController.run()
-
-}
+class EncryptionServiceFileRequest(
+    val filePath : String,
+    val algorithm: EncryptionServiceEncryptionAlgorithms,
+    val key: Key,
+    val ivParameterSpec: IvParameterSpec?,
+    val secureRandom: SecureRandom?
+)

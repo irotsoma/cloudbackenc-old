@@ -144,7 +144,7 @@ class CloudServicesFragment() : Fragment() {
         val callbackURL = "$protocol://$hostname:$port/cloudservicecallback"
         LOG.debug("Calculated callback address: $callbackURL")
         val httpEntity = HttpEntity<CloudServiceUser>(CloudServiceUser(userId, null, availableCloudServicesModel.service.uuid.toString(), callbackURL), requestHeaders)
-        LOG.debug("Connecting to central controller cloud service login service at $protocol://${applicationProperties["centralcontroller.host"]}:${applicationProperties["centralcontroller.port"]}/cloudservice/login/${availableCloudServicesModel.service.uuid}")
+        LOG.debug("Connecting to central controller cloud service login service at $protocol://${applicationProperties["centralcontroller.host"]}:${applicationProperties["centralcontroller.port"]}/cloudservices/login/${availableCloudServicesModel.service.uuid}")
         runAsync {
             val callResponse = RestTemplate().postForEntity("$protocol://${applicationProperties["centralcontroller.host"]}:${applicationProperties["centralcontroller.port"]}/cloudservice/login/${availableCloudServicesModel.service.uuid}", httpEntity, CloudServiceUser.STATE::class.java)
             LOG.debug("Cloud service setup call response: ${callResponse.statusCode}: ${callResponse.statusCodeValue}")

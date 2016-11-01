@@ -56,12 +56,12 @@ open class CloudServicesControllerIntegrationTests {
         if (useSSL!=null && useSSL!="") {
             protocol= "https"
             trustSelfSignedSSL()
-            restTemplate = TestRestTemplate(TestRestTemplate.HttpClientOption.SSL)
+            restTemplate = TestRestTemplate("test", "insecurepassword",TestRestTemplate.HttpClientOption.SSL)
         } else {
             protocol = "http"
-            restTemplate = TestRestTemplate()
+            restTemplate = TestRestTemplate("test", "insecurepassword")
         }
-        val testValue = restTemplate.getForEntity("$protocol://localhost:$port/cloudservices", String::class.java)
+        val testValue = restTemplate.getForEntity("$protocol://localhost:$port/cloud-services", String::class.java)
         assert(testValue.statusCode==HttpStatus.OK)
         //below is only valid when google drive plugin is installed in extensions folder
         assertThat(testValue.body, containsString("[{\"uuid\":\"1d3cb21f-5b88-4b3c-8cb8-1afddf1ff375\",\"name\":\"Google Drive\",\"token\":\"\"}]"))
@@ -82,7 +82,7 @@ open class CloudServicesControllerIntegrationTests {
         val requestHeaders = HttpHeaders()
         requestHeaders.add(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
         val httpEntity = HttpEntity<CloudServiceUser>(CloudServiceUser("test",null,"1d3cb21f-5b88-4b3c-8cb8-1afddf1ff375", null), requestHeaders)
-        val returnValue = restTemplate.postForEntity("$protocol://localhost:$port/cloudservice/login/1d3cb21f-5b88-4b3c-8cb8-1afddf1ff375", httpEntity, CloudServiceUser.STATE::class.java)
+        val returnValue = restTemplate.postForEntity("$protocol://localhost:$port/cloud-services/login/1d3cb21f-5b88-4b3c-8cb8-1afddf1ff375", httpEntity, CloudServiceUser.STATE::class.java)
         assert(returnValue.body== CloudServiceUser.STATE.LOGGED_IN)
 
     }

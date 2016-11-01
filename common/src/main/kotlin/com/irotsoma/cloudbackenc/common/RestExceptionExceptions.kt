@@ -45,11 +45,29 @@ enum class RestExceptionExceptions {
         }
     },
     /**
+     * Returned when attempting to access a URL under /file-encryptors with an invalid UUID.
+     */
+    Invalid_Encryption_Service_UUID{
+        override fun httpStatusCode(): Int{
+            return 404
+        }
+    },
+    /**
      * Returned when attempting to access a URL under /users with an invalid user ID.
      */
     User_Not_Found{
         override fun httpStatusCode(): Int{
             return 404
+        }
+    },
+    File_Not_Found{
+        override fun httpStatusCode(): Int{
+            return 404
+        }
+    },
+    Unsupported_Encryption_Algorithm{
+        override fun httpStatusCode(): Int{
+            return 400
         }
     },
     Invalid_Email_Address{

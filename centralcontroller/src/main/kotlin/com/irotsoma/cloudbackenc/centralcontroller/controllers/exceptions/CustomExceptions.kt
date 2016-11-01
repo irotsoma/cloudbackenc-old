@@ -28,7 +28,7 @@ import com.irotsoma.cloudbackenc.common.RestExceptionExceptions
  */
 class DuplicateUserException() : RestException(RestExceptionExceptions.Duplicate_User)
 /**
- * Custom exception for trying to access /cloudservices with an invalid UUID
+ * Custom exception for trying to access /cloud-services with an invalid UUID
  */
 class InvalidCloudServiceUUIDException() : RestException(RestExceptionExceptions.Invalid_Cloud_Service_UUID)
 

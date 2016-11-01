@@ -57,7 +57,7 @@ open class UserController {
     @Autowired
     lateinit var messageSource: MessageSource
 
-    @RequestMapping("/users", method = arrayOf(RequestMethod.POST))
+    @RequestMapping("/users", method = arrayOf(RequestMethod.POST), produces = arrayOf("application/json"))
     @Secured("ROLE_ADMIN")
     fun createUser(@RequestBody user: CloudBackEncUser, uriComponentsBuilder: UriComponentsBuilder): ResponseEntity<AdditionalSupertypes.None>{
         val authorizedUser = SecurityContextHolder.getContext().authentication
@@ -94,7 +94,7 @@ open class UserController {
         return ResponseEntity(headers, HttpStatus.CREATED)
     }
 
-    @RequestMapping("/users/{userId}", method = arrayOf(RequestMethod.PUT))
+    @RequestMapping("/users/{userId}", method = arrayOf(RequestMethod.PUT), produces = arrayOf("application/json"))
     fun updateUser(@PathVariable(value="userId")userId: String, @RequestBody updatedUser:CloudBackEncUser, response: HttpServletResponse) : ResponseEntity<CloudBackEncUser>{
         val authorizedUser = SecurityContextHolder.getContext().authentication
         val currentUser = userAccountDetailsManager.loadUserByUsername(authorizedUser.name)
@@ -127,7 +127,7 @@ open class UserController {
         //TODO: email user
         return ResponseEntity(updatedUser.maskedPasswordInstance(), HttpStatus.OK)
     }
-    @RequestMapping("/users/{userId}", method = arrayOf(RequestMethod.DELETE))
+    @RequestMapping("/users/{userId}", method = arrayOf(RequestMethod.DELETE), produces = arrayOf("application/json"))
     @Secured("ROLE_ADMIN")
     fun deleteUser(@RequestBody updatedUser:CloudBackEncUser) : ResponseEntity<AdditionalSupertypes.None>{
         val authorizedUser = SecurityContextHolder.getContext().authentication.name

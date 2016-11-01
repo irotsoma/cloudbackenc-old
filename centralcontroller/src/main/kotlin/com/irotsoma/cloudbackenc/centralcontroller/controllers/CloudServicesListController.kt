@@ -14,7 +14,9 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>
  */
-
+/*
+ * Created by irotsoma on 7/12/2016.
+ */
 package com.irotsoma.cloudbackenc.centralcontroller.controllers
 
 import com.irotsoma.cloudbackenc.centralcontroller.cloudservices.CloudServiceRepository
@@ -27,14 +29,14 @@ import org.springframework.web.bind.annotation.ResponseBody
 
 
 /**
- * Created by irotsoma on 7/12/2016.
- *
  * REST Controller for getting a list of cloud service extensions currently installed.
  *
- * Use GET method to /cloudservices URL.
+ * Use GET method to /cloud-services URL.
+ *
+ * @author Justin Zak
  */
 @Controller
-@RequestMapping("/cloudservices")
+@RequestMapping("/cloud-services",produces = arrayOf("application/json"))
 open class CloudServicesListController {
 
     @Autowired

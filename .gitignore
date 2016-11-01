@@ -8,6 +8,6 @@ logs
 /cloudservice-googledrive
 /encryptionservice-bouncycastle
 /encryptionservice-apachecommonscrypto
-/centralcontroller/config/centralcontroller.mv.db
-/centralcontroller/config/centralcontroller.trace.db
+/centralcontroller/config/database/centralcontroller.mv.db
+/centralcontroller/config/database/centralcontroller.trace.db
 /gradle.properties

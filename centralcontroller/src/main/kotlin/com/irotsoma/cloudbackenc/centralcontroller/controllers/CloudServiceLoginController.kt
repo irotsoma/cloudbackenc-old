@@ -14,7 +14,9 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>
  */
-
+/*
+ * Created by irotsoma on 7/13/2016.
+ */
 package com.irotsoma.cloudbackenc.centralcontroller.controllers
 
 import com.irotsoma.cloudbackenc.centralcontroller.authentication.UserAccountDetailsManager
@@ -36,8 +38,6 @@ import java.net.URL
 import java.util.*
 
 /**
- * Created by irotsoma on 7/13/2016.
- *
  * Rest Controller that takes an instance of CloudServiceUser as JSON, calls the login method of the requested cloud
  * service as identified in the URL by UUID, and returns an instance of CloudServiceUser with the userId and login
  * token.
@@ -56,7 +56,7 @@ open class CloudServiceLoginController {
     @Autowired
     lateinit var messageSource: MessageSource
 
-    @RequestMapping("cloudservice/login/{uuid}", method = arrayOf(RequestMethod.POST))
+    @RequestMapping("cloud-services/login/{uuid}", method = arrayOf(RequestMethod.POST), produces = arrayOf("application/json"))
     fun login(@PathVariable(value="uuid")uuid: UUID, @RequestBody user: CloudServiceUser) : ResponseEntity<CloudServiceUser.STATE> {
         val locale = LocaleContextHolder.getLocale()
         val cloudServiceFactory : Class<CloudServiceFactory> = cloudServiceRepository.cloudServiceExtensions[uuid] ?: throw InvalidCloudServiceUUIDException()

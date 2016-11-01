@@ -29,7 +29,7 @@ enum class EncryptionServiceSymmetricEncryptionAlgorithms(
         /**
          * The value should be the standard string representations of the algorithms.
          */
-        val value: String) {
+        val value: String): EncryptionServiceEncryptionAlgorithms {
     //TODO:  Add more algorithms and remove insecure ones.
     // This is just a quick list of algorithms supported by bouncycastle/apache commons crypto
     /**

@@ -30,7 +30,7 @@ enum class EncryptionServiceAsymmetricEncryptionAlgorithms(
         /**
          * The value should be the standard string representations of the algorithms.
          */
-        val value: String) {
+        val value: String): EncryptionServiceEncryptionAlgorithms {
     //TODO:  Add more algorithms and remove insecure ones.
     RSA("RSA"),
     RSA_PKCS1("RSA/PKCS1"),
