@@ -10,5 +10,4 @@ cache:
   directories:
     - $HOME/.gradle/caches/
     - $HOME/.gradle/wrapper/
-script:
-  - ./gradlew :common:check
+
