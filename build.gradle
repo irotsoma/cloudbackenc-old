@@ -34,6 +34,8 @@ buildscript {
         classpath 'org.springframework.build.gradle:propdeps-plugin:0.0.7'
         classpath "org.liquibase:liquibase-gradle-plugin:1.2.1"
         classpath "org.jetbrains.dokka:dokka-gradle-plugin:0.9.9"}
+    ext.repoUsername = hasProperty('ossrhUsername') ? ossrhUsername : System.getenv('ossrhUsername')
+    ext.repoPassword = hasProperty('ossrhPassword') ? ossrhPassword : System.getenv('ossrhPassword')
 
 }
 plugins {
@@ -46,9 +48,11 @@ subprojects {
     apply plugin: 'java'
     apply plugin: 'kotlin'
     apply plugin: 'signing'
-//    signing {
-//        sign configurations.archives
-//    }
+    ext.isReleaseVersion = !version.endsWith("SNAPSHOT")
+    signing {
+        required { isReleaseVersion && gradle.taskGraph.hasTask("uploadArchives") }
+        sign configurations.archives
+    }
     repositories {
         mavenCentral()
     }
@@ -111,6 +115,8 @@ subprojects {
             url localMavenRepository
         }
     }
+    def repoUsername = hasProperty('ossrhUsername') ? ossrhUsername : System.getenv('ossrhUsername')
+    def repoPassword = hasProperty('ossrhPassword') ? ossrhPassword : System.getenv('ossrhPassword')
 }
 
 project(':common') {
@@ -123,7 +129,7 @@ project(':common') {
                 beforeDeployment { MavenDeployment deployment -> signing.signPom(deployment) }
 
                 repository(url: "https://oss.sonatype.org/service/local/staging/deploy/maven2") {
-                    authentication(userName: ossrhUsername, password: ossrhPassword)
+                    authentication(userName: repoUsername, password: repoPassword)
                 }
 
                 snapshotRepository(url: "https://oss.sonatype.org/content/repositories/snapshots") {
