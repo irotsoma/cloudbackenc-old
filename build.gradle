@@ -72,7 +72,7 @@ subprojects {
     license {
         ignoreFailures true
         mapping('kt', 'JAVADOC_STYLE')
-        excludes(['**/*.json', '**/*.properties', '**/LICENSE', '**/*license*.html', '**/*license*.xml', '**/COPYING', '**/COPYING.LESSER'])
+        excludes(['**/*.json', '**/*.properties', '**/LICENSE', '**/*license*.html', '**/*license*.xml', '**/COPYING', '**/COPYING.LESSER', '**/*.jar'])
     }
     task copyLicenseReports(type: Copy) {
         from "$buildDir/reports/license/"
