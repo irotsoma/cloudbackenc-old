@@ -55,15 +55,19 @@ open class EncryptionServiceRepository : ApplicationContextAware {
 
     @PostConstruct
     fun loadDynamicServices() {
+        //external config extension directory
         val extensionsDirectory: File = File(encryptionServicesSettings.directory)
         if (!extensionsDirectory.isDirectory || !extensionsDirectory.canRead()) {
             LOG.warn("Extensions directory is missing or unreadable. ${extensionsDirectory.absolutePath}")
             return
         }
+        //internal resources extension directory (packaged extensions or test extensions)
+        val resourcesExtensionsDirectory: File? = File(javaClass.classLoader.getResource("extensions").file)
+
         var jarURLs = emptyArray<URL>()
         var factoryClasses = emptyMap<UUID,String>()
 
-        for (jar in extensionsDirectory.listFiles{directory, name -> (!File(directory,name).isDirectory && name.endsWith(".jar"))} ?: arrayOf<File>()) {
+        for (jar in (extensionsDirectory.listFiles{directory, name -> (!File(directory,name).isDirectory && name.endsWith(".jar"))} ?: arrayOf<File>()).plus(resourcesExtensionsDirectory?.listFiles{directory, name -> (!File(directory,name).isDirectory && name.endsWith(".jar"))} ?: arrayOf<File>())) {
             try {
                 val jarFile = JarFile(jar)
                 //read config file from jar if present

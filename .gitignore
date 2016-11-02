@@ -2,7 +2,8 @@
 .gradle
 build
 *.iml
-extensions
+/centralcontroller/config/extensions
+/filecontroller/config/extensions
 logs
 /secret
 /cloudservice-googledrive
