@@ -1,6 +1,0 @@
-general:
-  artifacts:
-    - "centralcontroller/logs"
-  branches:
-    ignore:
-      - gh-pages
