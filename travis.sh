@@ -1,3 +1,3 @@
 #!/bin/bash
-cd /centralcontroller
-../gradlew :centralcontroller:build
+cd ~/cloudbackenc/centralcontroller
+. ../gradlew :centralcontroller:build
