@@ -64,7 +64,6 @@ open class CloudServicesControllerIntegrationTests {
         val testValue = restTemplate.getForEntity("$protocol://localhost:$port/cloud-services", String::class.java)
         assert(testValue.statusCode==HttpStatus.OK)
         //below is only valid when google drive plugin is installed in extensions folder
-        println(testValue.body)
         assertThat(testValue.body, containsString("[{\"uuid\":\"1d3cb21f-5b88-4b3c-8cb8-1afddf1ff375\",\"name\":\"Google Drive\",\"token\":\"\"}]"))
     }
 
