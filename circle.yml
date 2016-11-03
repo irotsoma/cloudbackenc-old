@@ -1,3 +1,9 @@
 general:
   artifacts:
     - "centralcontroller/logs"
+  branches:
+    ignore:
+      - gh-pages
+test:
+  override:
+    - ./gradlew :centralcontroller:test
