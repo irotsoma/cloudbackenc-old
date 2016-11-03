@@ -66,7 +66,7 @@ open class CloudServiceRepository : ApplicationContextAware {
         }
         //internal resources extension directory (packaged extensions or test extensions)
         val resourcesExtensionsDirectory: File? = File(javaClass.classLoader.getResource("extensions").file)
-        LOG.debug("Resources path: ${javaClass?.classLoader?.getResources("*")?.toList()?.get(0)?.path ?: "null"}")
+        //LOG.debug("Resources path: ${javaClass?.classLoader?.getResources("*")?.toList()?.get(0)?.path ?: "null"}")
         LOG.debug("Resources extension directory:  ${resourcesExtensionsDirectory?.absolutePath}")
         var jarURLs = emptyArray<URL>()
         var factoryClasses = emptyMap<UUID,String>()
