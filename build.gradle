@@ -120,14 +120,14 @@ subprojects {
             url localMavenRepository
         }
     }
-    //try to pull repository credentials from either properties or environment variables
-    def repoUsername = hasProperty('ossrhUsername') ? ossrhUsername : System.getenv('ossrhUsername')
-    def repoPassword = hasProperty('ossrhPassword') ? ossrhPassword : System.getenv('ossrhPassword')
+
 }
 
 project(':common') {
     apply plugin: 'maven'
-
+    //try to pull repository credentials from either properties or environment variables
+    def repoUsername = ossrhUsername ?: System.getenv('ossrhUsername')
+    def repoPassword = ossrhPassword ?: System.getenv('ossrhPassword')
 
     uploadArchives {
         repositories {
@@ -186,6 +186,9 @@ project(':cloudservice'){
         compile project(':common')
     }
     apply plugin: 'maven'
+    //try to pull repository credentials from either properties or environment variables
+    def repoUsername = ossrhUsername ?: System.getenv('ossrhUsername')
+    def repoPassword = ossrhPassword ?: System.getenv('ossrhPassword')
     uploadArchives {
         repositories {
             mavenDeployer {
@@ -244,7 +247,9 @@ project(':encryptionservice'){
         compile project(':common')
     }
     apply plugin: 'maven'
-
+    //try to pull repository credentials from either properties or environment variables
+    def repoUsername = ossrhUsername ?: System.getenv('ossrhUsername')
+    def repoPassword = ossrhPassword ?: System.getenv('ossrhPassword')
     uploadArchives {
         repositories {
             mavenDeployer {
