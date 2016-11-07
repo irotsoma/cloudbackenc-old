@@ -66,6 +66,11 @@ subprojects {
         main.java.srcDirs += 'src/main/kotlin'
     }
 
+    //allow for excluding certain tests via external configuration
+    test{
+        exclude hasProperty('testExclude') ? testExclude : System.getenv('testExclude') ?: ''
+    }
+
     //this section downloads some reports regarding the licenses of various dependencies and includes them in the
     // META-INF/licenses folder
     apply plugin: 'com.github.hierynomus.license'
@@ -115,6 +120,7 @@ subprojects {
             url localMavenRepository
         }
     }
+    //try to pull repository credentials from either properties or environment variables
     def repoUsername = hasProperty('ossrhUsername') ? ossrhUsername : System.getenv('ossrhUsername')
     def repoPassword = hasProperty('ossrhPassword') ? ossrhPassword : System.getenv('ossrhPassword')
 }

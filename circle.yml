@@ -4,3 +4,6 @@ general:
   branches:
     ignore:
       - gh-pages
+machine:
+  environment:
+    testExclude: "**/*IntegrationTests*"
