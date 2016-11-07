@@ -34,8 +34,10 @@ buildscript {
         classpath 'org.springframework.build.gradle:propdeps-plugin:0.0.7'
         classpath "org.liquibase:liquibase-gradle-plugin:1.2.1"
         classpath "org.jetbrains.dokka:dokka-gradle-plugin:0.9.9"}
-    ext.repoUsername = hasProperty('ossrhUsername') ? ossrhUsername : System.getenv('ossrhUsername')
-    ext.repoPassword = hasProperty('ossrhPassword') ? ossrhPassword : System.getenv('ossrhPassword')
+
+    //try to pull repository credentials from either properties or environment variables
+    ext.repoUsername = project.hasProperty('ossrhUsername') ? ossrhUsername : System.getenv('ossrhUsername') ?: ''
+    ext.repoPassword = project.hasProperty('ossrhPassword') ? ossrhPassword : System.getenv('ossrhPassword') ?: ''
 
 }
 plugins {
@@ -125,10 +127,6 @@ subprojects {
 
 project(':common') {
     apply plugin: 'maven'
-    //try to pull repository credentials from either properties or environment variables
-    def repoUsername = ossrhUsername ?: System.getenv('ossrhUsername')
-    def repoPassword = ossrhPassword ?: System.getenv('ossrhPassword')
-
     uploadArchives {
         repositories {
             mavenDeployer {
@@ -186,9 +184,6 @@ project(':cloudservice'){
         compile project(':common')
     }
     apply plugin: 'maven'
-    //try to pull repository credentials from either properties or environment variables
-    def repoUsername = ossrhUsername ?: System.getenv('ossrhUsername')
-    def repoPassword = ossrhPassword ?: System.getenv('ossrhPassword')
     uploadArchives {
         repositories {
             mavenDeployer {
@@ -247,9 +242,6 @@ project(':encryptionservice'){
         compile project(':common')
     }
     apply plugin: 'maven'
-    //try to pull repository credentials from either properties or environment variables
-    def repoUsername = ossrhUsername ?: System.getenv('ossrhUsername')
-    def repoPassword = ossrhPassword ?: System.getenv('ossrhPassword')
     uploadArchives {
         repositories {
             mavenDeployer {
