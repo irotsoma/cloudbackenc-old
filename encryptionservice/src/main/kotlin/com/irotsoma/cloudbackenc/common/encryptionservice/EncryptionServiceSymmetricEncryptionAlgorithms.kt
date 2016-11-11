@@ -23,13 +23,9 @@ package com.irotsoma.cloudbackenc.common.encryptionservice
  * A list of encryption algorithms that extensions can support.
  *
  * @author Justin Zak
- * @param value The value should be the standard string representations of the algorithms.
+ * @property value The value should be the standard string representations of the algorithms.
  */
-enum class EncryptionServiceSymmetricEncryptionAlgorithms(
-        /**
-         * The value should be the standard string representations of the algorithms.
-         */
-        val value: String): EncryptionServiceEncryptionAlgorithms {
+enum class EncryptionServiceSymmetricEncryptionAlgorithms(val value: String): EncryptionServiceEncryptionAlgorithms {
     //TODO:  Add more algorithms and remove insecure ones.
     // This is just a quick list of algorithms supported by bouncycastle/apache commons crypto
     /**

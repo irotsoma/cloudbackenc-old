@@ -32,16 +32,16 @@ open class CloudServiceException : Exception{
      */
     constructor(message: String?) : super(message)
     /**
-     * Creates an instance with a message and the [Throwable] that caused the exception.
+     * Creates an instance with a message and the Throwable that caused the exception.
      *
      * @param message Exception description.
-     * @param cause The [Throwable] that caused the exception to occur.
+     * @param cause The Throwable that caused the exception to occur.
      */
     constructor(message: String?, cause: Throwable) : super(message, cause)
     /**
-     * Creates an instance with no specific message but include the [Throwable] that caused the exception.
+     * Creates an instance with no specific message but include the Throwable that caused the exception.
      *
-     * @param cause The [Throwable] that caused the exception to occur.
+     * @param cause The Throwable that caused the exception to occur.
      */
     constructor(cause: Throwable) : super(cause)
 }

@@ -24,16 +24,21 @@ package com.irotsoma.cloudbackenc.common.encryptionservice
  * A list of encryption algorithms that extensions can support.
  *
  * @author Justin Zak
- * @param value The value should be the standard string representations of the algorithms.
+ * @property value The value should be the standard string representations of the algorithms.
  */
-enum class EncryptionServiceAsymmetricEncryptionAlgorithms(
-        /**
-         * The value should be the standard string representations of the algorithms.
-         */
-        val value: String): EncryptionServiceEncryptionAlgorithms {
+enum class EncryptionServiceAsymmetricEncryptionAlgorithms(val value: String): EncryptionServiceEncryptionAlgorithms {
     //TODO:  Add more algorithms and remove insecure ones.
+    /**
+     * RSA encryption using the default mode for the library used.
+     */
     RSA("RSA"),
+    /**
+     * RSA in PKCS1 mode
+     */
     RSA_PKCS1("RSA/PKCS1"),
+    /**
+     * RSA in the default mode with PKCS1 padding
+     */
     RSA__PKCS1PADDING("RSA//PKCS1PADDING")
 
 }

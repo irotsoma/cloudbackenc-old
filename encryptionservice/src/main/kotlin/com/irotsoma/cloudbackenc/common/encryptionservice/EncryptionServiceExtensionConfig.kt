@@ -23,25 +23,13 @@ package com.irotsoma.cloudbackenc.common.encryptionservice
  * Encryption Service Extension configuration class populated by encryption-service-extension.json from the extension's resources
  *
  * @author Justin Zak
- * @param serviceName Human readable name of service
- * @param serviceUUID Internal UUID of the service
- * @param packageName Full package name of the factory class for the service
- * @param factoryClass Name of the factory class for the service
+ * @property serviceName Human readable name of service
+ * @property serviceUUID Internal UUID of the service
+ * @property packageName Full package name of the factory class for the service
+ * @property factoryClass Name of the factory class for the service
  */
 data class EncryptionServiceExtensionConfig (
-        /**
-         * Human readable name of service
-         */
         val serviceUUID: String,
-        /**
-         * Internal UUID of the service
-         */
         val serviceName: String,
-        /**
-         * Full package name of the factory class for the service
-         */
         val packageName: String,
-        /**
-         * Name of the factory class for the service
-         */
         val factoryClass: String)

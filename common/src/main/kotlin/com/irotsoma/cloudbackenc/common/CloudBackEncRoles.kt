@@ -20,7 +20,11 @@
  */
 package com.irotsoma.cloudbackenc.common
 
-
+/**
+ * List of user roles for the system
+ *
+ * @author Justin Zak
+ */
 enum class CloudBackEncRoles {
     /**
      * Role used for running integration tests

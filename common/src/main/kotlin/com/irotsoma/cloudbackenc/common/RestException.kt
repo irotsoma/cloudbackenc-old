@@ -14,15 +14,22 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>
  */
-
 /*
  * Created by irotsoma on 10/20/16.
  */
 package com.irotsoma.cloudbackenc.common
 
-
+/**
+ * A custom [Exception] class used to return structured exception messages to the rest client.
+ *
+ * @author Justin Zak
+ * @property type The predefined type of rest exception to generate.
+ */
 open class RestException(val type : RestExceptionExceptions): Exception() {
     companion object {
+        /**
+         * Serialization UID for the custom Exception type
+         */
         private const val serialVersionUID: Long = 23452365685674564
     }
 }

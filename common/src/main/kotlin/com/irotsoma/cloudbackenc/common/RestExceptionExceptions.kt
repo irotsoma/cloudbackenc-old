@@ -60,16 +60,25 @@ enum class RestExceptionExceptions {
             return 404
         }
     },
+    /**
+     * Returned when the system can not find the file that needs to be processed based on the request.
+     */
     File_Not_Found{
         override fun httpStatusCode(): Int{
             return 404
         }
     },
+    /**
+     * Returned when the requested encryption plugin does not support the requested encryption algorithm.
+     */
     Unsupported_Encryption_Algorithm{
         override fun httpStatusCode(): Int{
             return 400
         }
     },
+    /**
+     * Returned when setting up a user with an email address that is not in the correct format.
+     */
     Invalid_Email_Address{
         override fun httpStatusCode(): Int{
             return 400

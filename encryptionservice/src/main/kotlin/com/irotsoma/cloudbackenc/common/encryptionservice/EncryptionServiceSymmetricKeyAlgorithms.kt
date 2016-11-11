@@ -24,13 +24,9 @@ package com.irotsoma.cloudbackenc.common.encryptionservice
  * A list of symmetric encryption key algorithms that extensions can support.
  *
  * @author Justin Zak
- * @param value The value should be the standard string representations of the algorithms.
+ * @property value The value should be the standard string representations of the algorithms.
  */
-enum class EncryptionServiceSymmetricKeyAlgorithms(
-        /**
-         * The value should be the standard string representations of the algorithms.
-         */
-        val value: String) {
+enum class EncryptionServiceSymmetricKeyAlgorithms(val value: String) {
     //TODO:  Add more algorithms and remove insecure ones.
     /**
      * AES encryption key algorithm

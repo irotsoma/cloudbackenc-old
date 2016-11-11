@@ -43,6 +43,9 @@ class CloudServiceExtension {
      */
     var token: String
 
+    /**
+     * Initialize the extension object with a random UUID and empty name
+     */
     constructor(){
         this.uuid = UUID.randomUUID()
         name = ""

@@ -39,7 +39,7 @@ interface CloudServiceAuthenticationService  {
     fun isLoggedIn(user: CloudServiceUser): Boolean
     /**
      * Requests the system to log into the cloud service.
-     * @param user Internal [CloudBackEncUser] that is attempting to login.  Used for persistent credential storage.
+     * @param user Internal CloudBackEncUser that is attempting to login.  Used for persistent credential storage.
      * @param cloudServiceUser A [CloudServiceUser] object with username and password for login as well as callback url if needed.
      * @return [CloudServiceUser.STATE] depending on the result of the login.
      */

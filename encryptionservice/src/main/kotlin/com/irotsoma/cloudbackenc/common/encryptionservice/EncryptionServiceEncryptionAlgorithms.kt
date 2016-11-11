@@ -19,5 +19,7 @@
  */
 package com.irotsoma.cloudbackenc.common.encryptionservice
 
-
+/**
+ * An interface to represent an encryption algorithm regardless of whether it is synchronous or asynchronous
+ */
 interface EncryptionServiceEncryptionAlgorithms

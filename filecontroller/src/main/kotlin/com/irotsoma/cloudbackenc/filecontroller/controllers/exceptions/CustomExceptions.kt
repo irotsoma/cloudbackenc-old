@@ -28,6 +28,12 @@ import com.irotsoma.cloudbackenc.common.RestExceptionExceptions
  */
 class InvalidEncryptionServiceUUIDException() : RestException(RestExceptionExceptions.Invalid_Encryption_Service_UUID)
 
+/**
+ * Custom exception for when the system can not find the file requested to be encrypted.
+ */
 class EncryptionServiceFileNotFoundException(): RestException(RestExceptionExceptions.File_Not_Found)
 
+/**
+ * Custom exception for when the system does not support the requested algorithm.
+ */
 class UnsupportedEncryptionAlgorithm(): RestException(RestExceptionExceptions.Unsupported_Encryption_Algorithm)

@@ -24,13 +24,9 @@ package com.irotsoma.cloudbackenc.common.encryptionservice
  * List of PBKDF2 (Password-Based Key Derivation Function 2) key algorithms that extensions can support.
  *
  * @author Justin Zak
- * @param value The value should be the standard string representations of the algorithms.
+ * @property value The value should be the standard string representations of the algorithms.
  */
-enum class EncryptionServicePBKDFAlgorithms(
-        /**
-         * The value should be the standard string representations of the algorithms.
-         */
-        val value: String) {
+enum class EncryptionServicePBKDFAlgorithms(val value: String) {
     //TODO:  Add more algorithms
     /**
      * PBKDF2 with Hmac using SHA1

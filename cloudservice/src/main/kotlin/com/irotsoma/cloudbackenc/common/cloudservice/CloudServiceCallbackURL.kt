@@ -26,15 +26,9 @@ package com.irotsoma.cloudbackenc.common.cloudservice
  * controller that accepts a POST with this object as the body.
  *
  * @author Justin Zak
- * @param uuid The UUID of the cloud service extension
- * @param authorizationURL The URL that the user must browse to in order to authorize the application to access their account
+ * @property uuid The UUID of the cloud service extension
+ * @property authorizationURL The URL that the user must browse to in order to authorize the application to access their account
  */
 data class CloudServiceCallbackURL(
-        /**
-         * The UUID of the cloud service extension
-         */
         val uuid: String,
-        /**
-         * The URL that the user must browse to in order to authorize the application to access their account
-         */
         val authorizationURL: String)

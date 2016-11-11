@@ -23,7 +23,16 @@ import java.security.Key
 import java.security.SecureRandom
 import javax.crypto.spec.IvParameterSpec
 
-
+/**
+ * A class used to send information about a file to be encrypted and the encryption parameters.
+ *
+ * @author Justin Zak
+ * @property filePath The full path to the file as it will be accessed by the receiver.
+ * @property algorithm The encryption algorithm to use as a value of [EncryptionServiceEncryptionAlgorithms].
+ * @property key The encryption key to use to encrypt the file.
+ * @property ivParameterSpec (Optional) An instance of [IvParameterSpec] needed to encrypt the file if the encryption algorithm requires it.
+ * @property secureRandom (Optional) An instance of [SecureRandom]. To prevent the system from creating a new instance for every file, create a single instance and use it for each call.  This will improve performance on large batches.
+ */
 class EncryptionServiceFileRequest(
     val filePath : String,
     val algorithm: EncryptionServiceEncryptionAlgorithms,

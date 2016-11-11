@@ -20,14 +20,37 @@
  */
 package com.irotsoma.cloudbackenc.common
 
+/**
+ * An object to represent an internal user for authorization across services.
+ *
+ * Note: this object contains the plain text password for authorization operations across services.  If reusing this
+ * object call the [maskedPasswordInstance] to remove the password in a manner that the system will recognize.
+ *
+ * @author Justin Zak
+ * @property userId The ID of the user.
+ * @property password The password of the user.
+ * @property email (Optional) The email address of the user.  Must be in a valid format if present.
+ * @property enabled Boolean value indicating whether the user can currently access the system.  Default = true
+ * @property roles A [List] of [CloudBackEncRoles] assigned to the user.
+ */
 class CloudBackEncUser(val userId : String,
                        val password : String,
                        val email: String?,
-                       val enabled: Boolean,
+                       val enabled: Boolean = true,
                        val roles : List<CloudBackEncRoles>){
     companion object{
+        /**
+         * The text that will replace the password when [maskedPasswordInstance] is called.
+         */
         const val PASSWORD_MASKED = "PASSWORD_MASKED"
     }
+
+    /**
+     * Used to get a version of the object with the password masked by the constant value [PASSWORD_MASKED]
+     *
+     * @author Justin Zak
+     * @return Instance of [CloudBackEncUser] with the password masked by [PASSWORD_MASKED].
+     */
     fun maskedPasswordInstance(): CloudBackEncUser{
         return CloudBackEncUser(userId, PASSWORD_MASKED, email, enabled,roles)
     }

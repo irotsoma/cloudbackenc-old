@@ -25,26 +25,14 @@ package com.irotsoma.cloudbackenc.common.cloudservice
  * Populated by cloud-service-extension.json from the extension's resources.
  *
  * @author Justin Zak
- * @param serviceName Human readable name of service
- * @param serviceUUID Internal UUID of the service from the cloud-service-extension.json file.
- * @param packageName Full package name of the factory class for the service
- * @param factoryClass Name of the factory class for the service
+ * @property serviceName Human readable name of service
+ * @property serviceUUID Internal UUID of the service from the cloud-service-extension.json file.
+ * @property packageName Full package name of the factory class for the service
+ * @property factoryClass Name of the factory class for the service
  */
 data class CloudServiceExtensionConfig(
-        /**
-         * Internal UUID of the service from the cloud-service-extension.json file.
-         */
         val serviceUUID: String,
-        /**
-         * Human readable name of service
-         */
         val serviceName: String,
-        /**
-         * Full package name of the factory class for the service
-         */
         val packageName: String,
-        /**
-         * Name of the factory class for the service
-         */
         val factoryClass: String)
 
