@@ -25,11 +25,25 @@ package com.irotsoma.cloudbackenc.common
  * @author Justin Zak
  * @property type The predefined type of rest exception to generate.
  */
-open class RestException(val type : RestExceptionExceptions): Exception() {
+open class RestException : Exception {
+    val type : RestExceptionExceptions
     companion object {
         /**
          * Serialization UID for the custom Exception type
          */
-        private const val serialVersionUID: Long = 23452365685674564
+        private const val serialVersionUID : Long = 23452365685674564
+    }
+    /**
+     * @param type The predefined type of rest exception to generate.
+     */
+    constructor(type : RestExceptionExceptions) : super(){
+        this.type = type
+    }
+    /**
+     * @param type The predefined type of rest exception to generate.
+     * @param cause A Throwable representing the cause of the current exception.
+     */
+    constructor( type : RestExceptionExceptions, cause: Throwable) : super(cause){
+        this.type = type
     }
 }

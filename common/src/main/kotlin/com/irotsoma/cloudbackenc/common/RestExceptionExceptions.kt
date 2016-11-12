@@ -83,6 +83,14 @@ enum class RestExceptionExceptions {
         override fun httpStatusCode(): Int{
             return 400
         }
+    },
+    /**
+     * Returned when the file could not be written to the disk.
+     */
+    File_Not_Writable{
+        override fun httpStatusCode(): Int {
+            return 400
+        }
     }
     ;
 

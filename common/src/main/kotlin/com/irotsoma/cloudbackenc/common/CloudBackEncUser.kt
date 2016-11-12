@@ -31,7 +31,7 @@ package com.irotsoma.cloudbackenc.common
  * @property password The password of the user.
  * @property email (Optional) The email address of the user.  Must be in a valid format if present.
  * @property enabled Boolean value indicating whether the user can currently access the system.  Default = true
- * @property roles A [List] of [CloudBackEncRoles] assigned to the user.
+ * @property roles A List of [CloudBackEncRoles] assigned to the user.
  */
 class CloudBackEncUser(val userId : String,
                        val password : String,
@@ -46,10 +46,10 @@ class CloudBackEncUser(val userId : String,
     }
 
     /**
-     * Used to get a version of the object with the password masked by the constant value [PASSWORD_MASKED]
+     * Used to get a version of the object with the password masked by the constant value PASSWORD_MASKED
      *
      * @author Justin Zak
-     * @return Instance of [CloudBackEncUser] with the password masked by [PASSWORD_MASKED].
+     * @return Instance of [CloudBackEncUser] with the password masked by PASSWORD_MASKED.
      */
     fun maskedPasswordInstance(): CloudBackEncUser{
         return CloudBackEncUser(userId, PASSWORD_MASKED, email, enabled,roles)

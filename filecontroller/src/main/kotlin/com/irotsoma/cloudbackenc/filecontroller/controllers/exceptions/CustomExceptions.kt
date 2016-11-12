@@ -36,4 +36,9 @@ class EncryptionServiceFileNotFoundException(): RestException(RestExceptionExcep
 /**
  * Custom exception for when the system does not support the requested algorithm.
  */
-class UnsupportedEncryptionAlgorithm(): RestException(RestExceptionExceptions.Unsupported_Encryption_Algorithm)
+class UnsupportedEncryptionAlgorithmException(): RestException(RestExceptionExceptions.Unsupported_Encryption_Algorithm)
+
+/**
+ * Custom exception for when the system can not write the decrypted file to the disk.
+ */
+class FileNotWritatbleException() : RestException(RestExceptionExceptions.File_Not_Writable)

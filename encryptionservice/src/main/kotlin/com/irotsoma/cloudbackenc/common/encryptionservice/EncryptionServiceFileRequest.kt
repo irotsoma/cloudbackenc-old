@@ -24,7 +24,7 @@ import java.security.SecureRandom
 import javax.crypto.spec.IvParameterSpec
 
 /**
- * A class used to send information about a file to be encrypted and the encryption parameters.
+ * A class used to send information about a file to be encrypted or decrypted and the encryption parameters.
  *
  * @author Justin Zak
  * @property filePath The full path to the file as it will be accessed by the receiver.
