@@ -6,6 +6,7 @@ package com.irotsoma.cloudbackenc.filecontroller.controllers
 import com.irotsoma.cloudbackenc.common.encryptionservice.EncryptionServiceAsymmetricEncryptionAlgorithms
 import com.irotsoma.cloudbackenc.common.encryptionservice.EncryptionServiceFileRequest
 import com.irotsoma.cloudbackenc.common.encryptionservice.EncryptionServiceSymmetricEncryptionAlgorithms
+import com.irotsoma.cloudbackenc.filecontroller.controllers.compression.BzipFile
 import com.irotsoma.cloudbackenc.filecontroller.controllers.exceptions.FileNotWritatbleException
 import com.irotsoma.cloudbackenc.filecontroller.controllers.exceptions.InvalidEncryptionServiceUUIDException
 import com.irotsoma.cloudbackenc.filecontroller.controllers.exceptions.UnsupportedEncryptionAlgorithmException
@@ -40,8 +41,9 @@ class GetDecryptedFileController {
         } else if (((request.algorithm is EncryptionServiceAsymmetricEncryptionAlgorithms) && (request.algorithm !in encryptionServiceClass.supportedAsymmetricEncryptionAlgorithms) )){
             throw UnsupportedEncryptionAlgorithmException()
         }
-
-        fileEncryptionService.decrypt(file.inputStream, decryptedFile.outputStream(), request.key, request.algorithm, request.ivParameterSpec, request.secureRandom)
-
+        val outputFile = File.createTempFile(file.name,".tmp")
+        fileEncryptionService.decrypt(file.inputStream, outputFile.outputStream(), request.key, request.algorithm, request.ivParameterSpec, request.secureRandom)
+        val bzipCompression =  BzipFile()
+        bzipCompression.decompressFile(outputFile, decryptedFile)
     }
 }

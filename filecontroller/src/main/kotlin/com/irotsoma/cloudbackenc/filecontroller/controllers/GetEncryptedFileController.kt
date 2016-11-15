@@ -22,11 +22,13 @@ package com.irotsoma.cloudbackenc.filecontroller.controllers
 import com.irotsoma.cloudbackenc.common.encryptionservice.EncryptionServiceAsymmetricEncryptionAlgorithms
 import com.irotsoma.cloudbackenc.common.encryptionservice.EncryptionServiceFileRequest
 import com.irotsoma.cloudbackenc.common.encryptionservice.EncryptionServiceSymmetricEncryptionAlgorithms
+import com.irotsoma.cloudbackenc.filecontroller.controllers.compression.BzipFile
 import com.irotsoma.cloudbackenc.filecontroller.controllers.exceptions.EncryptionServiceFileNotFoundException
 import com.irotsoma.cloudbackenc.filecontroller.controllers.exceptions.InvalidEncryptionServiceUUIDException
 import com.irotsoma.cloudbackenc.filecontroller.controllers.exceptions.UnsupportedEncryptionAlgorithmException
 import com.irotsoma.cloudbackenc.filecontroller.encryption.EncryptionServiceRepository
 import org.springframework.beans.factory.annotation.Autowired
+import org.springframework.http.ResponseEntity
 import org.springframework.stereotype.Controller
 import org.springframework.web.bind.annotation.*
 import java.io.File
@@ -40,8 +42,8 @@ class GetEncryptedFileController {
     @Autowired
     private lateinit var encryptionServiceRepository: EncryptionServiceRepository
 
-    @RequestMapping(method = arrayOf(RequestMethod.GET))
-    @ResponseBody fun getEncryptedFile(@PathVariable(value="uuid")uuid: UUID, @RequestBody request: EncryptionServiceFileRequest, response: HttpServletResponse)  {
+    @RequestMapping(method = arrayOf(RequestMethod.POST), consumes = arrayOf("application/json;charset=UTF-8"), produces = arrayOf("application/octet-stream"))
+    @ResponseBody fun getEncryptedFile(@PathVariable(value="uuid")uuid: UUID, @RequestBody request: EncryptionServiceFileRequest, response: HttpServletResponse) {
         //verify that file exists
         val fileToEncrypt = File(request.filePath)
         if (!fileToEncrypt.exists()){
@@ -57,8 +59,13 @@ class GetEncryptedFileController {
             throw UnsupportedEncryptionAlgorithmException()
         }
         val outputFile = File.createTempFile(fileToEncrypt.name,".tmp")
-        fileEncryptionService.encrypt(fileToEncrypt.inputStream(), outputFile.outputStream(), request.key, request.algorithm, request.ivParameterSpec, request.secureRandom)
+        val compressedFile = File.createTempFile("${fileToEncrypt.name}.bz2",".tmp")
+        val bzipCompression =  BzipFile()
+        bzipCompression.compressFile(fileToEncrypt, compressedFile)
+        fileEncryptionService.encrypt(compressedFile.inputStream(), outputFile.outputStream(), request.key, request.algorithm, request.ivParameterSpec, request.secureRandom)
         Files.copy(outputFile.toPath(), response.outputStream)
         response.flushBuffer()
+        outputFile.delete()
+        compressedFile.delete()
     }
 }

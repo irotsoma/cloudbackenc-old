@@ -21,6 +21,7 @@ buildscript {
     ext.log4jVersion = '2.6.2'
     ext.kotlinVersion = '1.0.5'
     ext.apacheCommonsValidatorVersion = '1.5.1'
+    ext.apacheCommonsCompressionVersion = '1.12'
 
     ext.localMavenRepository = "file://$rootDir/../maven-repository"
     repositories {
@@ -310,8 +311,6 @@ project(':centralcontroller'){
         testCompile 'org.springframework.boot:spring-boot-starter-test'
         //cloud service interfaces
         compile project(':cloudservice')
-        //encryption service interfaces
-        compile project(':encryptionservice')
         //common classes
         compile project(':common')
         //jackson
@@ -343,6 +342,7 @@ project(':cloudbackencui'){
         compile 'org.springframework.boot:spring-boot-starter-actuator'
         compile 'org.springframework.boot:spring-boot-starter-web'
         compile 'org.springframework.boot:spring-boot-starter-logging'
+        optional 'org.springframework.boot:spring-boot-configuration-processor'
         //jackson
         compile 'com.fasterxml.jackson.module:jackson-module-kotlin'
         compile 'com.fasterxml.jackson.core:jackson-core'
@@ -380,6 +380,8 @@ project(':filecontroller'){
         compile 'com.fasterxml.jackson.core:jackson-core'
         compile 'com.fasterxml.jackson.core:jackson-databind'
         compile 'com.fasterxml.jackson.core:jackson-annotations'
+        //compresion
+        compile "org.apache.commons:commons-compress:$apacheCommonsCompressionVersion"
         //cloud service interfaces
         compile project(':encryptionservice')
         compile project(':common')
